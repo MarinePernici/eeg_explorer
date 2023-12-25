@@ -1,0 +1,133 @@
+.content-wrapper {
+    flex: 1;
+    /* Assure que ce conteneur occupe tout l'espace disponible */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Permet au footer d'être en bas de page même si le contenu est court */
+}
+
+#page-content {
+    flex: 1;
+    /* Permet au contenu de s'étendre et de pousser le footer vers le bas */
+    margin-bottom: 10px;
+}
+
+.common-card-style {
+    border: 3px solid #00152e;
+    border-radius: 15px;
+    padding: 10px;
+    /* margin: 10px; */
+    width: 49%;
+    display:flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    vertical-align: middle;
+    /* text-align: center;  */
+}
+
+#logged-card {
+    /* width: 60%; */
+}
+
+#query-result-card {
+    width: 60%;
+}
+
+.common-container-style {
+    /* width: 90vw; */
+    margin: auto;
+    margin-top: 5;
+}
+
+.form-text {
+    text-align: justify;
+    font-size:small;
+}
+
+H2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00152e;
+}
+
+H1 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00152e;
+    /* padding-top: 1%; */
+}
+
+H3 {
+    padding-left: 10px;
+    /* padding-top: 1%; */
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Lobster', cursive;
+    color: #00152e;
+}
+
+#title-container {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.btn {
+    /* background-color: #00152e;
+    color: white; */
+    border-radius: 5px;
+    border: None;
+    padding: 5px 20px;
+    /* margin: 5px; */
+    /* font-size: 1rem; */
+    font-weight: bold;
+}
+
+.btn.btn-lg {
+    width: 80%;
+}
+
+
+
+
+#home-card-container {
+    justify-content: space-between;
+}
+
+#home-card-container-logged {
+    justify-content: center;
+}
+
+#query-card-container {
+    justify-content: center;
+    align-items: center;
+}
+
+Footer {
+    background-color: #00152e;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+th {
+    background-color: #00152e !important;
+    color: white !important;
+}
+
+.custom-list-style li strong {
+    font-size: 1.2em;  /* ou la taille souhaitée */
+}
