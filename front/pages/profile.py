@@ -52,7 +52,7 @@ profile_layout = html.Div([
                         size='lg',
                         color="primary",
                         className="btn btn-lg",
-                        href="/login",
+                        href="/home",
                         id="logout-button",
                         n_clicks=0,
                     ),

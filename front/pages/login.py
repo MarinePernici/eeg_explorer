@@ -32,7 +32,7 @@ logged_card = dbc.Card([
                 dbc.Button('Modifier mon profil', href='/profile'),
                 html.Br(),
                 html.P("Si vous voulez vous déconnecter, clickez ici:"),
-                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/login", style={'marginBottom': 'auto'}),
+                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto'}),
                 html.Div(id='logout-content'),
 
         ], id="logged-card", class_name="common-card-style", style={'display': 'flex'})
