@@ -246,8 +246,8 @@ def redirect(pathname):
 
 # callback pour modifier le layout quand l'utilisateur est connecté/déconnecté
 @app.callback(
-    Output('home-card-container', 'style'),
-    Output('home-card-container-logged', 'style'),
+    Output('login-card-container', 'style'),
+    Output('login-card-container-logged', 'style'),
     [Input('login-button', 'n_clicks'), Input('logout-button', 'n_clicks')],
     # prevent_initial_call=True
 )
@@ -557,12 +557,13 @@ def update_history_table(pathname):
     Output('delete-account-button', 'n_clicks'),
     [Input('delete-account-button', 'n_clicks')],
     [State('delete-account-text', 'value'),
-     State('delete-account-password', 'value')]
+     State('delete-account-password', 'value'),
+     State('delete-account-text-display', 'children')]
 )
-def delete_account(n_clicks, text, password):
+def delete_account(n_clicks, text, password, text_display):
     if n_clicks > 0:
         if current_user.is_authenticated:
-            if text != 'supprimer':
+            if text != text_display:
                 return 'Veuillez entrer le texte de confirmation.', 0
             if not current_user.check_password(password):
                 return 'Mot de passe incorrect.', 0

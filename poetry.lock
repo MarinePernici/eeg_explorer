@@ -1824,6 +1824,16 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
+name = "stringgenerator"
+version = "0.4.4"
+description = "Generate randomized strings of characters using a template"
+optional = false
+python-versions = "*"
+files = [
+    {file = "StringGenerator-0.4.4.tar.gz", hash = "sha256:35f86752460b25b2ccf936f6c8b0ed330cf49b01a34a5400cbf3fa6693dea609"},
+]
+
+[[package]]
 name = "tenacity"
 version = "8.2.3"
 description = "Retry code until it succeeds"
@@ -2048,4 +2058,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12.0"
-content-hash = "0cbb17ac3b1793161a055df1f1fcba2a545835fa253172e5a816d3bdb53e5751"
+content-hash = "e412827acec9f762e31da4317e4a5760a93269ad51c4b0438c0730de5e2ea9c6"

@@ -1,6 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 from pages.title import title_container
+from strgen import StringGenerator
 
 profile_layout = html.Div([
     dbc.Container(
@@ -277,7 +278,7 @@ profile_delete_account_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col([
-                        html.P("supprimer"),
+                        html.P(StringGenerator("[\l\d]{12}").render_list(3)[0], id='delete-account-text-display'),
                         dbc.Input(id='delete-account-text', type='text', placeholder='Recopiez le texte ci-dessus pour supprimer votre compte', value=""),
                     ], width={"size": 6, "offset": 3, },),
                 ],
@@ -322,6 +323,7 @@ profile_history_layout=html.Div([
                     html.Div([
                         html.Div(id="dynamic-username"),  # Contenu dynamique
                         html.P("Sur cette page, vous pouvez accéder à l'ensemble de votre historique : les questions que vous avez posées et les réponses obtenues sont classées de la plus ancienne à la plus récente."),
+                        html.P("En bas de page, vous pouvez choisir de télécharger votre historique dans un fichier Excel ou CSV."),
                         ], style={'text-align': 'justify'},
                     ),
                     width={"size": 10, "offset": 1, },

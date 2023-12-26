@@ -98,11 +98,11 @@ H3 {
 
 
 
-#home-card-container {
+#login-card-container {
     justify-content: space-between;
 }
 
-#home-card-container-logged {
+#login-card-container-logged {
     justify-content: center;
 }
 
