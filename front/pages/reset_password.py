@@ -40,7 +40,6 @@ reset_password_layout = html.Div([
         dbc.Row(
             dbc.Col(html.Div(id='reset-password-message'), width={"size": 6, "offset": 3})
         , className="mb-3",),
-        # dcc.Location(id='url', refresh=False),  # Pour capturer et utiliser l'URL actuelle
     ],
     fluid=True,
     className="py-3"

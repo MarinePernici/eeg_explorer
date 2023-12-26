@@ -38,6 +38,7 @@ logged_card = dbc.Card([
 
         ], id="logged-card", class_name="common-card-style", style={'display': 'flex'})
 
+
 signup_card = dbc.Card([
     html.H2("Créer un Compte", style={'textAlign': 'center'}),
     html.P("Si vous n'avez pas encore de compte utilisateur, veuillez en créer un ici*."),
@@ -54,8 +55,15 @@ signup_card = dbc.Card([
     dbc.FormFeedback("", type="invalid", id='password-feedback-invalid'),
     dbc.FormText("Mot de passe : 12 caractères dont 1 minuscule, 1 majuscule, 1 chiffre et un caractère spécial", id='password-feedback', color='info'),
     html.Br(),
-    dbc.Button("Créer le compte", id='signup-button', color='info', disabled=True, style={'marginBottom': 'auto'}),
-    html.Div(id='signup-status'),
+    dbc.Button("Créer le compte", id='signup-button', color='info', disabled=True, ),
+    html.Div(id='signup-status', children=[
+        "* La création de compte est ouverte aux membres de Spectre Biotech, pour plus d'informations, veuillez ",
+        html.A(
+            "contacter le support.",
+            href="/contact",
+            target="_blank",
+        ),
+    ], style={'marginBottom': 'auto', 'marginTop': '10px'}),
 ], id="signup-card", class_name="common-card-style", style={'display': 'flex'})
 
 
@@ -76,23 +84,7 @@ login_layout_login = html.Div(
     id="home-card-container-logged", className="common-container-style"
 )
 
-information_container = html.Div(
-    [
-        # html.P("Bienvenue sur EEG Explorer."),
-        html.Br(),
-        html.P(
-            children =[
-                "* La création de compte est ouverte aux membres de Spectre Biotech, pour plus d'informations, veuillez ",
-                html.A(
-                    "contacter le support.",
-                    href="/contact",
-                    target="_blank",
-                ),
-            ],
-        )
-    ],
-    id="information-container",
-)
+
 
 login_layout = html.Div([
     dbc.Container(
@@ -110,11 +102,6 @@ login_layout = html.Div([
         dbc.Row(
             dbc.Col(
                 login_layout_login, width={"size": 10, "offset": 1},
-            ),
-        ),
-        dbc.Row(
-            dbc.Col(
-                information_container, width={"size": 10, "offset": 1},
             ),
         ),
     ],

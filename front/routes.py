@@ -173,7 +173,7 @@ def update_login_button_state(valid_email, password):
 )
 def create_account(n_clicks, name, email, password):
     if n_clicks is None or not email or not password:
-        return ''
+        return dash.no_update
 
     if is_email_registered(email):
         return 'Un compte existe déjà avec cette adresse e-mail.'
@@ -734,10 +734,14 @@ def reset_password(n_clicks, email):
 )
 def reset_password(n_clicks, new_password, confirm_new_password, pathname):
     if n_clicks > 0:
-        token = pathname.split('/')[-1]  # Extraire le token de l'URL
-        # Ajoutez ici la logique pour vérifier le token et réinitialiser le mot de passe
-        s = Serializer(app.server.secret_key)
-        email = s.loads(token, salt='password-reset-salt', max_age=3600)
+        try:
+            token = pathname.split('/')[-1]  # Extraire le token de l'URL
+            # Ajoutez ici la logique pour vérifier le token et réinitialiser le mot de passe
+            s = Serializer(app.server.secret_key)
+            email = s.loads(token, salt='password-reset-salt', max_age=3600)
+        except Exception as e:
+            print(e)
+            return "Ce lien de réinitialisation est invalide ou a expiré."
         if not is_email_registered(email):
             return "Email non reconnu."
         if new_password != confirm_new_password:
