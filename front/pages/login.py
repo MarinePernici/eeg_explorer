@@ -18,6 +18,7 @@ login_card = dbc.Card(
         html.Br(),
         html.Br(),
         dbc.Button('Se connecter', n_clicks=0, id='login-button', color='info', disabled=True, style={'marginBottom': 'auto'}),
+        html.A("Mot de passe oublié ?", href="/forgot-password", target="_blank", style={'marginLeft': 'auto'}),
         html.Div(id='login-status'),
     ], id="login-card", class_name="common-card-style", style={'display': 'flex'})
 

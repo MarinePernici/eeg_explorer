@@ -6,6 +6,7 @@ import requests
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from itsdangerous import URLSafeTimedSerializer as Serializer
 
 import dash
 import dash_bootstrap_components as dbc
@@ -31,12 +32,14 @@ from pages.profile import (profile_layout, profile_edit_layout,
 from pages.unauthorized import unauthorized_layout
 from pages.error_404 import error_404_layout
 from pages.contact import contact_form_layout
+from pages.forgot_password import forgot_password_layout
+from pages.reset_password import reset_password_layout
 from dotenv import load_dotenv
 
 load_dotenv()
 
 pages = ['/home', '/explorer', '/profile', '/login', '/profile/history', '/profile/edit', '/profile/edit/password']
-open_pages = ['/home', '/login', '/', '/contact']
+open_pages = ['/home', '/login', '/', '/contact', '/forgot-password']
 
 # Contenu principal
 content = html.Div(id="page-content")
@@ -59,6 +62,9 @@ app.layout = html.Div(className='content-wrapper', children=[
 )
 def page_router(pathname):
     # Redirection pour les utilisateurs non authentifiés tentant d'accéder à des pages protégées
+    if pathname.startswith('/reset_password/'):
+        return reset_password_layout
+    
     if pathname not in open_pages:
         if not current_user.is_authenticated:
             return unauthorized_layout
@@ -82,6 +88,8 @@ def page_router(pathname):
         return profile_layout
     if pathname == '/contact':
         return contact_form_layout
+    if pathname == '/forgot-password':
+        return forgot_password_layout
     return error_404_layout
 
 
@@ -313,6 +321,23 @@ def check_login_email_validity(email):
         return False, True, '', 'Adresse email invalide.'
     if not is_email_registered(email):
         return False, True, '', 'Adresse email non reconnue.'
+    return True, False, 'Adresse email valide.', ''
+
+# vérifier la validité de l'email de réinitialisation du mot de passe
+@app.callback(
+    [Output("user-email", "valid"),
+     Output("user-email", "invalid"),
+     Output("user-email-valid", "children"),
+     Output("user-email-invalid", "children")],
+    [Input("user-email", "value")],
+)
+def check_user_email_validity(email):
+    if not email:
+        return False, False, '', ''
+    if not is_email_valid(email):
+        return False, True, '', 'Adresse email invalide.'
+    # if not is_email_registered(email):
+    #     return False, True, '', 'Adresse email non reconnue.'
     return True, False, 'Adresse email valide.', ''
 
 # vérifier la validité du nouveau mot de passe
@@ -650,3 +675,83 @@ def handle_form_submission(n_clicks, name, email, subject, message):
             return f'Erreur lors de l\'envoi du message : {e}'
     except Exception as e:
         return f"Erreur lors du traitement de votre demande : {e}"
+
+
+@app.callback(
+    Output('forgot-password-message', 'children'),
+    [Input('forgot-password-button', 'n_clicks')],
+    [State('user-email', 'value')]
+)
+def reset_password(n_clicks, email):
+    if n_clicks > 0:
+        if is_email_registered(email):
+            s = Serializer(app.server.secret_key)
+            token = s.dumps(email, salt='password-reset-salt')
+
+            try:
+                # Préparer le message email
+                lien = f"http://127.0.0.1:8050/reset_password/{token}"
+                msg_body = f"""
+                Bonjour,
+                
+                Vous recevez cet email car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte EEG Explorer.
+                
+                Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous :
+                {lien}
+
+                Si vous rencontrez des problèmes pour cliquer sur le lien, copiez et collez l'URL dans votre navigateur
+                
+                Ce lien de réinitialisation est valide pendant 15 minutes. Passé ce délai, il sera nécessaire de soumettre une nouvelle demande de réinitialisation de mot de passe.
+                
+                Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email. Aucune modification ne sera apportée à votre compte.
+                
+                L'équipe EEG Explorer
+                """
+                msg = MIMEText(msg_body)
+                msg['Subject'] = 'Réinitialisation de votre mot de passe EEG Explorer'
+                msg['From'] = os.environ.get('email_contact')
+                msg['To'] = email
+
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+                server.login(os.environ.get('email_contact'), os.environ.get('email_password'))
+                server.sendmail(os.environ.get('email_contact'), email, msg.as_string())
+                server.quit()
+
+                return "Si votre compte existe, un email de réinitialisation a été envoyé."
+            except Exception as e:
+                return f"Erreur lors de l'envoi de l'email : {e}"
+
+        return "Si votre compte existe, un email de réinitialisation a été envoyé."
+    return ""
+    
+
+@app.callback(
+    Output('reset-password-message', 'children'),
+    [Input('reset-password-button', 'n_clicks')],
+    [State('new-password-reset', 'value'), State('confirm-new-password-reset', 'value'), State('url', 'pathname')],
+    prevent_initial_call=True,
+)
+def reset_password(n_clicks, new_password, confirm_new_password, pathname):
+    if n_clicks > 0:
+        token = pathname.split('/')[-1]  # Extraire le token de l'URL
+        # Ajoutez ici la logique pour vérifier le token et réinitialiser le mot de passe
+        s = Serializer(app.server.secret_key)
+        email = s.loads(token, salt='password-reset-salt', max_age=3600)
+        if not is_email_registered(email):
+            return "Email non reconnu."
+        if new_password != confirm_new_password:
+            return "Les nouveaux mots de passe ne correspondent pas."
+        safety, reason = is_password_safe(new_password)
+        if not safety:
+            return reason
+        try:
+            user = User.query.filter_by(email=email).first()
+            user.set_password(new_password)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer."
+        return "Votre mot de passe a été réinitialisé."
+    return ""
+
