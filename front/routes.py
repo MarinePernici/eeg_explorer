@@ -25,10 +25,11 @@ from pages.header import header
 from pages.navbar import navbar
 from pages.footer import footer
 from pages.home import home_layout
-from pages.login import login_layout
+from pages.login import login_layout, user_layout
 from pages.explorer import explorer_layout
 from pages.profile import (profile_layout, profile_edit_layout,
-    profile_edit_password_layout, profile_history_layout, profile_delete_account_layout)
+    profile_edit_password_layout, profile_delete_account_layout)
+from pages.profile_history import profile_history_layout
 from pages.unauthorized import unauthorized_layout
 from pages.error_404 import error_404_layout
 from pages.contact import contact_form_layout
@@ -73,6 +74,8 @@ def page_router(pathname):
     if pathname in ('/home', '/'):
         return home_layout
     if pathname in ('/login', ):
+        if current_user.is_authenticated:
+            return user_layout
         return login_layout
     if pathname == '/explorer':
         return explorer_layout
@@ -244,18 +247,18 @@ def redirect(pathname):
     return pathname if pathname else dash.no_update
 
 
-# callback pour modifier le layout quand l'utilisateur est connecté/déconnecté
-@app.callback(
-    Output('login-card-container', 'style'),
-    Output('login-card-container-logged', 'style'),
-    [Input('login-button', 'n_clicks'), Input('logout-button', 'n_clicks')],
-    # prevent_initial_call=True
-)
-def update_forms_and_message(login_n_clicks, logout_n_clicks):
+# # callback pour modifier le layout quand l'utilisateur est connecté/déconnecté
+# @app.callback(
+#     Output('login-card-container', 'style'),
+#     Output('login-card-container-logged', 'style'),
+#     [Input('login-button', 'n_clicks'), Input('logout-button', 'n_clicks')],
+#     # prevent_initial_call=True
+# )
+# def update_forms_and_message(login_n_clicks, logout_n_clicks):
 
-    if current_user.is_authenticated:
-        return {'display': 'none'}, {'display': 'flex'}
-    return {'display': 'flex'}, {'display': 'none'}
+#     if current_user.is_authenticated:
+#         return {'display': 'none'}, {'display': 'flex'}
+#     return {'display': 'flex'}, {'display': 'none'}
 
 
 # vérifier la validité du nom d'inscription

@@ -44,41 +44,41 @@ logged_card = dbc.Container(
             dbc.Col([
                 html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),
                 html.P('Vous êtes maintenant connecté à votre compte EEG Explorer!', style={'fontSize': '1rem'}),
-            ], width={"size": 6, "offset": 3}, className="text-center",
+            ], width={"size": 8, "offset": 2}, className="text-center",
             ),
         ], className="mb-3"),
         dbc.Row([
             dbc.Col(
                 html.P("Commencez votre exploration :"),
-                width={"size": 4, "offset": 3},
+                width={"size": 5, "offset": 2},
             ),
             dbc.Col(
                 dbc.Button('Explorer', href='/explorer', style={'width': '100%'}),
-                width={"size": 2, "offset": 0},
+                width={"size": 3, "offset": 0},
             ),
         ], className="mb-3"),
         dbc.Row([
             dbc.Col([
-                html.P("Consultez ou modifiez votre profil :"),
-            ], width={"size": 4, "offset": 3},),
+                html.P("Consultez ou modifiez votre les informations de votre compte :"),
+            ], width={"size": 5, "offset": 2},),
             dbc.Col([
-                dbc.Button('Profil', href='/profile', style={'width': '100%'}),
-            ], width={"size": 2, "offset": 0},),
+                dbc.Button('Mon compte', href='/profile', style={'width': '100%'}),
+            ], width={"size": 3, "offset": 0},),
         ], className="mb-3"),
         dbc.Row([
             dbc.Col(
-                html.P("Pour vous déconnectez :"),
-                width={"size": 4, "offset": 3},
+                html.P("Si vous souhaitez vous déconnecter :"),
+                width={"size": 5, "offset": 2},
             ),
             dbc.Col(
                 dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto', 'width': '100%'}),
-                width={"size": 2, "offset": 0},
+                width={"size": 3, "offset": 0},
             ),
         ], className="mb-3"),
         dbc.Row([
             dbc.Col(
                 html.Div(id='logout-content'),
-                width={"size": 6, "offset": 3},
+                width={"size": 8, "offset": 2},
             ),
         ]),
     ],
@@ -130,7 +130,7 @@ login_layout_login = html.Div(
     [
         logged_card,
     ],
-    style={'display': 'none'},
+    style={'display': 'flex'},
     id="login-card-container-logged", className="common-container-style"
 )
 
@@ -147,6 +147,30 @@ login_layout = html.Div([
                     login_layout_logout, width={"size": 10, "offset": 1},
                 ),
             ),
+            # dbc.Row(
+            #     dbc.Col(
+            #         login_layout_login, width={"size": 10, "offset": 1},
+            #     ),
+            # ),
+        ],
+        fluid=True,
+        className="py-3"
+    )
+])
+
+user_layout = html.Div([
+    dbc.Container(
+        [
+            dbc.Row(
+                dbc.Col(
+                    title_container, width={"size": 8, "offset": 2},
+                ),
+            ),
+            # dbc.Row(
+            #     dbc.Col(
+            #         login_layout_logout, width={"size": 10, "offset": 1},
+            #     ),
+            # ),
             dbc.Row(
                 dbc.Col(
                     login_layout_login, width={"size": 10, "offset": 1},

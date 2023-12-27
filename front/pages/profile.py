@@ -14,14 +14,65 @@ profile_layout = html.Div([
             dbc.Row(
                 dbc.Col(
                     html.Div([
-                        html.P("Ceci est la page de profil de notre application."),
-                        html.Div(id="dynamic-username"),  # Contenu dynamique
+                        html.Div(id="dynamic-username", style={'fontSize':'1.5rem'}),  # Contenu dynamique
+                        # html.P("Ceci est la page de profil de notre application."),
+                        
                         ], style={'text-align': 'center'},
                     ),
                     width={"size": 12, "offset": 0, },
                     className="text-center"
                 )
             ),
+            dbc.Row([
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/history.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 3, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/edit.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 3, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/logout.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 3, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/delete.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 3, "offset": 0, },
+                    className="text-center"
+                ),
+            ]),
             dbc.Row([
                 dbc.Col(
                     dbc.Button(
@@ -33,7 +84,7 @@ profile_layout = html.Div([
                         id="history-button",
                     ),
                     width={"size": 3, "offset": 0, },
-                    className="text-center"
+                    className="text-center mt-3"
                 ),
                 dbc.Col(
                     dbc.Button(
@@ -45,7 +96,7 @@ profile_layout = html.Div([
                         id="edit-profile-button",
                     ),
                     width={"size": 3, "offset": 0, },
-                    className="text-center"
+                    className="text-center mt-3"
                 ),
                 dbc.Col([
                     dbc.Button(
@@ -59,7 +110,7 @@ profile_layout = html.Div([
                     ),
                     html.Div(id='logout-content'),
                 ], width={"size": 3, "offset": 0, },
-                className="text-center"
+                className="text-center mt-3"
                 ),
                 dbc.Col(
                     dbc.Button(
@@ -71,7 +122,7 @@ profile_layout = html.Div([
                         # id="delete-account-button",
                         # n_clicks=0,
                     ), width={"size": 3, "offset": 0, },
-                    className="text-center"
+                    className="text-center mt-3"
                 ),
             ]),
         ],
@@ -309,89 +360,3 @@ profile_delete_account_layout = html.Div([
         className="py-3"
     )
 ])
-
-profile_history_layout=html.Div([
-    dbc.Container(
-        [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 6, "offset": 3},
-                ),
-            ),
-            dbc.Row(
-                dbc.Col(
-                    html.Div([
-                        html.Div(id="dynamic-username"),  # Contenu dynamique
-                        html.P("Sur cette page, vous pouvez accéder à l'ensemble de votre historique : les questions que vous avez posées et les réponses obtenues sont classées de la plus ancienne à la plus récente."),
-                        html.P("En bas de page, vous pouvez choisir de télécharger votre historique dans un fichier Excel ou CSV."),
-                        ], style={'text-align': 'justify'},
-                    ),
-                    width={"size": 10, "offset": 1, },
-                    className="center"
-                )
-            ),
-            dbc.Row(
-                dbc.Col(
-                    dbc.Table(
-                        [
-                            # Table header
-                            html.Thead(
-                                html.Tr(
-                                    [
-                                        html.Th("Date"),
-                                        html.Th("Requête"),
-                                        html.Th("Réponse"),
-                                    ],
-                                ),
-                            ),
-                            # Table body
-                            html.Tbody(id='history-table'),
-                        ],
-                        bordered=True,
-                        color="secondary",
-                        hover=True,
-                        responsive=True,
-                        striped=True,
-                    ),
-                    width={"size": 10, "offset": 1, },
-                ),
-            ),
-            dbc.Row(
-                dbc.Col([
-                    dbc.Label("Choisissez le format dans lequel vous voulez télécharger votre historique :", style={'textAlign': 'justify'}),
-                    dbc.RadioItems(
-                        id='format-select',
-                        options=[
-                            {'label': 'Excel', 'value': 'xlsx'},
-                            {'label': 'CSV', 'value': 'csv'},
-                        ],
-                        value='xlsx',  # Valeur par défaut
-                        style={'marginBottom': '10px', 'textAlign': 'center'},
-                        inline=True,
-                        label_style={"marginRight": "10px"},
-                    ),
-
-                    # Bouton de téléchargement
-                    dbc.Button('Télécharger mon historique', id='download-button', style={'width': '100%'}, n_clicks=0),
-
-                    # Composant dcc.Download pour le téléchargement du fichier
-                    dcc.Download(id='download-data')
-                ], width={"size": 3, "offset": 8, }, className="text-justify"),
-            ),
-        ],
-        fluid=True,
-        className="py-3"
-    )
-])
-
-
-#         html.P("Ceci est la page de profil de notre application."),
-#         html.Div(id="dynamic-content"),  # Contenu dynamique
-#         html.P("Vous pouvez modifier votre profil ici :"),
-#         dbc.Button("Modifier le profil", href="/edit_profile", ),
-#         html.P(),
-#         html.P("Vous pouvez vous déconnecter ici :"),
-#         dbc.Button("Se déconnecter", id="logout-button", n_clicks=0, href="/"),
-#         html.Div(id="logout-content"),
-#     ], className="text-center")
-# ])
