@@ -17,8 +17,11 @@ from flask_login import current_user, login_required, login_user, logout_user
 import pandas as pd
 
 from app import app
-from auth import (create_user, is_email_allowed, is_email_registered,
-                  is_username_registered, is_password_safe, is_email_valid)
+from auth import (
+    create_user, is_email_allowed, is_email_registered,
+    is_username_registered, is_password_safe, is_email_valid,
+    create_deleted_user
+)
 import chat_agent as agent
 from models import db, User, Queries, QueryResults, Contacts
 from pages.header import header
@@ -211,6 +214,10 @@ def login(n_clicks, password_edit, email, password):
     if trigger_id == 'login-button':
         if n_clicks > 0:
             user = User.query.filter_by(email=email).first()
+
+            if user.id == 0:   # Compte supprimé
+                return "Identifiants invalides", dash.no_update
+
             if user and user.check_password(password):
                 login_user(user)
                 return "Vous êtes connecté.", "/login"
@@ -564,26 +571,40 @@ def update_history_table(pathname):
      State('delete-account-text-display', 'children')]
 )
 def delete_account(n_clicks, text, password, text_display):
-    if n_clicks > 0:
-        if current_user.is_authenticated:
-            if text != text_display:
-                return 'Veuillez entrer le texte de confirmation.', 0
-            if not current_user.check_password(password):
-                return 'Mot de passe incorrect.', 0
-            if n_clicks == 1:
-                return 'Etes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible. Cliquez à nouveau sur le bouton pour confirmer.', 1
-            if n_clicks > 1:
-                user_id = current_user.id
-                user_to_delete = User.query.get(user_id)
-                
-                if user_to_delete:
-                    db.session.delete(user_to_delete)
-                    db.session.commit()
-                    logout_user()
-                    return 'Compte utilisateur supprimé avec succès.', 0
-                return 'Erreur: Utilisateur non trouvé.', 0
-        return 'Vous devez être connecté pour supprimer votre compte.', 0
-    return '', 0
+    if n_clicks > 0 and current_user.is_authenticated:
+        create_deleted_user()
+        if text != text_display:
+            return 'Veuillez entrer le texte de confirmation.', 0
+        if not current_user.check_password(password):
+            return 'Mot de passe incorrect.', 0
+        if n_clicks == 1:
+            return 'Etes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible. Cliquez à nouveau sur le bouton pour confirmer.', 1
+        if n_clicks > 1:
+            user_id = current_user.id
+
+            # Mettre à jour les références dans d'autres tables
+            queries_to_update = Queries.query.filter_by(user_id=user_id).all()
+            for query_row in queries_to_update:
+                query_row.user_id = 0
+            db.session.commit()
+
+            contacts_to_update = Contacts.query.filter_by(user_id=user_id).all()
+            for contact_row in contacts_to_update:
+                contact_row.user_id = 0
+            db.session.commit()
+
+            # Supprimer l'utilisateur
+            user_to_delete = User.query.get(user_id)
+            
+            if user_to_delete:
+                db.session.delete(user_to_delete)
+                db.session.commit()
+                logout_user()
+                return 'Compte utilisateur supprimé avec succès.', 0
+            
+            return 'Erreur: Utilisateur non trouvé.', 0
+        
+    return 'Vous devez être connecté pour supprimer votre compte.', 0
 
 
 # Callback pour télécharger l'historique de l'utilisateur
@@ -621,6 +642,7 @@ def generate_file(n_clicks, file_format):
     return dash.no_update
 
 
+# Callback pour enregistrer un message de contact
 @app.callback(
     Output('form-output', 'children'),  # Vous pouvez ajouter un élément pour afficher un message de confirmation
     [Input('contact-submit', 'n_clicks')],
@@ -681,6 +703,7 @@ def handle_form_submission(n_clicks, name, email, subject, message):
         return f"Erreur lors du traitement de votre demande : {e}"
 
 
+# Callback pour envoyer un email de réinitialisation de mot de passe
 @app.callback(
     Output('forgot-password-message', 'children'),
     [Input('forgot-password-button', 'n_clicks')],
@@ -729,7 +752,7 @@ def reset_password(n_clicks, email):
         return "Si votre compte existe, un email de réinitialisation a été envoyé."
     return ""
     
-
+# Callback pour réinitialiser le mot de passe
 @app.callback(
     Output('reset-password-message', 'children'),
     [Input('reset-password-button', 'n_clicks')],

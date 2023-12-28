@@ -45,7 +45,7 @@ home_layout = html.Div([
                             },
                         ),
                     ),
-                ], width={"size": 3, "offset": 0},
+                ], width=3,
                 className="mb-3 d-flex flex-column justify-content-center",
                 style={'background-color': '#00152e', 'border-radius': '5px',}
                 ),
@@ -84,7 +84,7 @@ home_layout = html.Div([
                             className='custom-list-style'
                         ), style={'text-align': 'justify'},
                     ),
-                    width={"size": 5, "offset": 0, },
+                    width=5,
                     className="mb-3 d-flex flex-column justify-content-center"
                 )
             ], style={'vertical-align': 'middle'}, className="align-items-stretch", justify="center",),
@@ -97,10 +97,8 @@ home_layout = html.Div([
                         className="btn btn-lg",
                         href="/explorer",
                         id="start-exploration-button",
-                        style={
-                            'width': '100%',
-                        }
-                    ), width={"size": 6, "offset": 0,}, className='d-flex align-items-center',
+                        style={'width': '100%'},
+                    ), width=3, className='d-flex align-items-center mb-3',
                 ),
             ], justify="center"),
         ],

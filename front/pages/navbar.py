@@ -7,8 +7,6 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink("Accueil", href="/home", active="exact")),
         dbc.NavItem(dbc.NavLink("Explorer", href="/explorer", active="exact")),
         dbc.NavItem(dbc.NavLink("Se connecter", href="/login", active="exact")),
-        
-        # dbc.NavItem(dbc.NavLink("Profil", href="/profile", active="exact")),
         dbc.DropdownMenu(
             children=[
                 dbc.DropdownMenuItem("Mon historique", href="/profile/history"),
@@ -22,7 +20,6 @@ navbar = dbc.NavbarSimple(
             align_end=True,
         ),
     ],
-    brand_href="/",
     color="#00152e",
     dark=True,
 )

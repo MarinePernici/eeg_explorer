@@ -2,8 +2,8 @@ import os
 import re
 
 from dotenv import load_dotenv
-
 from models import User, db
+from passlib.hash import argon2
 
 load_dotenv()  # Charge les variables d'environnement depuis '.env'
 
@@ -61,3 +61,21 @@ def create_user(name, email, password):
         print("Erreur lors de la création de l'utilisateur:", e)
         db.session.rollback()
         return False
+
+
+def create_deleted_user():
+    deleted_user = User.query.filter_by(username='deletedUser').first()
+    if not deleted_user:
+        # Générer un mot de passe fort et aléatoire
+        random_password = os.urandom(24).hex()
+        hashed_password = argon2.hash(random_password)
+
+        deleted_user = User(
+            id=0,  # ou un autre ID spécifique
+            username='deletedUser',
+            email='supprime@example.com',  # Email factice
+            password_hash=hashed_password,  # Mot de passe hashé
+            # Assurez-vous de définir d'autres champs requis avec des valeurs par défaut ou factices
+        )
+        db.session.add(deleted_user)
+        db.session.commit()
