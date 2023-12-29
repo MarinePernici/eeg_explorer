@@ -30,9 +30,12 @@ from pages.footer import footer
 from pages.home import home_layout
 from pages.login import login_layout, user_layout
 from pages.explorer import explorer_layout
-from pages.profile import (profile_layout, profile_edit_layout,
-    profile_edit_password_layout, profile_delete_account_layout)
+from pages.profile import profile_layout
 from pages.profile_history import profile_history_layout
+from pages.profile_delete import profile_delete_account_layout
+from pages.profile_edit import (
+    profile_edit_layout, profile_edit_password_layout
+)
 from pages.unauthorized import unauthorized_layout
 from pages.error_404 import error_404_layout
 from pages.contact import contact_form_layout
@@ -568,35 +571,51 @@ def update_history_table(pathname):
     [Input('delete-account-button', 'n_clicks')],
     [State('delete-account-text', 'value'),
      State('delete-account-password', 'value'),
-     State('delete-account-text-display', 'children')]
+     State('delete-account-text-display', 'children')],
+    prevent_initial_call=True
 )
 def delete_account(n_clicks, text, password, text_display):
     if n_clicks > 0 and current_user.is_authenticated:
-        create_deleted_user()
-        if text != text_display:
+        if not password:
+            return 'Veuillez entrer votre mot de passe.', 0
+        if not text:
             return 'Veuillez entrer le texte de confirmation.', 0
+        if text != text_display:
+            return 'Veuillez corriger le texte de confirmation.', 0
         if not current_user.check_password(password):
-            return 'Mot de passe incorrect.', 0
+            return 'Mot de passe invalide.', 0
         if n_clicks == 1:
             return 'Etes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible. Cliquez à nouveau sur le bouton pour confirmer.', 1
         if n_clicks > 1:
             user_id = current_user.id
 
-            # Mettre à jour les références dans d'autres tables
-            queries_to_update = Queries.query.filter_by(user_id=user_id).all()
-            for query_row in queries_to_update:
-                query_row.user_id = 0
-            db.session.commit()
-
-            contacts_to_update = Contacts.query.filter_by(user_id=user_id).all()
-            for contact_row in contacts_to_update:
-                contact_row.user_id = 0
-            db.session.commit()
-
-            # Supprimer l'utilisateur
+            # Identify the user to delete
             user_to_delete = User.query.get(user_id)
             
             if user_to_delete:
+                        
+                # if not exist create a deleted user
+                create_deleted_user()
+
+                # update queries and contacts tables with deleted user id
+                deleted_user_id = User.query.filter_by(
+                    username='deletedUser'
+                ).first().id
+                queries_to_update = Queries.query.filter_by(
+                    user_id=user_id
+                ).all()
+                for query_row in queries_to_update:
+                    query_row.user_id = deleted_user_id
+                db.session.commit()
+
+                contacts_to_update = Contacts.query.filter_by(
+                    user_id=user_id
+                ).all()
+                for contact_row in contacts_to_update:
+                    contact_row.user_id = deleted_user_id
+                db.session.commit()
+
+                # Supprimer l'utilisateur
                 db.session.delete(user_to_delete)
                 db.session.commit()
                 logout_user()
@@ -709,7 +728,7 @@ def handle_form_submission(n_clicks, name, email, subject, message):
     [Input('forgot-password-button', 'n_clicks')],
     [State('user-email', 'value')]
 )
-def reset_password(n_clicks, email):
+def send_reset_password_email(n_clicks, email):
     if n_clicks > 0:
         if is_email_registered(email):
             s = Serializer(app.server.secret_key)
