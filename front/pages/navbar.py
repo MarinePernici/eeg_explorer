@@ -20,6 +20,6 @@ navbar = dbc.NavbarSimple(
             align_end=True,
         ),
     ],
-    color="#00152e",
+    color="#1a1950",
     dark=True,
 )

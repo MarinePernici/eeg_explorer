@@ -1,4 +1,4 @@
-# routes.py
+""" app routes"""
 import re
 import time
 import os
@@ -118,13 +118,7 @@ def update_explorer_link(pathname):
     [Input('url', 'pathname')]
 )
 def update_dynamic_content(pathname):
-    """_summary_
-
-    Args:
-        pathname (_type_): _description_
-
-    Returns:
-        _type_: _description_
+    """
     """
     if pathname in pages:
         if current_user.is_authenticated:

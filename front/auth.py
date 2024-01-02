@@ -48,11 +48,11 @@ def create_user(name, email, password):
     if is_email_registered(email):
         return False
 
-    # Créez une instance de l'utilisateur
+    # create a user instance
     user = User(username=name, email=email)
-    user.set_password(password)  # Utilisez la méthode définie dans votre modèle User pour hacher le mot de passe
+    user.set_password(password)
 
-    # Ajoutez l'utilisateur à la base de données
+    # add user in the database
     try:
         db.session.add(user)
         db.session.commit()
@@ -66,16 +66,15 @@ def create_user(name, email, password):
 def create_deleted_user():
     deleted_user = User.query.filter_by(username='deletedUser').first()
     if not deleted_user:
-        # Générer un mot de passe fort et aléatoire
+        # generate a strong random password
         random_password = os.urandom(24).hex()
         hashed_password = argon2.hash(random_password)
 
         deleted_user = User(
-            id=0,  # ou un autre ID spécifique
+            id=0,
             username='deletedUser',
-            email='supprime@example.com',  # Email factice
-            password_hash=hashed_password,  # Mot de passe hashé
-            # Assurez-vous de définir d'autres champs requis avec des valeurs par défaut ou factices
+            email='supprime@example.com',  # false email
+            password_hash=hashed_password,  # hashed password
         )
         db.session.add(deleted_user)
         db.session.commit()

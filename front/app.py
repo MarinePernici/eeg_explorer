@@ -13,7 +13,10 @@ server.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 server.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-external_stylesheets = [dbc.themes.YETI, 'https://fonts.googleapis.com/css2?family=Lobster&display=swap']
+external_stylesheets = [
+    dbc.themes.YETI,
+    'https://fonts.googleapis.com/css2?family=Lobster&display=swap'
+]
 app = Dash(
     __name__,
     server=server,
@@ -37,9 +40,11 @@ db.init_app(server)
 login_manager = LoginManager()
 login_manager.init_app(server)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 from api import *
 from routes import *

@@ -1,9 +1,9 @@
+""" API routes. """
 
-from flask import request, jsonify, session
-from app import app  # Importez votre application Dash
-from models import db, User, Queries, QueryResults, Contacts  # Importez vos modèles SQLAlchemy
+from flask import request, jsonify
+from app import app
+from models import db, Queries, QueryResults, Contacts
 from sqlalchemy.exc import SQLAlchemyError
-from flask_login import login_required, current_user
 
 
 @app.server.route('/api/record_query', methods=['POST'])
@@ -20,11 +20,14 @@ def record_query():
         )
         db.session.add(new_query)
         db.session.commit()
-        return jsonify({"success": True, "message": "Requête enregistrée.", "query_id": new_query.id})
+        return jsonify({
+            "success": True,
+            "message": "Requête enregistrée.",
+            "query_id": new_query.id
+        })
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({"success": False, "message": str(e)})
-
 
 
 @app.server.route('/api/record_query_result', methods=['POST'])
@@ -38,11 +41,13 @@ def record_query_result():
         )
         db.session.add(new_query_result)
         db.session.commit()
-        return jsonify({"success": True, "message": "Résultat de requête enregistré."})
+        return jsonify(
+            {"success": True, "message": "Résultat de requête enregistré."}
+        )
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({"success": False, "message": str(e)})
-    
+
 
 @app.server.route('/api/record_contact', methods=['POST'])
 def record_contact():
@@ -67,12 +72,12 @@ def record_contact():
 def get_user_history():
     user_id = request.args.get('user_id')
     user_queries = Queries.query.filter_by(user_id=user_id).all()
-    # dates = Queries.time_created.filter_by(user_id=user_id).all()
     history = []
     for query_info in user_queries:
-        query_result = QueryResults.query.filter_by(query_id=query_info.id).first()
+        query_result = QueryResults.query.filter_by(
+            query_id=query_info.id
+        ).first()
         history.append({
-            # 'date': date.strftime("%d/%m/%Y - %H:%M:%S"),
             'date': query_info.time_created.strftime("%d/%m/%Y - %H:%M:%S"),
             'query': query_info.query_text,
             'response': query_result.result if query_result else 'No response'

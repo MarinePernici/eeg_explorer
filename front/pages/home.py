@@ -20,14 +20,14 @@ home_layout = html.Div([
                             'display': 'flex',  # Utiliser Flexbox
                             'align-items': 'center',  # Centrer verticalement
                             'justify-content': 'center',  # Centrer horizontalement
-                            'background-color': '#00152e',  # Fond coloré
+                            'background-color': '#1a1950',  # Fond coloré
                             'border-radius': '5px',  # Arrondir les coins
                             'height': '100%', # Hauteur 100%
                             # 'width': '100%',   # Largeur de 100% du conteneur
                             # 'padding-top': '100%',  # Padding-top de 100% pour maintenir un aspect carré
                             # 'position': 'relative',
                             # 'margin': '0 auto',  # Position relative pour le pseudo-élément
-                            # 'background-color': '#00152e',
+                            # 'background-color': '#1a1950',
                             # 'border-radius': '5px',
                         },
                         children=html.Img(
@@ -47,7 +47,7 @@ home_layout = html.Div([
                     ),
                 ], width=3,
                 className="mb-3 d-flex flex-column justify-content-center",
-                style={'background-color': '#00152e', 'border-radius': '5px',}
+                style={'background-color': '#1a1950', 'border-radius': '5px',}
                 ),
                 dbc.Col(
                     html.Div(
