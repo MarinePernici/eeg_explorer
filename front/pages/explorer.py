@@ -36,7 +36,7 @@ explorer_layout = html.Div([
                     [
                         dbc.Textarea(
                             id='query',
-                            rows=3,
+                            rows=4,
                             placeholder="""Ecrivez ici votre question 
 par exemple : combien y'a-t-il d'enregistrements EEG? 
 ou bien : quel est la valeur moyenne du pic alpha en F3 chez les personnes souffrant d'autisme?"""
