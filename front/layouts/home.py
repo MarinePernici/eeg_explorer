@@ -2,7 +2,7 @@
 
 import dash_bootstrap_components as dbc
 from dash import html, dcc
-from pages.title import title_container
+from front.layouts.title import title_container
 
 home_layout = html.Div([
     dbc.Container(

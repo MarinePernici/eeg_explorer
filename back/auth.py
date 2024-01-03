@@ -2,7 +2,7 @@ import os
 import re
 
 from dotenv import load_dotenv
-from models import User, db
+from back.models import User, db
 from passlib.hash import argon2
 
 load_dotenv()  # Charge les variables d'environnement depuis '.env'

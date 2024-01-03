@@ -1,66 +1,47 @@
 """ app routes"""
-import re
-import time
+
 import os
-import requests
+import re
 import smtplib
-from email.mime.text import MIMEText
+import time
 from email.mime.multipart import MIMEMultipart
-from itsdangerous import URLSafeTimedSerializer as Serializer
+from email.mime.text import MIMEText
 
 import dash
 import dash_bootstrap_components as dbc
+import pandas as pd
+import requests
 from dash import callback_context, dcc, html
 from dash.dependencies import Input, Output, State
+from dotenv import load_dotenv
 from flask import session
 from flask_login import current_user, login_required, login_user, logout_user
-import pandas as pd
+from itsdangerous import URLSafeTimedSerializer as Serializer
 
-from app import app
-from auth import (
-    create_user, is_email_allowed, is_email_registered,
-    is_username_registered, is_password_safe, is_email_valid,
-    create_deleted_user
-)
-import chat_agent as agent
-from models import db, User, Queries, QueryResults, Contacts
-from pages.header import header
-from pages.navbar import navbar
-from pages.footer import footer
-from pages.home import home_layout
-from pages.login import login_layout, user_layout
-from pages.explorer import explorer_layout
-from pages.profile import profile_layout
-from pages.profile_history import profile_history_layout
-from pages.profile_delete import profile_delete_account_layout
-from pages.profile_edit import (
-    profile_edit_layout, profile_edit_password_layout
-)
-from pages.unauthorized import unauthorized_layout
-from pages.error_404 import error_404_layout
-from pages.contact import contact_form_layout
-from pages.forgot_password import forgot_password_layout
-from pages.reset_password import reset_password_layout
-from dotenv import load_dotenv
+import back.chat_agent as agent
+from back.auth import (create_deleted_user, create_user, is_email_allowed,
+                       is_email_registered, is_email_valid, is_password_safe,
+                       is_username_registered)
+from back.models import Contacts, Queries, QueryResults, User, db
+from front.app import app
+from front.layouts.contact import contact_form_layout
+from front.layouts.error_404 import error_404_layout
+from front.layouts.explorer import explorer_layout
+from front.layouts.forgot_password import forgot_password_layout
+from front.layouts.home import home_layout
+from front.layouts.login import login_layout, user_layout
+from front.layouts.profile import profile_layout
+from front.layouts.profile_delete import profile_delete_account_layout
+from front.layouts.profile_edit import (profile_edit_layout,
+                                      profile_edit_password_layout)
+from front.layouts.profile_history import profile_history_layout
+from front.layouts.reset_password import reset_password_layout
+from front.layouts.unauthorized import unauthorized_layout
 
 load_dotenv()
 
 pages = ['/home', '/explorer', '/profile', '/login', '/profile/history', '/profile/edit', '/profile/edit/password']
 open_pages = ['/home', '/login', '/', '/contact', '/forgot-password']
-
-# Contenu principal
-content = html.Div(id="page-content")
-
-app.layout = html.Div(className='content-wrapper', children=[
-    header,
-    navbar,
-    dcc.Store(id='redirect-url'),
-    dcc.Location(id='url', refresh=False),
-    content,
-    footer
-])
-
-
 
 # call back pour afficher le layout en fonction de l'url
 @app.callback(
@@ -513,13 +494,6 @@ def ask_spectre_database(query, n_clicks):
 def update_history_table(pathname):
     if pathname == '/profile/history':
         try:
-            # Utilisez les cookies de session pour maintenir le contexte utilisateur
-            # with requests.Session() as s:
-            #     s.cookies.update(session)
-            #     response = s.get(
-            #         'http://127.0.0.1:8050/api/get_user_history',
-            #         timeout=180
-            #     )
             response = requests.get(
                 'http://127.0.0.1:8050/api/get_user_history',
                 params={'user_id': current_user.id},
@@ -623,6 +597,7 @@ def delete_account(n_clicks, text, password, text_display):
 # Callback pour télécharger l'historique de l'utilisateur
 import pandas as pd
 from dash.dependencies import Input, Output
+
 
 @app.callback(
     Output('download-data', 'data'),

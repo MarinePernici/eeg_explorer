@@ -1,18 +1,14 @@
-import os
-
+# Importations nécessaires
+from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
-from dash import Dash
-from dotenv import load_dotenv
-from flask import Flask
-from flask_login import LoginManager
 
-load_dotenv()  # Charge les variables d'environnement depuis '.env'
+from front.components import header, navbar, footer
 
-server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-server.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
+# Importation de l'application serveur Flask depuis server.py
+from back.server import server
+
+# Initialisation de l'application Dash
 external_stylesheets = [
     dbc.themes.YETI,
     'https://fonts.googleapis.com/css2?family=Lobster&display=swap'
@@ -32,25 +28,23 @@ app = Dash(
 )
 app.title = 'EEG Explorer'
 
-from models import db, User
+# Définition du layout de l'application
+# Contenu principal
+content = html.Div(id="page-content")
 
-db.init_app(server)
-
-# Configuration de Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(server)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+app.layout = html.Div(className='content-wrapper', children=[
+    header,
+    navbar,
+    dcc.Store(id='redirect-url'),
+    dcc.Location(id='url', refresh=False),
+    content,
+    footer
+])
 
 
-from api import *
-from routes import *
+from front.callbacks import *
 
-with server.app_context():
-    db.create_all()
 
+# Point d'entrée principal pour l'exécution de l'application
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True)  # Activer le mode debug pour le développement

@@ -1,7 +1,7 @@
 
 import dash_bootstrap_components as dbc
 from dash import dcc, html
-from pages.title import title_container
+from front.layouts.title import title_container
 
 
 login_card = dbc.Card(

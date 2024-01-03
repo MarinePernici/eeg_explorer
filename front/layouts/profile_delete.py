@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import html
-from pages.title import title_container
+from front.layouts.title import title_container
 from strgen import StringGenerator
 
 profile_delete_account_layout = html.Div([

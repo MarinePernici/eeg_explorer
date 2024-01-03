@@ -1,12 +1,15 @@
 """ API routes. """
 
-from flask import request, jsonify
-from app import app
-from models import db, Queries, QueryResults, Contacts
+
+from flask import jsonify, request
 from sqlalchemy.exc import SQLAlchemyError
 
+from back.models import Contacts, Queries, QueryResults, db
 
-@app.server.route('/api/record_query', methods=['POST'])
+from ..server import server
+
+
+@server.route('/api/record_query', methods=['POST'])
 def record_query():
     data = request.json
     try:
@@ -30,7 +33,7 @@ def record_query():
         return jsonify({"success": False, "message": str(e)})
 
 
-@app.server.route('/api/record_query_result', methods=['POST'])
+@server.route('/api/record_query_result', methods=['POST'])
 def record_query_result():
     data = request.json
     try:
@@ -49,7 +52,7 @@ def record_query_result():
         return jsonify({"success": False, "message": str(e)})
 
 
-@app.server.route('/api/record_contact', methods=['POST'])
+@server.route('/api/record_contact', methods=['POST'])
 def record_contact():
     data = request.json
     try:
@@ -68,7 +71,7 @@ def record_contact():
         return jsonify({"success": False, "message": str(e)})
 
 
-@app.server.route('/api/get_user_history', methods=['GET'])
+@server.route('/api/get_user_history', methods=['GET'])
 def get_user_history():
     user_id = request.args.get('user_id')
     user_queries = Queries.query.filter_by(user_id=user_id).all()
@@ -85,7 +88,7 @@ def get_user_history():
     return jsonify(history)
 
 
-# @app.server.route('/test')
+# @server.route('/test')
 # @login_required
 # def test_route():
 #     print(current_user)
