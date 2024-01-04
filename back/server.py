@@ -25,10 +25,10 @@ login_manager.init_app(server)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-from front.callbacks import *
+from back.api.routes import *
 
 with server.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    server.run(debug=True)
+    server.run(debug=True, port=8051)

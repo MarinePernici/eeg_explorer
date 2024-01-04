@@ -17,6 +17,25 @@ login_card = dbc.Card(
         html.Br(),
         html.Br(),
         dbc.Button('Se connecter', n_clicks=0, id='login-button', color='info', disabled=True, style={'marginBottom': 'auto'}),
+        html.Script("""
+            document.getElementById('login-button').addEventListener('click', function() {
+                var email = document.getElementById('login-email').value;
+                var password = document.getElementById('login-password').value;
+                fetch('/api/login', {
+                    method: 'POST',
+                    body: JSON.stringify({email: email, password: password}),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.token) {
+                        localStorage.setItem('auth_token', data.token);  // Stockage du token
+                    }
+                });
+            });
+        """),
         html.Div(id='login-status'),
         html.Br(),
         html.A("Mot de passe oublié ?", href="/forgot-password", target="_blank", style={'marginLeft': 'auto'}),

@@ -32,36 +32,100 @@ from front.layouts.home import home_layout
 from front.layouts.login import login_layout, user_layout
 from front.layouts.profile import profile_layout
 from front.layouts.profile_delete import profile_delete_account_layout
-from front.layouts.profile_edit import (profile_edit_layout,
-                                      profile_edit_password_layout)
+from front.layouts.profile_edit import (
+    profile_edit_layout,
+    profile_edit_password_layout
+)
 from front.layouts.profile_history import profile_history_layout
 from front.layouts.reset_password import reset_password_layout
 from front.layouts.unauthorized import unauthorized_layout
 
 load_dotenv()
 
-pages = ['/home', '/explorer', '/profile', '/login', '/profile/history', '/profile/edit', '/profile/edit/password']
-open_pages = ['/home', '/login', '/', '/contact', '/forgot-password']
+pages = [
+    '/home',
+    '/explorer',
+    '/profile',
+    '/login',
+    '/profile/history',
+    '/profile/edit',
+    '/profile/edit/password'
+]
+open_pages = [
+    '/home',
+    '/login',
+    '/',
+    '/contact',
+    '/forgot-password'
+]
+
+
+def is_user_authenticated():
+    session = requests.Session()
+    response = session.get('http://127.0.0.1:8051/api/is_authenticated')
+    if response.status_code == 200:
+        data = response.json()
+        print(data, flush=True)
+        return data['authenticated']
+    return False
+
+
+def get_user_id():
+    response = requests.get('http://127.0.0.1:8051/api/is_authenticated')
+    if response.status_code == 200:
+        data = response.json()
+        if data['authenticated']:
+            return data['user_id']
+        return None
+    return None
+
+def get_user_email():
+    response = requests.get('http://127.0.0.1:8051/api/is_authenticated')
+    if response.status_code == 200:
+        data = response.json()
+        if data['authenticated']:
+            return data['email']
+    return None
+
+def get_user_username():
+    response = requests.get('http://127.0.0.1:8051/api/is_authenticated')
+    if response.status_code == 200:
+        data = response.json()
+        if data['authenticated']:
+            return data['username']
+    return None
+
+    
+
+
 
 # call back pour afficher le layout en fonction de l'url
 @app.callback(
     Output('page-content', 'children'),
     [Input('url', 'pathname')]
 )
-def page_router(pathname):
+def page_router(pathname):    
+    response = requests.get('http://127.0.0.1:8051/api/is_authenticated')
+    if response.status_code == 200:
+        data = response.json()
+        print(data, flush=True)
+        user_authenticated = data['authenticated']
+    else:
+        user_authenticated = False
+    
     # Redirection pour les utilisateurs non authentifiés tentant d'accéder à des pages protégées
     if pathname.startswith('/reset_password/'):
         return reset_password_layout
     
     if pathname not in open_pages:
-        if not current_user.is_authenticated:
+        if not user_authenticated:
             return unauthorized_layout
 
     # Gestion de l'affichage des pages
     if pathname in ('/home', '/'):
         return home_layout
     if pathname in ('/login', ):
-        if current_user.is_authenticated:
+        if user_authenticated:
             return user_layout
         return login_layout
     if pathname == '/explorer':
@@ -89,7 +153,7 @@ def page_router(pathname):
     [Input('url', 'pathname')],
 )
 def update_explorer_link(pathname):
-    if pathname == '/home' and current_user.is_authenticated:
+    if pathname == '/home' and is_user_authenticated():
         return '/explorer'
     return '/login'
 
@@ -102,7 +166,7 @@ def update_dynamic_content(pathname):
     """
     """
     if pathname in pages:
-        if current_user.is_authenticated:
+        if is_user_authenticated():
             return dcc.Markdown(
                     f"Bienvenue **{current_user.username}**"
                 )
@@ -117,7 +181,7 @@ def update_dynamic_content(pathname):
 )
 def update_edit_content(pathname, username_status, email_status):
     if pathname == '/profile/edit':
-        if current_user.is_authenticated:
+        if is_user_authenticated():
             return f"Nom d'utilisateur actuel : {current_user.username}", f"Email actuel : {current_user.email}"
     if username_status == "Le nom d'utilisateur a été changé avec succès.":
         return f"Nom d'utilisateur actuel : {current_user.username}", f"Email actuel : {current_user.email}"
@@ -142,7 +206,7 @@ def update_signup_button_state(valid_email, valid_password, valid_name):
     [Input('login-email', 'valid'), Input('login-password', 'value')]
 )
 def update_login_button_state(valid_email, password):
-    if valid_email and password :  # Vérifie si les champs ne sont pas vides
+    if valid_email and password:  # Vérifie si les champs ne sont pas vides
         return False, 'primary'  # Active le bouton
     return True, 'info'  # Désactive le bouton
 
@@ -182,27 +246,50 @@ def create_account(n_clicks, name, email, password):
     [Input('login-button', 'n_clicks'), Input('login-password', 'value'),],
     [State('login-email', 'value'), State('login-password', 'value'),]
 )
+# def login(n_clicks, password_edit, email, password):
+#     ctx = callback_context
+#     if not ctx.triggered:
+#         raise dash.exceptions.PreventUpdate
+    
+#     trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+#     if trigger_id == 'login-button':
+#         if n_clicks > 0:
+#             user = User.query.filter_by(email=email).first()
+
+#             if user.id == 0:   # Compte supprimé
+#                 return "Identifiants invalides", dash.no_update
+
+#             if user and user.check_password(password):
+#                 login_user(user)
+#                 return "Vous êtes connecté.", "/login"
+
+#             return html.Div([
+#                 html.P("Mot de passe invalide.", className='text-danger'),
+#             ]), dash.no_update        
+#         return "", dash.no_update
+#     if trigger_id == 'login-password':
+#         return "", dash.no_update
 def login(n_clicks, password_edit, email, password):
     ctx = callback_context
     if not ctx.triggered:
         raise dash.exceptions.PreventUpdate
-    
+
     trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     if trigger_id == 'login-button':
         if n_clicks > 0:
-            user = User.query.filter_by(email=email).first()
-
-            if user.id == 0:   # Compte supprimé
-                return "Identifiants invalides", dash.no_update
-
-            if user and user.check_password(password):
-                login_user(user)
+            response = requests.post(
+                'http://127.0.0.1:8051/api/login',
+                json={'email': email, 'password': password},
+                timeout=60
+            )
+            if response.status_code == 200:
                 return "Vous êtes connecté.", "/login"
-
+            
             return html.Div([
                 html.P("Mot de passe invalide.", className='text-danger'),
-            ]), dash.no_update        
+            ]), dash.no_update
         return "", dash.no_update
     if trigger_id == 'login-password':
         return "", dash.no_update
@@ -305,10 +392,10 @@ def check_password_validity(password):
 def check_login_email_validity(email):
     if not email:
         return False, False, '', ''
-    if not is_email_valid(email):
-        return False, True, '', 'Adresse email invalide.'
-    if not is_email_registered(email):
-        return False, True, '', 'Adresse email non reconnue.'
+    # if not is_email_valid(email):
+    #     return False, True, '', 'Adresse email invalide.'
+    # if not is_email_registered(email):
+    #     return False, True, '', 'Adresse email non reconnue.'
     return True, False, 'Adresse email valide.', ''
 
 # vérifier la validité de l'email de réinitialisation du mot de passe
@@ -370,7 +457,7 @@ def check_confirm_new_password_validity(confirm_password, new_password):
      State('confirm-new-password', 'value')]
 )
 def change_password(n_clicks, old_password, new_password, confirm_new_password):
-    if n_clicks > 0 and current_user.is_authenticated:
+    if n_clicks > 0 and is_user_authenticated():
         user = User.query.filter_by(id=current_user.id).first()
         if not user.check_password(old_password):
             return "L'ancien mot de passe est incorrect."
@@ -398,7 +485,7 @@ def change_password(n_clicks, old_password, new_password, confirm_new_password):
     [State('new-username', 'value')]
 )
 def change_username(n_clicks, new_username):
-    if new_username and n_clicks > 0 and current_user.is_authenticated:
+    if new_username and n_clicks > 0 and is_user_authenticated():
         user = User.query.filter_by(id=current_user.id).first()
         if is_username_registered(new_username):
             return "Ce nom d'utilisateur est déjà utilisé. Veuillez en choisir un autre"
@@ -416,7 +503,7 @@ def change_username(n_clicks, new_username):
     [State('new-email', 'value')]
 )
 def change_email(n_clicks, new_email):
-    if new_email and n_clicks > 0 and current_user.is_authenticated:
+    if new_email and n_clicks > 0 and is_user_authenticated():
         user = User.query.filter_by(id=current_user.id).first()
         if not is_email_valid(new_email):
             return "Adresse email invalide."
@@ -456,7 +543,7 @@ def ask_spectre_database(query, n_clicks):
             'cost': total_cost
         }
         try:
-            response = requests.post('http://127.0.0.1:8050/api/record_query', json=query_data, timeout=60)  # Mettez à jour l'URL selon votre configuration
+            response = requests.post('http://127.0.0.1:8051/api/record_query', json=query_data, timeout=60)  # Mettez à jour l'URL selon votre configuration
             print(response.json(), flush=True)
         except requests.RequestException as e:
             print(e, flush=True)
@@ -475,7 +562,7 @@ def ask_spectre_database(query, n_clicks):
                 'execution_time': execution_time,  # Calculez le temps d'exécution si nécessaire
             }
             try:
-                response = requests.post('http://127.0.0.1:8050/api/record_query_result', json=result_data, timeout=60)
+                response = requests.post('http://127.0.0.1:8051/api/record_query_result', json=result_data, timeout=60)
                 print(response.json(), flush=True)
             except requests.RequestException as e:
                 print(e, flush=True)
@@ -495,7 +582,7 @@ def update_history_table(pathname):
     if pathname == '/profile/history':
         try:
             response = requests.get(
-                'http://127.0.0.1:8050/api/get_user_history',
+                'http://127.0.0.1:8051/api/get_user_history',
                 params={'user_id': current_user.id},
                 timeout=180
             )
@@ -543,7 +630,7 @@ def update_history_table(pathname):
     prevent_initial_call=True
 )
 def delete_account(n_clicks, text, password, text_display):
-    if n_clicks > 0 and current_user.is_authenticated:
+    if n_clicks > 0 and is_user_authenticated():
         if not password:
             return 'Veuillez entrer votre mot de passe.', 0
         if not text:
@@ -607,7 +694,7 @@ from dash.dependencies import Input, Output
 )
 def generate_file(n_clicks, file_format):
     if n_clicks > 0:
-        if current_user.is_authenticated:
+        if is_user_authenticated():
             # Récupérer les données de l'utilisateur
             user_id = current_user.id
             user_queries = Queries.query.filter_by(user_id=user_id).all()
@@ -645,7 +732,7 @@ def handle_form_submission(n_clicks, name, email, subject, message):
 
     # Ici, vous pouvez ajouter la logique pour enregistrer les données dans une base de données
     try:
-        if current_user.is_authenticated:
+        if is_user_authenticated():
             user_id = current_user.id
         else:
             user_id = None
@@ -657,7 +744,7 @@ def handle_form_submission(n_clicks, name, email, subject, message):
             'user_id': user_id
         }
         try:
-            response = requests.post('http://127.0.0.1:8050/api/record_contact', json=contact_data, timeout=60)
+            response = requests.post('http://127.0.0.1:8051/api/record_contact', json=contact_data, timeout=60)
             print(response.json(), flush=True)
         except requests.RequestException as e:
             print(e, flush=True)

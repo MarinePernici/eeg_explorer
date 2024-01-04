@@ -1,12 +1,15 @@
 # Importations nécessaires
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
+from flask import Flask
 
-from front.components import header, navbar, footer
+from front.components.header import header
+from front.components.navbar import navbar
+from front.components.footer import footer
 
 
-# Importation de l'application serveur Flask depuis server.py
-from back.server import server
+# Configuration d'un serveur Flask
+server = Flask(__name__)
 
 # Initialisation de l'application Dash
 external_stylesheets = [
@@ -28,19 +31,17 @@ app = Dash(
 )
 app.title = 'EEG Explorer'
 
-# Définition du layout de l'application
-# Contenu principal
 content = html.Div(id="page-content")
 
 app.layout = html.Div(className='content-wrapper', children=[
     header,
     navbar,
+    dcc.Store(id='token-store'),
     dcc.Store(id='redirect-url'),
     dcc.Location(id='url', refresh=False),
     content,
     footer
 ])
-
 
 from front.callbacks import *
 

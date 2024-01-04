@@ -1,12 +1,61 @@
 """ API routes. """
 
+import jwt
+import datetime
 
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 from sqlalchemy.exc import SQLAlchemyError
+from flask import Flask, jsonify, request
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_sqlalchemy import SQLAlchemy
 
-from back.models import Contacts, Queries, QueryResults, db
+
+from back.models import Contacts, Queries, QueryResults, db, User
 
 from ..server import server
+
+
+@server.route('/api/login', methods=['POST'])
+def login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    user = User.query.filter_by(email=email).first()
+    if user and user.check_password(password):
+        login_user(user)
+        if current_user.is_authenticated:
+            # Création du token
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),  # Expiration après 1 jour
+                'iat': datetime.datetime.utcnow(),  # Date de création du token
+                'sub': user.id  # Sujet du token (identifiant de l'utilisateur)
+            }
+            token = jwt.encode(payload, server.config['SECRET_KEY'], algorithm='HS256')
+
+            # Retourner le token dans un cookie
+            # resp = make_response(jsonify({'login': True}))
+            # resp.set_cookie('auth_token', token)
+            # return resp
+            return jsonify({'token': token})
+    return jsonify({'login': False}), 401
+
+
+@server.route('/api/logout')
+@login_required
+def logout():
+    logout_user()
+    return jsonify({'logout': True})
+
+
+@server.route('/api/is_authenticated')
+def is_authenticated():
+    if current_user.is_authenticated:
+        return jsonify(
+            {'authenticated': True,
+             'user_id': current_user.get_id(),
+             'email': current_user.email,
+             'username': current_user.username}
+        )
+    return jsonify({'authenticated': False})
 
 
 @server.route('/api/record_query', methods=['POST'])
