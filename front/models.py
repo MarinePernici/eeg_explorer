@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'  # Spécifiez le nom de la table ici
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(100), unique=False, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(200))
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)

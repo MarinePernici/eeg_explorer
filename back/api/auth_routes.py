@@ -15,13 +15,16 @@ def get_username():
 def get_email():
     return current_user.email
 
-def is_username_registered(name):
-    existing_username = User.query.filter_by(username=name).first()
-    return existing_username is not None
+def get_id():
+    return current_user.id
 
-def is_email_registered(email):
-    existing_user = User.query.filter_by(email=email).first()
-    return existing_user is not None
+# def is_username_registered(name):
+#     existing_username = User.query.filter_by(username=name).first()
+#     return existing_username is not None
+
+# def is_email_registered(email):
+#     existing_user = User.query.filter_by(email=email).first()
+#     return existing_user is not None
 
 # def create_user(name, email, password):
 
@@ -60,19 +63,19 @@ def is_email_registered(email):
 #         db.session.commit()
 
 
-def login_process(
-    email,
-    password
-):
-    user = User.query.filter_by(email=email).first()
+# def login_process(
+#     email,
+#     password
+# ):
+#     user = User.query.filter_by(email=email).first()
     
-    if not user:
-        return False
+#     if not user:
+#         return False
     
-    if user.id == 0:   # deleted user id
-        return False
+#     if user.id == 0:   # deleted user id
+#         return False
 
-    if user and user.check_password(password):
-        login_user(user)
-        return True
-    return False
+#     if user and user.check_password(password):
+#         login_user(user)
+#         return True
+#     return False
