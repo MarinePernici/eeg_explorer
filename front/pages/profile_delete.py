@@ -92,8 +92,8 @@ profile_delete_account_layout = html.Div([
                             anonymisées de vos requêtes pour améliorer notre
                             application.""",
                             html.Br(),
-                            """Si vous souhaitez supprimer vos données
-                            anonymisées, veuillez vous en informer via le
+                            """Si vous souhaitez supprimer toutes vos données,
+                            veuillez nous en informer via le
                             """,
                             html.A(
                                 "formulaire de contact",

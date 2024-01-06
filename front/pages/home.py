@@ -62,9 +62,8 @@ home_layout = html.Div([
                             de l'EEG en clinique courante et faciliter
                             l'accès aux données EEG, une
                             ressource précieuse mais souvent sous-exploitée.
-                            Avec EEG Explorer accéder simplement à une vaste
-                            **collection de plus
-                            de 5000 enregistrements EEG**.
+                            Avec EEG Explorer accédez simplement à **une vaste
+                            collection d'enregistrements EEG**.
                             Grâce à l'intelligence artificielle intégrée,
                             interagissez avec notre base de données via de
                             simples questions en langage naturel.

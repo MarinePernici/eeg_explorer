@@ -59,7 +59,7 @@ logged_card = dbc.Container(
         ], className="mb-3"),
         dbc.Row([
             dbc.Col([
-                html.P("Consultez ou modifiez votre les informations de votre compte :"),
+                html.P("Consultez ou modifiez les informations de votre compte :"),
             ], width={"size": 5, "offset": 2},),
             dbc.Col([
                 dbc.Button('Mon compte', href='/profile', style={'width': '100%'}),

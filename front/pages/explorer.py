@@ -20,7 +20,7 @@ explorer_layout = html.Div([
                     ),
                     html.Div([
                         html.P(
-                            """Pour en savoir plus sur notre bases de données et son contenu, vous pouvez consulter notre """
+                            """Pour en savoir plus sur notre base de données et son contenu, vous pouvez consulter la """
                         ),
                         html.A(
                             "documentation.",

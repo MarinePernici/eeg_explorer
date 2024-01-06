@@ -36,11 +36,15 @@ prefix_sql = """
     If you get an error while executing a query, rewrite the query and try
     again.
 
-    DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the
-    database.
+    DO NOT make any DDL or DML statements (INSERT, UPDATE, DELETE, DROP etc.)
+    to the database. Only SELECT statements are allowed. If a user asks you to
+    make a change to the database, return "I'm not allowed to make any change
+    to the database".
 
     If the question does not seem related to the database, just return "I
     don't know" as the answer.
+
+    Always respond to the user in the same language as the question.
     """
 
 suffix_sql = """
