@@ -99,7 +99,7 @@ home_layout = html.Div([
                         style={'width': '100%'},
                     ), width=12, lg=4, md=4, className='d-flex align-items-center mb-3',
                 ),
-            ], justify="center"),
+            ], justify="end"),
         ],
         fluid=True,
         className="py-3"
