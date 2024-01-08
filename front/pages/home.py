@@ -45,7 +45,7 @@ home_layout = html.Div([
                             },
                         ),
                     ),
-                ], width=3,
+                ], width=4, lg=3, md=3,
                 className="mb-3 d-flex flex-column justify-content-center",
                 style={'background-color': '#1a1950', 'border-radius': '5px',}
                 ),
@@ -83,7 +83,7 @@ home_layout = html.Div([
                             className='custom-list-style'
                         ), style={'text-align': 'justify'},
                     ),
-                    width=5,
+                    width=8, lg=7, md=7, 
                     className="mb-3 d-flex flex-column justify-content-center"
                 )
             ], style={'vertical-align': 'middle'}, className="align-items-stretch", justify="center",),
@@ -97,9 +97,9 @@ home_layout = html.Div([
                         href="/explorer",
                         id="start-exploration-button",
                         style={'width': '100%'},
-                    ), width=3, className='d-flex align-items-center mb-3',
+                    ), width=12, lg=4, md=4, className='d-flex align-items-center mb-3',
                 ),
-            ], justify="center"),
+            ], justify="end"),
         ],
         fluid=True,
         className="py-3"

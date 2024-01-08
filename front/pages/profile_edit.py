@@ -195,7 +195,7 @@ profile_edit_password_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        dbc.Button("Modifier", id='edit-password-button', color="primary", n_clicks=0, style={'width': "100%"},),
+                        dbc.Button("Modifier", id='edit-password-button', disabled=True, color="primary", n_clicks=0, style={'width': "100%"},),
                         width={"size": 2, "offset": 5, },
                     ),
                 ],
