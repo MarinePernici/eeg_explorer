@@ -11,6 +11,17 @@ from front.auth import get_queries_from_user_id, get_query_result_from_id
 import pandas as pd
 
 
+# Callback pour activer/désactiver le bouton de téléchargement
+@app.callback(
+    Output("download-button", "disabled"),
+    [Input("format-select", "value")],
+)
+def update_download_button_state(file_format):
+    if file_format:
+        return False
+    return True
+
+
 @app.callback(
     Output('history-table', 'children'),
     [Input('url', 'pathname')]

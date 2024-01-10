@@ -15,8 +15,19 @@ from front.auth import (
     verify_password,
     update_user_id,
     delete_user
-
 )
+
+
+# callback pour activer/désactiver le bouton de suppression du compte
+@app.callback(
+    Output("delete-account-button", "disabled"),
+    [Input("delete-account-text", "value"),
+     Input("delete-account-password", "value")],
+)
+def update_delete_account_button_state(text, password):
+    if text and password:
+        return False
+    return True
 
 
 @app.callback(

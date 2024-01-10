@@ -13,7 +13,7 @@ from front.pages.login import login_layout, user_layout
 from front.pages.profile import profile_layout
 from front.pages.profile_delete import profile_delete_account_layout
 from front.pages.profile_edit import (
-    profile_edit_layout, profile_edit_password_layout
+    profile_edit_layout, profile_edit_password_layout, profile_edit_email_layout
 )
 from front.pages.profile_history import profile_history_layout
 from front.pages.reset_password import reset_password_layout
@@ -32,6 +32,7 @@ routes = {
     '/profile/history': profile_history_layout,
     '/profile/edit': profile_edit_layout,
     '/profile/edit/password': profile_edit_password_layout,
+    '/profile/edit/email': profile_edit_email_layout,
     '/profile/delete': profile_delete_account_layout,
     '/profile': profile_layout
 }

@@ -1,5 +1,5 @@
 """ Callbacks for the edit_password page"""
-
+import dash
 from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import (get_id, is_user_authenticated)
@@ -64,7 +64,7 @@ def update_edit_password_button_state(valid_new_password, valid_confirm_password
 def change_password(n_clicks, old_password, new_password, confirm_new_password):
     if n_clicks > 0 and is_user_authenticated():
         user = get_user_from_id(get_id())
-        print(user)
+    
         if not user.check_password(old_password):
             return "Identifiants invalides."
         
@@ -78,3 +78,16 @@ def change_password(n_clicks, old_password, new_password, confirm_new_password):
             return "Le mot de passe a été changé avec succès."
         return "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer."
     return ""
+
+# callback pour reinitialiser le formulaire
+@app.callback(
+    Output('old-password', 'value'),
+    Output('new-password', 'value'),
+    Output('confirm-new-password', 'value'),
+    [Input('password-change-status', 'children')],
+    prevent_initial_call=True
+)
+def reset_form(status):
+    if status == "Le mot de passe a été changé avec succès.":
+        return '', '', ''
+    return dash.no_update, dash.no_update, dash.no_update

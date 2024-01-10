@@ -23,6 +23,7 @@ profile_delete_account_layout = html.Div([
                             plus vous connecter à l'application ni accéder à
                             votre historique."""
                         ),
+                        html.Br(),
                         ], style={'text-align': 'justify'},
                     ),
                     width={"size": 6, "offset": 3, },
@@ -46,6 +47,7 @@ profile_delete_account_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col([
+                        html.Br(),
                         html.P(
                             StringGenerator(r"[\l\d]{12}").render_list(3)[0],
                             id='delete-account-text-display'
