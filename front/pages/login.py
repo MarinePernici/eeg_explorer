@@ -16,7 +16,7 @@ login_card = dbc.Card(
         dbc.Input(id='login-password', type='password', placeholder='Mot de passe'),
         html.Br(),
         html.Br(),
-        dbc.Button('Se connecter', n_clicks=0, id='login-button', color='info', disabled=True, style={'marginBottom': 'auto'}),
+        dbc.Button('Se connecter', n_clicks=0, id='login-button', disabled=True, style={'marginBottom': 'auto'}),
         html.Div(id='login-status'),
         html.Br(),
         html.A("Mot de passe oublié ?", href="/forgot-password", target="_blank", style={'marginLeft': 'auto'}),
@@ -105,7 +105,7 @@ signup_card = dbc.Card([
     dbc.FormFeedback("", type="invalid", id='password-feedback-invalid'),
     dbc.FormText("Mot de passe : 12 caractères dont 1 minuscule, 1 majuscule, 1 chiffre et un caractère spécial", id='password-feedback', color='info'),
     html.Br(),
-    dbc.Button("Créer le compte", id='signup-button', color='info', disabled=True, ),
+    dbc.Button("Créer le compte", id='signup-button', disabled=True, ),
     html.Div(id='signup-status', children=[
         "* La création de compte est ouverte aux membres de Spectre Biotech, pour plus d'informations, veuillez ",
         html.A(

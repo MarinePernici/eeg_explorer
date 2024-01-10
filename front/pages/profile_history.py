@@ -57,14 +57,14 @@ profile_history_layout=html.Div([
                             {'label': 'Excel', 'value': 'xlsx'},
                             {'label': 'CSV', 'value': 'csv'},
                         ],
-                        value='xlsx',  # Valeur par défaut
+                        # value='xlsx',  # Valeur par défaut
                         style={'marginBottom': '10px', 'textAlign': 'center'},
                         inline=True,
                         label_style={"marginRight": "10px"},
                     ),
 
                     # Bouton de téléchargement
-                    dbc.Button('Télécharger mon historique', id='download-button', style={'width': '100%'}, n_clicks=0),
+                    dbc.Button('Télécharger mon historique', id='download-button', style={'width': '100%'}, n_clicks=0, disabled=True),
 
                     # Composant dcc.Download pour le téléchargement du fichier
                     dcc.Download(id='download-data')

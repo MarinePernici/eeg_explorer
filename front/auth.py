@@ -2,7 +2,7 @@ import os
 import re
 
 from dotenv import load_dotenv
-from models import User, db, Queries, QueryResults, Contacts
+from back.api.models import User, db, Queries, QueryResults, Contacts
 from passlib.hash import argon2
 from flask_login import logout_user
 

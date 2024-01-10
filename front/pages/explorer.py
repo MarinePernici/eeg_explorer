@@ -2,6 +2,7 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 from pages.title import title_container
 
+
 explorer_layout = html.Div([
     dbc.Container(
         [
@@ -53,7 +54,7 @@ ou bien : quel est la valeur moyenne du pic alpha en F3 chez les personnes souff
             ),
             dbc.Row(
                 dbc.Col(
-                    dbc.Button('Interroger la base de données', n_clicks=0, id='search-button'),
+                    dbc.Button('Interroger la base de données', n_clicks=0, id='search-button', disabled=True,),
                     width={"size": 8, "offset": 2}, style={'textAlign': 'right'},
                 ),
             ),

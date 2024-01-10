@@ -63,39 +63,14 @@ profile_edit_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        html.P(id='profile-email'),
-                        width={"size": 3, "offset": 2, },
-                    ),
-                    dbc.Col([
-                        dbc.Input(
-                            id='new-email',
-                            type='email',
-                            placeholder='Ma nouvelle adresse email',
-                            value=""
-                        ),
-                        dbc.FormText(
-                            "Votre nouvelle adresse email doit être valide",
-                            id='new-email-feedback',
-                            color='info'
-                        ),
-                    ], width=3,
+                        dbc.Input(placeholder="Pour modifier votre email vous devrez entrer votre mot de passe actuel", type="password", disabled=True),
+                        width={"size": 6, "offset": 2, },
                     ),
                     dbc.Col(
-                        dbc.Button(
-                            "Modifier",
-                            id='edit-email-button',
-                            color="primary",
-                            n_clicks=0,
-                            style={'width': "100%"},
-                            ),
+                        dbc.Button("Modifier", color="primary", href="/profile/edit/email", style={'width': "100%"},),
                         width=2,
-                    ),
-                    dbc.Col(
-                        html.Div(id='email-change-status'),
-                        width=2,
-                    ),
+                    )
                 ],
-                # justify="center",
                 className="mb-3",
             ),
             # Ligne pour le mot de passe
@@ -205,6 +180,82 @@ profile_edit_password_layout = html.Div([
                 [
                     dbc.Col(
                         html.Div(id='password-change-status', style={'text-align': 'center'}),
+                        width={"size": 4, "offset": 4},
+                    ),
+                ],
+                className="mb-3",
+            ),
+        ],
+        fluid=True,
+        className="py-3"
+    )
+])
+
+
+profile_edit_email_layout = html.Div([
+    dbc.Container(
+        [
+            dbc.Row(
+                dbc.Col(
+                    title_container, width={"size": 6, "offset": 3},
+                ),
+            ),
+            dbc.Row(
+                dbc.Col(
+                    html.Div([
+                        html.Div(id="dynamic-username"),
+                        html.P("Ceci est la page de modification de votre email."),
+                        ], style={'text-align': 'justify'},
+                    ),
+                    width={"size": 6, "offset": 3, },
+                    className="text-center"
+                )
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Input(id='password', type='password', placeholder='Votre mot de passe', value=""),
+                        width={"size": 6, "offset": 3, },
+                    ),
+                ],
+                className="mb-3",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dbc.Input(id='new-email', type='email', placeholder='Votre nouvel email', value=""),
+                            dbc.FormFeedback("", type="valid", id='new-email-feedback-valid'),
+                            dbc.FormFeedback("", type="invalid", id='new-email-feedback-invalid'),
+                        ], width={"size": 6, "offset": 3, },
+                    ),
+                ],
+                className="mb-3",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col([
+                        dbc.Input(id='confirm-new-email', type='email', placeholder='Confirmer le nouvel email', value=""),
+                        dbc.FormFeedback("", type="valid", id='confirm-new-email-feedback-valid'),
+                        dbc.FormFeedback("", type="invalid", id='confirm-new-email-feedback-invalid'),
+                    ], width={"size": 6, "offset": 3, },
+                    ),
+                ],
+                className="mb-3",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Button("Modifier", id='edit-email-button', disabled=True, color="primary", n_clicks=0, style={'width': "100%"},),
+                        width={"size": 2, "offset": 5, },
+                    ),
+                ],
+                className="mb-3",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.Div(id='email-change-status', style={'text-align': 'center'}),
                         width={"size": 4, "offset": 4},
                     ),
                 ],

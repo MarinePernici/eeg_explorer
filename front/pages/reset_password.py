@@ -35,10 +35,25 @@ reset_password_layout = html.Div([
             className="mb-3",
         ),
         dbc.Row(
-            dbc.Col(dbc.Button("Réinitialiser", id='reset-password-button', color="primary", n_clicks=0), width={"size": 2, "offset": 5})
-        , className="mb-3"),
+            dbc.Col(
+                dbc.Button(
+                    "Réinitialiser le mot de pass",
+                    id='reset-password-button',
+                    color="primary",
+                    n_clicks=0,
+                    disabled=True,
+                    style={'width': '100%'}
+                ),
+                width=10, lg=3, md=3,
+            )
+        , className="mb-3", justify="center"),
         dbc.Row(
-            dbc.Col(html.Div(id='reset-password-message'), width={"size": 6, "offset": 3})
+            dbc.Col(
+                html.Div(
+                    id='reset-password-message'
+                ),
+                width={"size": 6, "offset": 3}
+            )
         , className="mb-3",),
     ],
     fluid=True,

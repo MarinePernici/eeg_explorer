@@ -3,25 +3,21 @@
 import dash
 from dash.dependencies import Input, Output, State
 
-from flask_login import current_user
-
 from back.api.auth_routes import get_username, is_user_authenticated, get_email, get_id
 from front.app import app
 from front.auth import (
-    get_user_from_id, is_email_allowed, is_email_valid, is_username_valid,
-    is_email_registered, is_username_registered, edit_username, edit_email
+    get_user_from_id, is_email_allowed, is_email_valid,
+    is_email_registered, edit_username, edit_email
 )
-# Callback to display the current username and email on the profile edit page
+
+# Callback to display the current username on the profile edit page
 @app.callback(
     Output('profile-username', 'children'),
-    Output('profile-email', 'children'),
     [
         Input('url', 'pathname'),
-        Input('username-change-status', 'children'),
-        Input('email-change-status', 'children')
     ],
 )
-def update_edit_content(pathname, username_status, email_status):
+def update_edit_content(pathname):
     """
     Display the current username and email on the profile edit page
 
@@ -34,20 +30,8 @@ def update_edit_content(pathname, username_status, email_status):
         str: username and email to display
     """
     if pathname == '/profile/edit' and is_user_authenticated():
-        return (
-            f"Nom d'utilisateur actuel : {get_username()}",
-            f"Email actuel : {get_email()}"
-        )
-    # if username_status == "Le nom d'utilisateur a été changé avec succès.":
-    #     return (
-    #         f"Nom d'utilisateur actuel : {get_username()}",
-    #         f"Email actuel : {get_email()}"
-    #     )
-    # if email_status == "L'email a été changé avec succès.":
-    #     return (
-    #         f"Nom d'utilisateur actuel : {get_username()}",
-    #         f"Email actuel : {get_email()}"
-    #     )
+        return f"Nom d'utilisateur actuel : {get_username()}"
+
     return dash.no_update
 
 
@@ -67,26 +51,26 @@ def change_username(n_clicks, new_username):
 
     return ""
 
-# callback pour modifier l'email
-@app.callback(
-    Output('email-change-status', 'children'),
-    [Input('edit-email-button', 'n_clicks')],
-    [State('new-email', 'value')]
-)
-def change_email(n_clicks, new_email):
-    if new_email and n_clicks > 0 and is_user_authenticated():
-        user = get_user_from_id(get_id())
-        if not is_email_valid(new_email):
-            return "Adresse email invalide."
+# # callback pour modifier l'email
+# @app.callback(
+#     Output('email-change-status', 'children'),
+#     [Input('edit-email-button', 'n_clicks')],
+#     [State('new-email', 'value')]
+# )
+# def change_email(n_clicks, new_email):
+#     if new_email and n_clicks > 0 and is_user_authenticated():
+#         user = get_user_from_id(get_id())
+#         if not is_email_valid(new_email):
+#             return "Adresse email invalide."
 
-        if is_email_registered(new_email):
-            return "Un compte existe déjà avec cette adresse e-mail."
+#         if is_email_registered(new_email):
+#             return "Un compte existe déjà avec cette adresse e-mail."
 
-        if not is_email_allowed(new_email):
-            return "Adresse email non autorisée. Vous ne pouvez pas créer de compte."
+#         if not is_email_allowed(new_email):
+#             return "Adresse email non autorisée. Vous ne pouvez pas créer de compte."
 
-        if edit_email(user, new_email):
-            return "L'email a été changé avec succès."
-        return "Une erreur est survenue lors du changement d'email."
+#         if edit_email(user, new_email):
+#             return "L'email a été changé avec succès."
+#         return "Une erreur est survenue lors du changement d'email."
 
-    return ""
+#     return ""

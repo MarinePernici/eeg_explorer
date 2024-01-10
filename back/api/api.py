@@ -1,8 +1,8 @@
 """ API routes. """
 
 from flask import request, jsonify
-from app import app
-from models import db, Queries, QueryResults, Contacts
+from front.app import app
+from back.api.models import db, Queries, QueryResults, Contacts
 from sqlalchemy.exc import SQLAlchemyError
 
 

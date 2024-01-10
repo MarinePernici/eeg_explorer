@@ -32,7 +32,7 @@ app = Dash(
 )
 app.title = 'EEG Explorer'
 
-from models import db, User
+from back.api.models import db, User
 
 db.init_app(server)
 
@@ -45,8 +45,12 @@ login_manager.init_app(server)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-from api import *
-from routes import *
+from front.components.page_content import app_layout
+
+app.layout = app_layout
+
+from back.api.api import *
+from front.routes import *
 
 with server.app_context():
     db.create_all()

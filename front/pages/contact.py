@@ -26,6 +26,8 @@ contact_form_layout = html.Div([
             dbc.Col([
                 dbc.Label("Email", html_for="contact-email"),
                 dbc.Input(type="email", id="contact-email", placeholder="Entrez votre email", value=""),
+                dbc.FormFeedback("", type="valid", id='contact-email-feedback-valid'),
+                dbc.FormFeedback("", type="invalid", id='contact-email-feedback-invalid'),
             ], width=12, lg=6), justify="center"
         ),
         dbc.Row(
@@ -42,8 +44,8 @@ contact_form_layout = html.Div([
         ),
         dbc.Row(
             dbc.Col([
-                dbc.Button("Envoyer", color="primary", id="contact-submit", className="mt-2", style={'width': '100%'}),
-                html.Div(id='form-output')
+                dbc.Button("Envoyer", n_clicks=0, color="primary", id="contact-submit", className="mt-2", style={'width': '100%'}),
+                html.Div(id='form-output', children=" "),
             ], width=2), justify="center"
         ),
     ], fluid=True),
