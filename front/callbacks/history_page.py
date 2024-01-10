@@ -1,18 +1,13 @@
 
 import requests
-import json
 
 import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output, State
-from flask_login import current_user
 
-from back.api.auth_routes import (get_id, get_username, get_email,
-                                  is_user_authenticated)
+from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
-from front.auth import get_user_from_id, is_password_safe, edit_password,  get_queries_from_user_id, get_query_result_from_id
-from front.models import User, db
-import front.chat_agent as agent
+from front.auth import get_queries_from_user_id, get_query_result_from_id
 import pandas as pd
 
 

@@ -5,7 +5,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-import dash_bootstrap_components as dbc
 import requests
 from dash.dependencies import Input, Output, State
 from dotenv import load_dotenv

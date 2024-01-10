@@ -1,36 +1,22 @@
 """ callback for the delete account page"""
 
 import dash
-import dash_bootstrap_components as dbc
-from dash import callback_context, dcc, html
 from dash.dependencies import Input, Output, State
-from flask import session
-from flask_login import current_user, login_required, login_user, logout_user
 
-
-from back.api.auth_routes import (get_id, get_username, get_email,
+from back.api.auth_routes import (get_id,
                                   is_user_authenticated)
 from front.app import app
 from front.auth import (
     get_user_from_id,
     get_user_from_username,
-    is_password_safe,
-    edit_password,
     get_queries_from_user_id,
     get_contacts_from_user_id,
-    get_query_result_from_id,
     create_deleted_user,
     verify_password,
     update_user_id,
     delete_user
 
 )
-
-from models import db, User, Queries, QueryResults, Contacts
-
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 @app.callback(
@@ -55,7 +41,9 @@ def delete_account(n_clicks, text, password, text_display):
         if not verify_password(get_user_from_id(get_id()), password):
             return 'Mot de passe invalide.', 0, '', ''
         if n_clicks == 1:
-            return 'Etes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible. Cliquez à nouveau sur le bouton pour confirmer.', 1, dash.no_update, dash.no_update
+            return """Etes-vous sûr de vouloir supprimer votre compte ? Cette
+action est irréversible. Cliquez à nouveau sur le bouton pour confirmer.
+""", 1, dash.no_update, dash.no_update
         if n_clicks > 1:
             user_id = get_id()
 

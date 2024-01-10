@@ -3,14 +3,13 @@
 import dash
 from dash.dependencies import Input, Output, State
 
-from flask_login import current_user
-
 from back.api.auth_routes import get_username, is_user_authenticated, get_email, get_id
 from front.app import app
 from front.auth import (
-    get_user_from_id, is_email_allowed, is_email_valid, is_username_valid,
-    is_email_registered, is_username_registered, edit_username, edit_email
+    get_user_from_id, is_email_allowed, is_email_valid,
+    is_email_registered, edit_username, edit_email
 )
+
 # Callback to display the current username and email on the profile edit page
 @app.callback(
     Output('profile-username', 'children'),

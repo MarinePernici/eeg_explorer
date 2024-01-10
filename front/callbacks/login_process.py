@@ -5,11 +5,8 @@ from dash import html
 from dash.dependencies import Input, Output, State
 from flask_login import login_user
 
-from back.api.auth_routes import (get_username, get_email,
-                                  is_user_authenticated)
 from front.app import app
-from front.auth import get_user_from_email, is_email_allowed, is_email_valid, is_password_safe
-from front.models import User
+from front.auth import get_user_from_email, is_email_valid
 
 
 # callback pour activer/désactiver le bouton de connexion
@@ -18,7 +15,7 @@ from front.models import User
     [Input('login-email', 'valid'), Input('login-password', 'value')]
 )
 def update_login_button_state(valid_email, password):
-    if valid_email and password :  # Vérifie si les champs ne sont pas vides
+    if valid_email and password:  # Vérifie si les champs ne sont pas vides
         return False, 'primary'  # Active le bouton
     return True, 'info'  # Désactive le bouton
 

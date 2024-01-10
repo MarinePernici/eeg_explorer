@@ -1,7 +1,7 @@
 """ This module contains the functions used to manage the users """
 
 from flask_login import current_user, login_user
-from front.models import User
+from back.api.models import User
 import os
 from passlib.hash import argon2
 
