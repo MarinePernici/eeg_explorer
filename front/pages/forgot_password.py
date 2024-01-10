@@ -37,7 +37,7 @@ forgot_password_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        dbc.Button("Réinitialiser mon mot de passe", disabled=True, id='forgot-password-button', color="primary", n_clicks=0, style={'width': "100%"},),
+                        dbc.Button("Envoyer le lien de réinitialisation", disabled=True, id='forgot-password-button', color="primary", n_clicks=0, style={'width': "100%"},),
                         width={"size": 3, "offset": 6, },
                     ),
                 ],

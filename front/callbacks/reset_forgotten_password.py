@@ -1,4 +1,5 @@
 
+import dash
 from dash.dependencies import Input, Output, State
 
 from front.app import app
@@ -126,3 +127,60 @@ def reset_password(n_clicks, new_password, confirm_new_password, pathname):
             return "Votre mot de passe a été réinitialisé."
         return "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer."
     return ""
+
+# Callback pour vérifier la validité du nouveau mot de passe
+@app.callback(
+    [Output("new-password-reset", "valid"),
+     Output("new-password-reset", "invalid"),
+     Output("new-password-reset-feedback-valid", "children"),
+     Output("new-password-reset-feedback-invalid", "children")],
+    [Input("new-password-reset", "value")],
+)
+def check_new_password_validity(password):
+    if not password:
+        return False, False, '', ''
+    safety, reason = is_password_safe(password)
+    if not safety:
+        return False, True, '', reason
+    return True, False, '', ''
+
+
+# Callback pour vérifier la validité de la confirmation du nouveau mot de passe
+@app.callback(
+    [Output("confirm-new-password-reset", "valid"),
+     Output("confirm-new-password-reset", "invalid"),
+     Output("confirm-new-password-reset-feedback-valid", "children"),
+     Output("confirm-new-password-reset-feedback-invalid", "children")],
+    [Input("confirm-new-password-reset", "value"),
+     Input("new-password-reset", "value")],
+)
+def check_confirm_new_password_validity(confirm_password, password):
+    if not confirm_password:
+        return False, False, '', ''
+    if confirm_password == password:
+        return True, False, '', ''
+    return False, True, '', 'Les mots de passe ne correspondent pas.'
+
+
+# Callback pour activer/désactiver le bouton de réinitialisation du mot de passe
+@app.callback(
+    Output("reset-password-button", "disabled"),
+    [Input("new-password-reset", "valid"),
+     Input("confirm-new-password-reset", "valid")],
+)
+def update_reset_password_button_state(valid_password, valid_confirm_password):
+    if valid_password and valid_confirm_password:
+        return False
+    return True
+
+
+# Callback pour reinitialiser les valeurs des champs de mot de passe
+@app.callback(
+    Output("new-password-reset", "value"),
+    Output("confirm-new-password-reset", "value"),
+    [Input("reset-password-button", "n_clicks")],
+)
+def reset_password_inputs(n_clicks):
+    if n_clicks > 0:
+        return "", ""
+    return dash.no_update, dash.no_update

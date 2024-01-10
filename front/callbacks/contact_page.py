@@ -5,14 +5,48 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+import dash
 import requests
 from dash.dependencies import Input, Output, State
 from dotenv import load_dotenv
 
 from back.api.auth_routes import get_id, is_user_authenticated
+from front.auth import is_email_valid
 from front.app import app
 
 load_dotenv()
+
+
+# callback pour vérifier la validité de l'email
+@app.callback(
+    Output("contact-email", "valid"),
+    Output("contact-email", "invalid"),
+    Output("contact-email-feedback-valid", "children"),
+    Output("contact-email-feedback-invalid", "children"),
+    [Input("contact-email", "value")],
+)
+def update_contact_email_validity(email):
+    if email is None:
+        return False, False, "", ""
+    if not email:
+        return False, False, "", ""
+    if is_email_valid(email):
+        return True, False, "Adresse email valide", ""
+    return False, True, "", "Adresse email invalide"
+
+
+# callback pour activé/désactivé le bouton d'envoi du message
+@app.callback(
+    Output("contact-submit", "disabled"),
+    [Input("contact-name", "value"),
+     Input("contact-email", "valid"),
+     Input("contact-subject", "value"),
+     Input("contact-message", "value")],
+)
+def update_contact_submit_button_state(name, valid_email, subject, message):
+    if name and valid_email and subject and message:
+        return False
+    return True
 
 
 # Callback pour enregistrer un message de contact
@@ -25,9 +59,15 @@ load_dotenv()
      State('contact-message', 'value')]
 )
 def handle_form_submission(n_clicks, name, email, subject, message):
-    if n_clicks is None:
+    if n_clicks == 0:
         return None  # Pas d'action si le bouton n'a pas été cliqué
 
+    if not name or not email or not subject or not message:
+        return 'Veuillez remplir tous les champs du formulaire.'
+    
+    if not is_email_valid(email):
+        return 'Veuillez entrer une adresse email valide.'
+    
     # Ici, vous pouvez ajouter la logique pour enregistrer les données dans une base de données
     try:
         if is_user_authenticated():
@@ -74,3 +114,18 @@ def handle_form_submission(n_clicks, name, email, subject, message):
             return f'Erreur lors de l\'envoi du message : {e}'
     except Exception as e:
         return f"Erreur lors du traitement de votre demande : {e}"
+    
+
+# callback pour supprimer les valeurs du formulaire après envoi
+@app.callback(
+    Output('contact-name', 'value'),
+    Output('contact-email', 'value'),
+    Output('contact-subject', 'value'),
+    Output('contact-message', 'value'),
+    [Input('form-output', 'children')],
+    prevent_initial_call=True
+)
+def clear_form_output(form_output):
+    if form_output == 'Bien reçu! Nous vous répondrons dès que possible.':
+        return "", "", "", ""
+    return dash.no_update, dash.no_update, dash.no_update, dash.no_update

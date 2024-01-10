@@ -11,13 +11,13 @@ from front.auth import get_user_from_email, is_email_valid
 
 # callback pour activer/désactiver le bouton de connexion
 @app.callback(
-    Output('login-button', 'disabled'), Output('login-button', 'color'),
+    Output('login-button', 'disabled'),
     [Input('login-email', 'valid'), Input('login-password', 'value')]
 )
 def update_login_button_state(valid_email, password):
     if valid_email and password:  # Vérifie si les champs ne sont pas vides
-        return False, 'primary'  # Active le bouton
-    return True, 'info'  # Désactive le bouton
+        return False  # Active le bouton
+    return True  # Désactive le bouton
 
 
 # # callback pour se connecter

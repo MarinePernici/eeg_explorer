@@ -86,7 +86,7 @@ home_layout = html.Div([
                     width=8, lg=7, md=7, 
                     className="mb-3 d-flex flex-column justify-content-center"
                 )
-            ], style={'vertical-align': 'middle'}, className="align-items-stretch", justify="center",),
+            ], style={'vertical-align': 'middle'}, className="d-flex align-items-stretch", justify="center",),
             dbc.Row([
                 dbc.Col(
                     dbc.Button(
@@ -97,9 +97,11 @@ home_layout = html.Div([
                         href="/explorer",
                         id="start-exploration-button",
                         style={'width': '100%'},
-                    ), width=12, lg=4, md=4, className='d-flex align-items-center mb-3',
+                    ), width=12, lg={'size': 3, 'offset': 8}, md={'size': 3, 'offset': 8}, className='d-flex align-items-center mb-3',
                 ),
-            ], justify="end"),
+            ], 
+            # justify="end"
+            ),
         ],
         fluid=True,
         className="py-3"

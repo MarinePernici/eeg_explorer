@@ -12,7 +12,7 @@ from front.auth import (
 
 # callback pour activer/désactiver le bouton d'inscription
 @app.callback(
-    [Output('signup-button', 'disabled'), Output('signup-button', 'color')],
+    Output('signup-button', 'disabled'),
     [Input('signup-email', 'valid'),
      Input('signup-password', 'valid', ),
      Input('signup-name', 'valid')
@@ -20,8 +20,8 @@ from front.auth import (
 )
 def update_signup_button_state(valid_email, valid_password, valid_name):
     if valid_email and valid_password and valid_name:
-        return False, 'primary'  # Active le bouton
-    return True, 'info'  # Désactive le bouton
+        return False  # Active le bouton
+    return True  # Désactive le bouton
 
 
 # callback pour créer un compte
