@@ -26,6 +26,7 @@ def update_search_button_state(query):
 # Callback pour la recherche dans la base de données spectre
 @app.callback(
     [Output("search-result", "children"),
+     Output('query-reminder', 'children'),
      Output("query", "value"),
      Output("query-card-container", "style")
      ],
@@ -47,6 +48,7 @@ def ask_spectre_database(n_clicks, query):
         
             query_result, total_tokens, prompt_tokens, completion_tokens, total_cost, execution_time = agent.query_database(query)
         
+        reminder = f"Votre question était : {query}"
         # Enregistrer la requête en base de données
         query_data = {
             'query_text': query,
@@ -61,14 +63,14 @@ def ask_spectre_database(n_clicks, query):
             print(response.json(), flush=True)
         except requests.RequestException as e:
             print(e, flush=True)
-            return "Une erreur s'est produite", "", {'display': 'flex'}
+            return "Une erreur s'est produite", reminder, "", {'display': 'flex'}
                 
         if response.ok:
             try:
                 query_id = response.json().get('query_id')
             except requests.RequestException as e:
                 print(e, flush=True)
-                return "Une erreur s'est produite", "", {'display': 'flex'}
+                return "Une erreur s'est produite", reminder, "", {'display': 'flex'}
         # Enregistrer les résultats en base de données
             result_data = {
                 'query_id': query_id,  # Vous devez récupérer l'ID de la requête que vous venez d'enregistrer
@@ -80,9 +82,9 @@ def ask_spectre_database(n_clicks, query):
                 print(response.json(), flush=True)
             except requests.RequestException as e:
                 print(e, flush=True)
-                return "Une erreur s'est produite", "", {'display': 'flex'}
+                return "Une erreur s'est produite", reminder, "", {'display': 'flex'}
         # time.sleep(5)
         # query_result = query
-        return [dcc.Markdown(query_result)], "", {'display': 'flex'}
+        return [dcc.Markdown(query_result)], reminder, "", {'display': 'flex'}
 
-    return "", "", {'display': 'none'}
+    return "", "", "", {'display': 'none'}
