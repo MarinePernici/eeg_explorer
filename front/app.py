@@ -32,7 +32,7 @@ app = Dash(
 )
 app.title = 'EEG Explorer'
 
-from back.api.models import db, User
+from back.models import db, User
 
 db.init_app(server)
 

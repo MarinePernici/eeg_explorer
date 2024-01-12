@@ -1,8 +1,8 @@
 import os
-import re
+import requests
 
 from dotenv import load_dotenv
-from back.api.models import User, db, Queries, QueryResults, Contacts
+from back.models import User, db, Queries, QueryResults, Contacts
 from passlib.hash import argon2
 from flask_login import logout_user
 
@@ -89,12 +89,6 @@ def get_user_from_username(username):
     return User.query.filter_by(username=username).first()
 
 
-# def is_email_allowed(email):
-#     allowed_domain = os.environ.get('ALLOWED_DOMAIN')
-#     domain = email.split('@')[-1]
-#     return domain.lower() == allowed_domain.lower()
-
-
 def is_username_registered(name):
     existing_username = User.query.filter_by(username=name).first()
     return existing_username is not None
@@ -103,39 +97,6 @@ def is_username_registered(name):
 def is_email_registered(email):
     existing_user = User.query.filter_by(email=email).first()
     return existing_user is not None
-
-
-# def is_email_valid(email):
-#     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-#     return re.match(email_regex, email) is not None
-
-
-# def is_username_valid(username):
-#     if username.lower() == 'deleteduser':
-#         return False, 'Ce nom d\'utilisateur n\'est pas autorisé.'
-
-#     if len(username) < 3 or len(username) > 15:
-#         return False, 'Le nom d\'utilisateur doit avoir entre 3 et 15 caractères.'
-
-#     username_regex = r'^[a-zA-Z0-9._-]{3,15}$'
-#     if not re.match(username_regex, username):
-#         return False, 'Le nom d\'utilisateur ne doit contenir que des chiffres, lettres, tirets ou underscores.'
-
-#     return re.match(username_regex, username) is not None, ''
-
-
-# def is_password_safe(password):
-#     if len(password) < 12:
-#         return False, 'Le mot de passe doit contenir au moins 12 caractères.'
-#     if not re.search(r"[A-Z]", password):
-#         return False, 'Le mot de passe doit contenir au moins une lettre majuscule.'
-#     if not re.search(r"[a-z]", password):
-#         return False, 'Le mot de passe doit contenir au moins une lettre minuscule.'
-#     if not re.search(r"\d", password):
-#         return False, 'Le mot de passe doit contenir au moins un chiffre.'
-#     if not re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~" + r'"]', password):
-#         return False, 'Le mot de passe doit contenir au moins un caractère spécial.'
-#     return True, ""
 
 
 def create_user(name, email, password):
@@ -173,3 +134,33 @@ def create_deleted_user():
         )
         db.session.add(deleted_user)
         db.session.commit()
+
+
+def post_query_in_db(
+    query_data,
+):
+
+    response = requests.post(
+        'http://127.0.0.1:8050/api/record_query',
+        json=query_data,
+        timeout=60
+    )
+    print(response.json(), flush=True)
+    return response
+
+
+def get_query_id(response):
+    query_id = response.json().get('query_id')
+    return query_id
+
+
+def post_query_result_in_db(
+    result_data,
+):
+    response = requests.post(
+        'http://127.0.0.1:8050/api/record_query_result',
+        json=result_data,
+        timeout=60
+    )
+    print(response.json(), flush=True)
+    return response

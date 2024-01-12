@@ -2,7 +2,7 @@
 
 from flask import request, jsonify
 from front.app import app
-from back.api.models import db, Queries, QueryResults, Contacts
+from back.models import db, Queries, QueryResults, Contacts
 from sqlalchemy.exc import SQLAlchemyError
 
 
