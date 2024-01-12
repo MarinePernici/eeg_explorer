@@ -27,7 +27,7 @@ def check_keywords(text):
     data_manipulation_regex = r"(?i)\b(creat|add|insert|delet|remov|drop|updat|modif|chang|alter|truncat|merg)"
     transaction_control_regex = r"(?i)\b(commit|rollback|savepoint)"
     structure_manipulation_regex = r"(?i)\b(create\s+(index|table|view)|drop\s+(index|table|view)|renam)"
-    access_control_regex = r"(?i)\b(grant|revok)"
+    access_control_regex = r"(?i)\b(grant|revok|privileg)"
     specific_sql_commands_regex = r"(?i)\b(lock|unlock|execut|call|set)"
 
     # Vérifier si un des mots clés est présent dans la phrase traduite
