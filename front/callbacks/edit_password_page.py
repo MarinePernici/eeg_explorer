@@ -4,7 +4,8 @@ from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
-from front.auth import get_user_from_id, is_password_safe, edit_password
+from back.api.auth import get_user_from_id, edit_password
+from front.functions.validity_functions import is_password_safe
 
 
 # vérifier la validité du nouveau mot de passe

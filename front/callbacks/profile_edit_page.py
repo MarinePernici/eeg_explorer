@@ -3,21 +3,22 @@
 import dash
 from dash.dependencies import Input, Output, State
 
-from back.api.auth_routes import get_username, is_user_authenticated, get_email, get_id
+from back.api.auth_routes import get_username, is_user_authenticated, get_id
 from front.app import app
-from front.auth import (
-    get_user_from_id, is_email_allowed, is_email_valid,
-    is_email_registered, edit_username, edit_email
+from back.api.auth import (
+    get_user_from_id, edit_username
 )
+from front.functions.validity_functions import is_username_valid
 
 # Callback to display the current username on the profile edit page
 @app.callback(
     Output('profile-username', 'children'),
     [
         Input('url', 'pathname'),
+        Input('username-change-status', 'children'),
     ],
 )
-def update_edit_content(pathname):
+def update_edit_content(pathname, change_status):
     """
     Display the current username and email on the profile edit page
 
@@ -29,8 +30,9 @@ def update_edit_content(pathname):
     Returns:
         str: username and email to display
     """
-    if pathname == '/profile/edit' and is_user_authenticated():
-        return f"Nom d'utilisateur actuel : {get_username()}"
+    if pathname == '/profile/edit' or change_status:
+        if is_user_authenticated():
+            return f"Nom d'utilisateur actuel : {get_username()}"
 
     return dash.no_update
 
@@ -51,26 +53,21 @@ def change_username(n_clicks, new_username):
 
     return ""
 
-# # callback pour modifier l'email
-# @app.callback(
-#     Output('email-change-status', 'children'),
-#     [Input('edit-email-button', 'n_clicks')],
-#     [State('new-email', 'value')]
-# )
-# def change_email(n_clicks, new_email):
-#     if new_email and n_clicks > 0 and is_user_authenticated():
-#         user = get_user_from_id(get_id())
-#         if not is_email_valid(new_email):
-#             return "Adresse email invalide."
 
-#         if is_email_registered(new_email):
-#             return "Un compte existe déjà avec cette adresse e-mail."
+# vérifier la validité du nouveau nom
+@app.callback(
+    [Output("new-username", "valid"),
+     Output("new-username", "invalid"),
+     Output("new-username-feedback-valid", "children"),
+     Output("new-username-feedback-invalid", "children")],
+    [Input("new-username", "value")],
+)
+def check_username_validity(name):
+    if not name:
+        return False, False, '', ''
+    
+    validity, reason = is_username_valid(name)
+    if not validity:
+        return False, True, '', reason
 
-#         if not is_email_allowed(new_email):
-#             return "Adresse email non autorisée. Vous ne pouvez pas créer de compte."
-
-#         if edit_email(user, new_email):
-#             return "L'email a été changé avec succès."
-#         return "Une erreur est survenue lors du changement d'email."
-
-#     return ""
+    return True, False, reason, ''

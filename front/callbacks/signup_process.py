@@ -4,9 +4,12 @@ import dash
 from dash.dependencies import Input, Output, State
 
 from front.app import app
-from front.auth import (
-    is_email_allowed, is_email_valid, is_password_safe, is_username_valid,
+from back.api.auth import (
     is_email_registered, create_user
+)
+from front.functions.validity_functions import (
+    is_email_allowed, is_email_valid,
+    is_password_safe, is_username_valid
 )
 
 

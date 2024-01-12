@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
-from front.auth import get_queries_from_user_id, get_query_result_from_id
+from back.api.auth import get_queries_from_user_id, get_query_result_from_id
 import pandas as pd
 
 

@@ -11,7 +11,7 @@ from dash.dependencies import Input, Output, State
 from dotenv import load_dotenv
 
 from back.api.auth_routes import get_id, is_user_authenticated
-from front.auth import is_email_valid
+from front.functions.validity_functions import is_email_valid
 from front.app import app
 
 load_dotenv()

@@ -25,22 +25,25 @@ profile_edit_layout = html.Div([
                     ),
                     width={"size": 8, "offset": 2, },
                     className="text-center"
-                )
+                ), align="center",
             ),
             dbc.Row(
                 [
                     dbc.Col(
-                        html.P(id='profile-username',),
-                        width={"size": 3, "offset": 2, },
+                        html.Div(id='profile-username'),
+                        width={"size": 3, "offset": 2, }, align="center",
                     ),
                     dbc.Col(
-                        dbc.Input(
-                            id='new-username',
-                            type='text',
-                            placeholder="Mon nouveau nom d'utilisateur",
-                            value=""
-                        ),
-                        width={"size": 3, "offset": 0, },
+                        [
+                            dbc.Input(
+                                id='new-username',
+                                type='text',
+                                placeholder="Mon nouveau nom d'utilisateur",
+                                value=""
+                            ),
+                            dbc.FormFeedback("", type="valid", id='new-username-feedback-valid', style={'fontSize': '0.7rem'}),
+                            dbc.FormFeedback("", type="invalid", id='new-username-feedback-invalid', style={'fontSize': '0.7rem'}),
+                        ], width={"size": 3, "offset": 0, },
                     ),
                     dbc.Col(
                         dbc.Button(
@@ -57,7 +60,7 @@ profile_edit_layout = html.Div([
                         width={"size": 2, "offset": 0, },
                     ),
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
             # Ligne pour l'email
             dbc.Row(
@@ -71,7 +74,7 @@ profile_edit_layout = html.Div([
                         width=2,
                     )
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
             # Ligne pour le mot de passe
             dbc.Row(
@@ -85,7 +88,7 @@ profile_edit_layout = html.Div([
                         width=2,
                     )
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
             dbc.Row(
                 [
@@ -107,7 +110,7 @@ profile_edit_layout = html.Div([
                         width=2,
                     ),
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
         ],
         fluid=True,

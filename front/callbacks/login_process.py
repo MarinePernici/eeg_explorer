@@ -6,7 +6,8 @@ from dash.dependencies import Input, Output, State
 from flask_login import login_user
 
 from front.app import app
-from front.auth import get_user_from_email, is_email_valid
+from back.api.auth import get_user_from_email
+from front.functions.validity_functions import is_email_valid
 
 
 # callback pour activer/désactiver le bouton de connexion
