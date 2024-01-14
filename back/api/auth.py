@@ -6,6 +6,10 @@ from back.models import User, db, Queries, QueryResults, Contacts
 from passlib.hash import argon2
 from flask_login import logout_user
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 load_dotenv()  # Charge les variables d'environnement depuis '.env'
 
 
@@ -43,6 +47,7 @@ def get_queries_from_user_id(user_id):
 
 def get_contacts_from_user_id(user_id):
     return Contacts.query.filter_by(user_id=user_id).all()
+
 
 def edit_password(user, new_password):
     user.set_password(new_password)
@@ -136,31 +141,48 @@ def create_deleted_user():
         db.session.commit()
 
 
-def post_query_in_db(
-    query_data,
-):
-
-    response = requests.post(
-        'http://127.0.0.1:8050/api/record_query',
-        json=query_data,
-        timeout=60
-    )
-    print(response.json(), flush=True)
-    return response
-
-
 def get_query_id(response):
     query_id = response.json().get('query_id')
     return query_id
 
 
-def post_query_result_in_db(
-    result_data,
+def post_data_in_db(
+    data,
+    route,
 ):
+    url = f'http://127.0.0.1:8050/api/{route}'
     response = requests.post(
-        'http://127.0.0.1:8050/api/record_query_result',
-        json=result_data,
+        url,
+        json=data,
         timeout=60
     )
     print(response.json(), flush=True)
     return response
+
+
+def send_contact_email(name, email, subject, message):
+
+    msg = MIMEMultipart()
+    msg['Subject'] = 'Contact EEG Explorer'
+
+    body = f"""
+Message reçu via le formulaire de contact EEG Explorer
+\nNom : {name}
+Email : {email}
+Sujet : {subject}
+Message :\n{message}
+"""
+    msg.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(
+        os.environ.get('email_contact'),
+        os.environ.get('email_password')
+    )
+    server.sendmail(
+        from_addr=os.environ.get('email_contact'),
+        to_addrs=os.environ.get('email_contact'),
+        msg=msg.as_string()
+    )
+    server.quit()

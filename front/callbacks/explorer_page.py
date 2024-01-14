@@ -11,7 +11,7 @@ from front.app import app
 import back.chat_agent as agent
 from front.functions.explorer_functions import is_query_safe
 from back.api.auth import (
-    post_query_in_db, get_query_id, post_query_result_in_db
+    get_query_id, post_data_in_db
 )
 
 
@@ -75,8 +75,9 @@ def ask_spectre_database(n_clicks, query):
         }
 
         try:
-            response = post_query_in_db(
-                query_data,
+            response = post_data_in_db(
+                data=query_data,
+                route='record_query'
             )
         except Exception as e:
             print(e, flush=True)
@@ -95,8 +96,10 @@ def ask_spectre_database(n_clicks, query):
             'execution_time': execution_time,
         }
         try:
-            response = post_query_result_in_db(result_data)
-
+            response = post_data_in_db(
+                data=result_data,
+                route='record_query_result'
+            )
         except requests.RequestException as e:
             print(e, flush=True)
             return error

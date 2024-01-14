@@ -1,18 +1,16 @@
 """ callback for the contact form"""
 
 import os
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 import dash
 import requests
 from dash.dependencies import Input, Output, State
 from dotenv import load_dotenv
 
+from back.api.auth import post_data_in_db, send_contact_email
 from back.api.auth_routes import get_id, is_user_authenticated
-from front.functions.validity_functions import is_email_valid
 from front.app import app
+from front.functions.validity_functions import is_email_valid
 
 load_dotenv()
 
@@ -51,7 +49,7 @@ def update_contact_submit_button_state(name, valid_email, subject, message):
 
 # Callback pour enregistrer un message de contact
 @app.callback(
-    Output('form-output', 'children'),  # Vous pouvez ajouter un élément pour afficher un message de confirmation
+    Output('form-output', 'children'),
     [Input('contact-submit', 'n_clicks')],
     [State('contact-name', 'value'),
      State('contact-email', 'value'),
@@ -64,16 +62,16 @@ def handle_form_submission(n_clicks, name, email, subject, message):
 
     if not name or not email or not subject or not message:
         return 'Veuillez remplir tous les champs du formulaire.'
-    
+
     if not is_email_valid(email):
         return 'Veuillez entrer une adresse email valide.'
-    
-    # Ici, vous pouvez ajouter la logique pour enregistrer les données dans une base de données
+
     try:
         if is_user_authenticated():
             user_id = get_id()
         else:
             user_id = None
+
         contact_data = {
             'name': name,
             'email': email,
@@ -82,39 +80,42 @@ def handle_form_submission(n_clicks, name, email, subject, message):
             'user_id': user_id
         }
         try:
-            response = requests.post('http://127.0.0.1:8050/api/record_contact', json=contact_data, timeout=60)
-            print(response.json(), flush=True)
+            post_data_in_db(data=contact_data, route='record_contact')
         except requests.RequestException as e:
-            print(e, flush=True)
-            return f"Erreur lors de l'enregistrement du message : {e}"
+            print(
+                f"Erreur lors de l'enregistrement du message : {e}",
+                flush=True
+            )
+            return f"""
+            Erreur lors de l'enregistrement du message, veuillez réessayer.
+            Si le problème persiste, veuillez nous contacter à l'adresse
+            suivante : {os.environ.get('email_contact')}
+            """
 
-    # Exemple de logique pour envoyer un email (à adapter selon votre configuration SMTP)
         try:
-            msg = MIMEMultipart()
-            msg['Subject'] = 'Contact EEG Explorer'  # Définir l'objet de l'email
-
-            # Ajouter le nom, l'email et le message de l'expéditeur dans le corps de l'email
-            body = f"Message reçu via le formulaire de contact EEG Explorer\n\nNom : {name}\nEmail : {email}\nSujet : {subject}\nMessage :\n{message}"
-            msg.attach(MIMEText(body, 'plain'))
-
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(
-                os.environ.get('email_contact'),
-                os.environ.get('email_password')
-            )
-            server.sendmail(
-                from_addr=os.environ.get('email_contact'),
-                to_addrs=os.environ.get('email_contact'),
-                msg=msg.as_string()
-            )
-            server.quit()
+            send_contact_email(name, email, subject, message)
             return 'Bien reçu! Nous vous répondrons dès que possible.'
         except Exception as e:
-            return f'Erreur lors de l\'envoi du message : {e}'
+            print(
+                f'Erreur lors de l\'envoi du message : {e}',
+                flush=True
+            )
+            return f"""
+            Erreur lors de l\'envoi du message, veuillez réessayer.
+            Si le problème persiste, veuillez nous contacter à l'adresse
+            suivante : {os.environ.get('email_contact')}
+            """
     except Exception as e:
-        return f"Erreur lors du traitement de votre demande : {e}"
-    
+        print(
+            f'Erreur lors du traitement de la demande : {e}',
+            flush=True
+        )
+        return f"""
+        Erreur lors du traitement de votre demande, veuillez réessayer.
+        Si le problème persiste, veuillez nous contacter à l'adresse 
+        suivante : {os.environ.get('email_contact')}
+        """
+
 
 # callback pour supprimer les valeurs du formulaire après envoi
 @app.callback(
