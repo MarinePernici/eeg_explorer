@@ -23,30 +23,18 @@ home_layout = html.Div([
                             'background-color': '#1a1950',  # Fond coloré
                             'border-radius': '5px',  # Arrondir les coins
                             'height': '100%', # Hauteur 100%
-                            # 'width': '100%',   # Largeur de 100% du conteneur
-                            # 'padding-top': '100%',  # Padding-top de 100% pour maintenir un aspect carré
-                            # 'position': 'relative',
-                            # 'margin': '0 auto',  # Position relative pour le pseudo-élément
-                            # 'background-color': '#1a1950',
-                            # 'border-radius': '5px',
                         },
                         children=html.Img(
                             src='../assets/img/logo.png',
                             style={
                                 'max-width': '100%',
                                 'max-height': '100%',
-                                # 'position': 'absolute',
-                                # 'top': '0',
-                                # 'bottom': '0',
-                                # 'left': '0',
-                                # 'right': '0',
-                                # 'margin': 'auto',
                                 'border-radius': '5px',
                             },
                         ),
                     ),
-                ], width=4, lg=3, md=3,
-                className="mb-3 d-flex flex-column justify-content-center",
+                ], width=5, lg=3, md=3,
+                className="mb-3 ms-3 d-flex flex-column justify-content-center ",
                 style={'background-color': '#1a1950', 'border-radius': '5px',}
                 ),
                 dbc.Col(
@@ -83,7 +71,7 @@ home_layout = html.Div([
                             className='custom-list-style'
                         ), style={'text-align': 'justify'},
                     ),
-                    width=8, lg=7, md=7, 
+                    width=12, lg=7, md=7, 
                     className="mb-3 d-flex flex-column justify-content-center"
                 )
             ], style={'vertical-align': 'middle'}, className="d-flex align-items-stretch", justify="center",),

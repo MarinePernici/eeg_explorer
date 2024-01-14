@@ -11,6 +11,7 @@ from front.app import app
 # callback pour se déconnecter
 @app.callback(
     Output('logout-content', 'children'),
+    Output('redirect-logout', 'data'),
     [Input('logout-button', 'n_clicks')],
     prevent_initial_call=True,
 )
@@ -20,5 +21,5 @@ def logout_from_app(n_clicks):
 
         return html.Div([
                 html.P("Vous n'êtes plus connecté."),
-            ])
-    return dash.no_update
+            ]), "/login"
+    return dash.no_update, dash.no_update

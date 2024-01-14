@@ -21,6 +21,7 @@ from front.callbacks.login_process import (check_login_email_validity,
                                            login_to_app, redirect,
                                            update_login_button_state)
 from front.callbacks.logout_process import logout_from_app
+from front.callbacks.navbar_links import update_navbar_links
 from front.callbacks.profile_edit_page import (change_username,
                                                update_edit_content)
 from front.callbacks.reset_forgotten_password import (

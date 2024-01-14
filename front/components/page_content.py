@@ -10,6 +10,7 @@ app_layout = html.Div(className='content-wrapper', children=[
     header,
     navbar,
     dcc.Store(id='redirect-url'),
+    dcc.Store(id='redirect-logout'),
     dcc.Location(id='url', refresh=False),
     html.Div(id="page-content"),
     footer

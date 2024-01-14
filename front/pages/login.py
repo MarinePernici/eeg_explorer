@@ -23,21 +23,6 @@ login_card = dbc.Card(
     ], id="login-card", class_name="common-card-style", style={'display': 'flex'})
 
 
-# logged_card = dbc.Card([
-#                 html.H2("Bienvenue"),
-#                 html.Div(id="dynamic-username"),
-#                 html.P("Commencer à explorer la base de données :"),
-#                 dbc.Button('Explorer', href='/explorer'),
-#                 html.Br(),
-#                 html.P("Allez sur la page de profil :"),
-#                 dbc.Button('Modifier mon profil', href='/profile'),
-#                 html.Br(),
-#                 html.P("Si vous voulez vous déconnecter, clickez ici:"),
-#                 dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto'}),
-#                 html.Div(id='logout-content'),
-
-#         ], id="logged-card", class_name="common-card-style", style={'display': 'flex'})
-
 logged_card = dbc.Container(
     [
         dbc.Row([
@@ -71,7 +56,7 @@ logged_card = dbc.Container(
                 width={"size": 5, "offset": 2},
             ),
             dbc.Col(
-                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto', 'width': '100%'}),
+                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', style={'marginBottom': 'auto', 'width': '100%'}),
                 width={"size": 3, "offset": 0},
             ),
         ], className="mb-3"),
