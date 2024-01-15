@@ -22,7 +22,7 @@ def record_query():
         db.session.commit()
         return jsonify({
             "success": True,
-            "message": "Requête enregistrée.",
+            "message": "Query saved successfully.",
             "query_id": new_query.id
         })
     except SQLAlchemyError as e:
@@ -37,12 +37,13 @@ def record_query_result():
         new_query_result = QueryResults(
             query_id=data['query_id'],
             result=data['result'],
-            execution_time=data['execution_time']
+            execution_time=data['execution_time'],
+            intermediate_steps=data['intermediate_steps']
         )
         db.session.add(new_query_result)
         db.session.commit()
         return jsonify(
-            {"success": True, "message": "Résultat de requête enregistré."}
+            {"success": True, "message": "Query result saved successfully."}
         )
     except SQLAlchemyError as e:
         db.session.rollback()
@@ -62,7 +63,7 @@ def record_contact():
         )
         db.session.add(new_contact)
         db.session.commit()
-        return jsonify({"success": True, "message": "Message envoyé."})
+        return jsonify({"success": True, "message": "Contact saved successfully."})
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({"success": False, "message": str(e)})

@@ -186,3 +186,13 @@ Message :\n{message}
         msg=msg.as_string()
     )
     server.quit()
+
+
+def get_user_history(user_id):
+    response = requests.get(
+        'http://127.0.0.1:8050/api/get_user_history',
+        params={'user_id': user_id},
+        timeout=180
+    )
+    print("Request status :", response.status_code, flush=False)
+    return response

@@ -85,6 +85,10 @@ class QueryResults(CommonMixin, db.Model):
         db.Float,
         nullable=False
     )
+    intermediate_steps: Mapped[str] = mapped_column(
+        db.Text,
+        nullable=True
+    )
 
 
 class Contacts(CommonMixin, db.Model):

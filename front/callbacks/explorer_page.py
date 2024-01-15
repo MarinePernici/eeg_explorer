@@ -46,15 +46,18 @@ def ask_spectre_database(n_clicks, query):
             prompt_tokens = None
             completion_tokens = None
             total_cost = None
-            execution_time = 0
+            execution_time = -1
             query_registered = message
+            intermediate_steps = None
         else:
             (
-                query_result, total_tokens,
+                result, total_tokens,
                 prompt_tokens, completion_tokens,
                 total_cost, execution_time
             ) = agent.query_database(query)
             query_registered = query
+            query_result = result['output']
+            intermediate_steps = str(result['intermediate_steps'])
 
         reminder = f"Votre question était : {query}"
 
@@ -94,6 +97,7 @@ def ask_spectre_database(n_clicks, query):
             'query_id': query_id,
             'result': query_result,
             'execution_time': execution_time,
+            'intermediate_steps': intermediate_steps
         }
         try:
             response = post_data_in_db(
