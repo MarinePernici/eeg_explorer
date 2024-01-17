@@ -36,7 +36,7 @@ navbar = dbc.NavbarSimple(
                     id="history_link",
                 ),
                 dbc.DropdownMenuItem(
-                    "Mes coordonnées",
+                    "Mes informations",
                     href="/profile/edit",
                     disabled=True,
                     id="edit_link",
