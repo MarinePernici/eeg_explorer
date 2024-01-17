@@ -18,7 +18,7 @@ def translate_sentence(sentence, target_language, api_key):
 
     translated_text = response.json()["translations"][0]["text"]
     detected_language = response.json()["translations"][0]["detected_source_language"].upper()
-    print(translated_text)
+
     return translated_text, detected_language
 
 
@@ -49,6 +49,7 @@ def is_query_safe(query):
             "EN",
             os.environ.get("DEEPL_API_KEY")
         )
+        print(translated_query, '\n' + source_language)
     except Exception as e:
         print(e)
         return False, "Une erreur s'est produite."
@@ -56,9 +57,9 @@ def is_query_safe(query):
     # Vérifier si un des mots clés est présent dans la phrase traduite
     is_safe = check_keywords(translated_query)
 
-    # Message dans la langue d'origine
+    # Message à retourner
     message = "Authorised request" if is_safe else "Unauthorised request"
-
+    print(message)
     # Traduire le message dans la langue d'origine
     if source_language != "EN":
         message = translate_sentence(
