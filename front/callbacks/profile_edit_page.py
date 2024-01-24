@@ -3,6 +3,7 @@
 from collections import Counter
 import pandas as pd
 import plotly.express as px
+import time
 from datetime import datetime, timedelta
 
 import dash
@@ -102,6 +103,7 @@ def update_edit_username_button_state(username_valid):
 )
 def update_profile_graph(pathname):
     if pathname == '/profile/edit' and is_user_authenticated():
+        # time.sleep(1)
         try:
             response = get_user_history(get_id())
             if response.status_code == 200:
@@ -160,11 +162,4 @@ def update_profile_graph(pathname):
         except Exception as e:
             print(f"Erreur requête: {e}", flush=True)
             return {}
-    return dash.no_update
-
-
-
-
-
-
     return dash.no_update

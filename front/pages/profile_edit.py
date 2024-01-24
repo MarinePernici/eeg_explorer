@@ -27,19 +27,22 @@ profile_edit_layout = html.Div([
                 ), align="center",
             ),
             dbc.Row(
-                dbc.Col(
-                    dcc.Graph(
-                        id='profile-graph',
-                        figure={
-                            'layout': {
-                                'title': "Vous n'avez pas encore fait de requêtes"
-                            }
-                        },
-                        config={
-                            'displayModeBar': False
-                        },
+                dcc.Loading(
+                    dbc.Col(
+                        dcc.Graph(
+                            id='profile-graph',
+                            figure={
+                                'layout': {
+                                    'title': "Vous n'avez pas encore fait de requêtes"
+                                }
+                            },
+                            config={
+                                'displayModeBar': False
+                            },
+                        ),
+                        width={"size": 10, "offset": 1, }, style=rounded_border_style,
                     ),
-                    width={"size": 10, "offset": 1, }, style=rounded_border_style,
+                    type="default",
                 ),
             ),
             dbc.Row(

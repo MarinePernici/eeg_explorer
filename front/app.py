@@ -15,7 +15,7 @@ server.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 external_stylesheets = [
     dbc.themes.YETI,
-    'https://fonts.googleapis.com/css2?family=Lobster&family=Inter&display=swap',
+    "https://rsms.me/inter/inter.css",
     "https://use.typekit.net/vwt4vop.css"
 ]
 app = Dash(

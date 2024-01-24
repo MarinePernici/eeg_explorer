@@ -19,29 +19,32 @@ profile_history_layout=html.Div([
                 )
             ),
             dbc.Row(
-                dbc.Col(
-                    dbc.Table(
-                        [
-                            # Table header
-                            html.Thead(
-                                html.Tr(
-                                    [
-                                        html.Th("Date"),
-                                        html.Th("Requête"),
-                                        html.Th("Réponse"),
-                                    ],
+                dcc.Loading(
+                    dbc.Col(
+                        dbc.Table(
+                            [
+                                # Table header
+                                html.Thead(
+                                    html.Tr(
+                                        [
+                                            html.Th("Date"),
+                                            html.Th("Requête"),
+                                            html.Th("Réponse"),
+                                        ],
+                                    ),
                                 ),
-                            ),
-                            # Table body
-                            html.Tbody(id='history-table'),
-                        ],
-                        bordered=True,
-                        color="secondary",
-                        hover=True,
-                        responsive=True,
-                        striped=True,
+                                # Table body
+                                html.Tbody(id='history-table'),
+                            ],
+                            bordered=True,
+                            color="secondary",
+                            hover=True,
+                            responsive=True,
+                            striped=True,
+                        ),
+                        width={"size": 10, "offset": 1, },
                     ),
-                    width={"size": 10, "offset": 1, },
+                    type="circle",    
                 ),
             ),
             dbc.Row(

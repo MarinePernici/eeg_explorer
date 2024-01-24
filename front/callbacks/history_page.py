@@ -1,5 +1,6 @@
 
 import requests
+import time
 
 import dash
 from dash import html, dcc
@@ -28,6 +29,7 @@ def update_download_button_state(file_format):
 )
 def update_history_table(pathname):
     if pathname == '/profile/history':
+        time.sleep(1)
         try:
             response = get_user_history(get_id())
             if response.status_code == 200:
