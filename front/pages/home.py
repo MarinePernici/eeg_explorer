@@ -7,11 +7,7 @@ from pages.title import title_container
 home_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 8, "offset": 2},
-                ),
-            ),
+            title_container,
             dbc.Row([
                 
                 dbc.Col([

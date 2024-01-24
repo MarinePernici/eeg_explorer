@@ -122,59 +122,22 @@ login_layout_login = html.Div(
 login_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 8, "offset": 2},
-                ),
-            ),
+            title_container,
             dbc.Row(
                 dbc.Col(
                     login_layout_logout, width={"size": 10, "offset": 1},
                 ),
             ),
-            # dbc.Row(
-            #     dbc.Col(
-            #         login_layout_login, width={"size": 10, "offset": 1},
-            #     ),
-            # ),
         ],
         fluid=True,
         className="py-3"
     )
 ])
 
-# user_layout = html.Div([
-#     dbc.Container(
-#         [
-#             dbc.Row(
-#                 dbc.Col(
-#                     title_container, width={"size": 8, "offset": 2},
-#                 ),
-#             ),
-#             # dbc.Row(
-#             #     dbc.Col(
-#             #         login_layout_logout, width={"size": 10, "offset": 1},
-#             #     ),
-#             # ),
-#             dbc.Row(
-#                 dbc.Col(
-#                     login_layout_login, width={"size": 10, "offset": 1},
-#                 ),
-#             ),
-#         ],
-#         fluid=True,
-#         className="py-3"
-#     )
-# ])
-
 user_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 6, "offset": 3},
-                ),
-            ),
+            title_container,
             dbc.Row([
                 dbc.Col([
                     html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),
@@ -182,18 +145,6 @@ user_layout = html.Div([
                 ], width={"size": 8, "offset": 2}, className="text-center",
                 ),
             ], className="mb-1"),
-            # dbc.Row(
-            #     dbc.Col(
-            #         html.Div([
-            #             html.Div(
-            #                 id="dynamic-username", style={'fontSize': '1.5rem'}
-            #             ),
-            #         ], style={'text-align': 'center'},
-            #         ),
-            #         width={"size": 12, "offset": 0, },
-            #         className="text-center"
-            #     )
-            # ),
             dbc.Row([
                 dbc.Col(
                     html.Img(

@@ -5,11 +5,7 @@ from pages.title import title_container
 
 contact_form_layout = html.Div([
     dbc.Container([
-        dbc.Row(
-            dbc.Col(
-                title_container, width={"size": 8, "offset": 2},
-            ),
-        ),
+        title_container,
         dbc.Row(
             dbc.Col(
                 html.H2("Contactez-nous", className="text-center mb-4"),
@@ -90,5 +86,5 @@ contact_form_layout = html.Div([
                 width=12, lg=6
             ), justify="center", className="my-2",
         ),
-    ], fluid=True),
+    ], fluid=True, className="py-3"),
 ])
