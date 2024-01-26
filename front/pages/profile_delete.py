@@ -6,7 +6,7 @@ from strgen import StringGenerator
 profile_delete_account_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([

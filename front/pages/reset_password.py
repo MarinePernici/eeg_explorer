@@ -4,7 +4,7 @@ from pages.title import title_container
 
 reset_password_layout = html.Div([
     dbc.Container([
-        title_container,
+        *title_container,
         dbc.Row(
             dbc.Col(html.H2("Réinitialisation du Mot de Passe"), width={"size": 6, "offset": 3})
         , className="mb-3"),

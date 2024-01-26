@@ -4,7 +4,7 @@ from pages.title import title_container
 
 unauthorized_layout = html.Div([
     dbc.Container([
-        title_container,
+        *title_container,
         html.H2("Accès Restreint", className="mt-5"),
         html.Br(),
         html.P("Vous devez être connecté pour accéder à cette page."),

@@ -122,7 +122,7 @@ login_layout_login = html.Div(
 login_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     login_layout_logout, width={"size": 10, "offset": 1},
@@ -137,7 +137,7 @@ login_layout = html.Div([
 user_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row([
                 dbc.Col([
                     html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),

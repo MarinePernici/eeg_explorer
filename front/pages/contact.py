@@ -5,7 +5,7 @@ from pages.title import title_container
 
 contact_form_layout = html.Div([
     dbc.Container([
-        title_container,
+        *title_container,
         dbc.Row(
             dbc.Col(
                 html.H2("Contactez-nous", className="text-center mb-4"),
@@ -63,7 +63,7 @@ contact_form_layout = html.Div([
                     placeholder="Votre message",
                     rows=4
                 ),
-            ], width=12, lg=6), justify="center"
+            ], width=12, lg=6), justify="center", className="mb-3"
         ),
         dbc.Row(
             dbc.Col([
@@ -74,7 +74,7 @@ contact_form_layout = html.Div([
                     id="contact-submit",
                     style={'width': '100%'}
                 ),
-            ], width=2), justify="center", className="my-2"
+            ], width=2), justify="center", className="mb-3"
         ),
         dbc.Row(
             dbc.Col(
@@ -84,7 +84,7 @@ contact_form_layout = html.Div([
                     style={'textAlign': 'center'}
                 ),
                 width=12, lg=6
-            ), justify="center", className="my-2",
+            ), justify="center",
         ),
     ], fluid=True, className="py-3"),
 ])

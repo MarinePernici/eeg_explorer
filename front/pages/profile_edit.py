@@ -13,7 +13,7 @@ rounded_border_style = {
 profile_edit_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
@@ -172,7 +172,7 @@ profile_edit_layout = html.Div([
 profile_edit_password_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
@@ -245,7 +245,7 @@ profile_edit_password_layout = html.Div([
 profile_edit_email_layout = html.Div([
     dbc.Container(
         [
-            title_container,
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
