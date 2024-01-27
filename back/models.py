@@ -13,7 +13,7 @@ from sqlalchemy.sql import func
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'  # Spécifiez le nom de la table ici
+    __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=False, nullable=False)
@@ -26,9 +26,6 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return argon2.verify(password, self.password_hash)
-
-# class Base(DeclarativeBase):
-#     pass
 
 
 class CommonMixin():
@@ -87,6 +84,10 @@ class QueryResults(CommonMixin, db.Model):
     execution_time: Mapped[float] = mapped_column(
         db.Float,
         nullable=False
+    )
+    intermediate_steps: Mapped[str] = mapped_column(
+        db.Text,
+        nullable=True
     )
 
 

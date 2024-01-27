@@ -15,7 +15,8 @@ server.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 external_stylesheets = [
     dbc.themes.YETI,
-    'https://fonts.googleapis.com/css2?family=Lobster&display=swap'
+    "https://rsms.me/inter/inter.css",
+    "https://use.typekit.net/vwt4vop.css"
 ]
 app = Dash(
     __name__,
@@ -26,13 +27,13 @@ app = Dash(
     meta_tags=[
         {
             'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1.0'
+            'content': 'width=device-width, initial-scale=1.0, maximum-scale=1.2, minimum-scale=0.8,'
         }
     ]
 )
 app.title = 'EEG Explorer'
 
-from back.api.models import db, User
+from back.models import db, User
 
 db.init_app(server)
 

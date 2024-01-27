@@ -54,30 +54,36 @@ H2 {
 }
 
 H1 {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: bold;
-    color: #1a1950;
+    /* text-align: center; */
+    font-size: 3.5rem;
+    font-weight: 900;
+    /* color: #1a1950; */
+    font-family: "nort", sans-serif;
+    color: #1B5079;
     /* padding-top: 1%; */
 }
 
-H3 {
-    padding-left: 10px;
+H4 {
+    /* padding-left: 10px; */
     /* padding-top: 1%; */
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
+    /* text-align: center; */
+    /* font-size: 2rem; */
+    /* font-weight: bold;
     font-style: italic;
-    font-family: 'Lobster', cursive;
-    color: #1a1950;
+    font-family: 'Lobster', cursive; */
+    font-family: "nort", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    /* color: #C7E8FC; */
 }
+
 
 #title-container {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: baseline;
     width: 100%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .btn {
@@ -130,4 +136,17 @@ th {
 
 .custom-list-style li strong {
     font-size: 1.2em;  /* ou la taille souhaitée */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #1a1950;
+}
+
+input {
+    background-color: aliceblue !important;
+}
+
+textarea {
+    background-color: aliceblue !important;
 }

@@ -5,13 +5,12 @@ from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
-from front.auth import (
+from back.api.auth import (
     get_user_from_id,
-    is_email_valid,
     edit_email,
-    is_email_allowed,
     is_email_registered,
 )
+from front.functions.validity_functions import is_email_valid, is_email_allowed
 
 
 # vérifier la validité du nouvel email

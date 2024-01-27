@@ -23,21 +23,6 @@ login_card = dbc.Card(
     ], id="login-card", class_name="common-card-style", style={'display': 'flex'})
 
 
-# logged_card = dbc.Card([
-#                 html.H2("Bienvenue"),
-#                 html.Div(id="dynamic-username"),
-#                 html.P("Commencer à explorer la base de données :"),
-#                 dbc.Button('Explorer', href='/explorer'),
-#                 html.Br(),
-#                 html.P("Allez sur la page de profil :"),
-#                 dbc.Button('Modifier mon profil', href='/profile'),
-#                 html.Br(),
-#                 html.P("Si vous voulez vous déconnecter, clickez ici:"),
-#                 dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto'}),
-#                 html.Div(id='logout-content'),
-
-#         ], id="logged-card", class_name="common-card-style", style={'display': 'flex'})
-
 logged_card = dbc.Container(
     [
         dbc.Row([
@@ -71,7 +56,7 @@ logged_card = dbc.Container(
                 width={"size": 5, "offset": 2},
             ),
             dbc.Col(
-                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', href="/home", style={'marginBottom': 'auto', 'width': '100%'}),
+                dbc.Button('Se déconnecter', n_clicks=0, id='logout-button', style={'marginBottom': 'auto', 'width': '100%'}),
                 width={"size": 3, "offset": 0},
             ),
         ], className="mb-3"),
@@ -137,21 +122,12 @@ login_layout_login = html.Div(
 login_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 8, "offset": 2},
-                ),
-            ),
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     login_layout_logout, width={"size": 10, "offset": 1},
                 ),
             ),
-            # dbc.Row(
-            #     dbc.Col(
-            #         login_layout_login, width={"size": 10, "offset": 1},
-            #     ),
-            # ),
         ],
         fluid=True,
         className="py-3"
@@ -161,19 +137,142 @@ login_layout = html.Div([
 user_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 8, "offset": 2},
+            *title_container,
+            dbc.Row([
+                dbc.Col([
+                    html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),
+                    html.P('Vous êtes maintenant connecté à votre compte EEG Explorer!', style={'fontSize': '1rem'}),
+                ], width={"size": 8, "offset": 2}, className="text-center",
                 ),
-            ),
-            # dbc.Row(
-            #     dbc.Col(
-            #         login_layout_logout, width={"size": 10, "offset": 1},
-            #     ),
-            # ),
+            ], className="mb-1"),
+            dbc.Row([
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/explore.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/history.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/edit.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="text-center"
+                ),
+                dbc.Col(
+                    html.Img(
+                        src="../assets/img/logout.png",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                            'border-radius': '25px',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="text-center"
+                ),
+            ], justify="center"),
+            dbc.Row([
+                dbc.Col(
+                    dbc.Button(
+                        "Commencer l'exploration",
+                        # size='lg',
+                        color="primary",
+                        # className="btn",
+                        href="/explorer",
+                        # id="delete-account-button",
+                        # n_clicks=0,
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                        },
+                    ), width={"size": 2, "offset": 0, },
+                    className="text-center mt-3"
+                ),
+                dbc.Col(
+                    dbc.Button(
+                        "Consulter mon historique",
+                        # size='lg',
+                        color="primary",
+                        # className="btn btn-lg",
+                        href="/profile/history",
+                        id="history-button",
+                        style={
+                            'max-width': '80%',
+                            'max-height': '100%',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="text-center mt-3"
+                ),
+                dbc.Col(
+                    dbc.Button(
+                        "Voir mon profil",
+                        # size='lg',
+                        color="primary",
+                        # className="btn btn-lg",
+                        href="/profile/edit",
+                        id="edit-profile-button",
+                        style={
+                            'width': '80%',
+                            'height': '100%',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'justify-content': 'center',
+                        },
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="d-flex justify-content-center mt-3",
+                ),
+                dbc.Col(
+                    dbc.Button(
+                        "Se déconnecter",
+                        # size='lg',
+                        color="primary",
+                        # className="btn btn-lg",
+                        href="/home",
+                        id="logout-button",
+                        n_clicks=0,
+                        style={
+                            'width': '80%',
+                            'height': '100%',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'justify-content': 'center',
+                        },
+
+                    ),
+                    width={"size": 2, "offset": 0, },
+                    className="d-flex justify-content-center mt-3",
+                ),
+            ], justify="center"),
             dbc.Row(
                 dbc.Col(
-                    login_layout_login, width={"size": 10, "offset": 1},
+                    html.Div(id='logout-content'),
+                    width={"size": 8, "offset": 2},
                 ),
             ),
         ],

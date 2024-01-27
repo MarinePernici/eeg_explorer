@@ -1,5 +1,6 @@
 
 import requests
+import time
 
 import dash
 from dash import html, dcc
@@ -7,7 +8,7 @@ from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
-from front.auth import get_queries_from_user_id, get_query_result_from_id
+from back.api.auth import get_queries_from_user_id, get_query_result_from_id, get_user_history
 import pandas as pd
 
 
@@ -28,15 +29,11 @@ def update_download_button_state(file_format):
 )
 def update_history_table(pathname):
     if pathname == '/profile/history':
+        time.sleep(1)
         try:
-            response = requests.get(
-                'http://127.0.0.1:8050/api/get_user_history',
-                params={'user_id': get_id()},
-                timeout=180
-            )
-            print(response.status_code, flush=False)
+            response = get_user_history(get_id())
             if response.status_code == 200:
-                print("Request status :", response.status_code, "\nQuery history is accessible", flush=True)
+                print("History is accessible", flush=True)
                 try:
                     history_data = response.json()
                     rows = []
@@ -91,8 +88,8 @@ def generate_file(n_clicks, file_format):
 
             # Générer le fichier en fonction du format sélectionné
             if file_format == 'csv':
-                return dcc.send_data_frame(df.to_csv, filename="historique_requetes.csv", index=False)
+                return dcc.send_data_frame(df.to_csv, filename="eeg_explorer_history.csv", index=False)
             if file_format == 'xlsx':
-                return dcc.send_data_frame(df.to_excel, filename="historique_requetes.xlsx", index=False)
+                return dcc.send_data_frame(df.to_excel, filename="eeg_explorer_history.xlsx", index=False)
             
     return dash.no_update

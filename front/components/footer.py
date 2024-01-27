@@ -6,20 +6,14 @@ footer = html.Footer(
     children=[
         html.P(
             children=[
-                "Pour plus d'informations, veuillez visiter notre ",
+                "Pour plus d'informations, n'hésitez pas à",
                 html.A(
-                    "FAQ",
-                    href="/faq",
-                    style={'marginRight': '10px', 'marginLeft': '10px'}
-                ),
-                " ou ",
-                html.A(
-                    "Nous Contacter",
+                    "nous contacter.",
                     href="/contact",
-                    style={'marginRight': '10px', 'marginLeft': '10px'}
+                    className="ms-1"
                 ),
             ],
-            style={'marginTop': '15px'}
+            className="mt-3"
         ),
         html.P(
             children=[
@@ -28,10 +22,10 @@ footer = html.Footer(
                     "Spectre Biotech",
                     href="https://www.spectre-biotech.com",
                     target="_blank",
-                    style={'marginRight': '10px', 'marginLeft': '10px'}
+                    className="ms-1"
                 ),
             ],
-            style={'marginTop': '15px'}
+            className="mt-3"
         )
     ]
 )

@@ -6,7 +6,8 @@ from dash.dependencies import Input, Output, State
 from flask_login import login_user
 
 from front.app import app
-from front.auth import get_user_from_email, is_email_valid
+from back.api.auth import get_user_from_email
+from front.functions.validity_functions import is_email_valid
 
 
 # callback pour activer/désactiver le bouton de connexion
@@ -18,27 +19,6 @@ def update_login_button_state(valid_email, password):
     if valid_email and password:  # Vérifie si les champs ne sont pas vides
         return False  # Active le bouton
     return True  # Désactive le bouton
-
-
-# # callback pour se connecter
-# @app.callback(
-#     Output('login-status', 'children'), Output('redirect-url', 'data'),
-#     Output('login-email', 'value'), Output('login-password', 'value'),
-#     [Input('login-button', 'n_clicks')],
-#     [State('login-email', 'value'), State('login-password', 'value'),]
-# )
-# def login_to_app(n_clicks, email, password):
-#     if n_clicks > 0:
-#         user_logged = login_process(email, password)
-
-#         if not user_logged:
-#             return html.Div([
-#                 html.P("Identifiants invalides", className='text-danger'),
-#             ]), dash.no_update, '', ''
-
-#         return "Vous êtes connecté.", "/login", '', ''
-
-#     return "", dash.no_update, dash.no_update, dash.no_update
 
 
 # callback pour se connecter
@@ -69,10 +49,14 @@ def login_to_app(n_clicks, email, password):
 
 @app.callback(
     Output('url', 'pathname'),
-    [Input('redirect-url', 'data')]
+    [Input('redirect-url', 'data'), Input('redirect-logout', 'data')]
 )
-def redirect(pathname):
-    return pathname if pathname else dash.no_update
+def redirect(redirect_login, redirect_logout):
+    if redirect_login:
+        return redirect_login
+    if redirect_logout:
+        return redirect_logout
+    return dash.no_update
 
 
 # vérifier la validité de l'email de connexion

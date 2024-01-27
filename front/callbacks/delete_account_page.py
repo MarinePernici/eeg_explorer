@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output, State
 from back.api.auth_routes import (get_id,
                                   is_user_authenticated)
 from front.app import app
-from front.auth import (
+from back.api.auth import (
     get_user_from_id,
     get_user_from_username,
     get_queries_from_user_id,

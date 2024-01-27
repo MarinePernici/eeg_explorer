@@ -1,91 +1,132 @@
 import dash_bootstrap_components as dbc
-from dash import html
+from dash import html, dcc
 from pages.title import title_container
+
+rounded_border_style = {
+    'border-radius': '15px',  # 15px est un exemple, ajustez selon vos besoins
+    'overflow': 'hidden',
+    'box-shadow': '3px 3px 10px rgba(0,0,0,0.2)',
+    'background-color': '#1a1950',
+    'margin-bottom': '10px',
+}
 
 profile_edit_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 6, "offset": 3},
-                ),
-            ),
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
                         html.Div(
                             id="dynamic-username", style={'fontSize': '1.5rem'}
                         ),  # Contenu dynamique
+                        ], style={'text-align': 'justify'},
+                    ),
+                    width={"size": 10, "offset": 1, },
+                    className="text-center"
+                ), align="center",
+            ),
+            dbc.Row(
+                dcc.Loading(
+                    dbc.Col(
+                        dcc.Graph(
+                            id='profile-graph',
+                            figure={
+                                'layout': {
+                                    'title': "Vous n'avez pas encore fait de requêtes"
+                                }
+                            },
+                            config={
+                                'displayModeBar': False
+                            },
+                        ),
+                        width={"size": 10, "offset": 1, }, style=rounded_border_style,
+                    ),
+                    type="default",
+                ),
+            ),
+            dbc.Row(
+                dbc.Col(
+                    html.Div([
+                        html.Hr(),
                         html.P(
                             "C'est ici que vous pouvez consulter et/ou " +
                             "modifier vos coordonnées personnelles:"
                         ),
-                        html.Br(),
                         ], style={'text-align': 'justify'},
                     ),
-                    width={"size": 8, "offset": 2, },
+                    width={"size": 10, "offset": 1, },
                     className="text-center"
-                )
-            ),
+                ), align="center", className="mb-3", style={'fontSize': '1.2rem', 'fontWeight': 'bold'},
+            ),      
             dbc.Row(
                 [
                     dbc.Col(
-                        html.P(id='profile-username',),
-                        width={"size": 3, "offset": 2, },
+                        html.Div(id='profile-username'),
+                        width={"size": 4, "offset": 1, }, align="center",
                     ),
                     dbc.Col(
-                        dbc.Input(
-                            id='new-username',
-                            type='text',
-                            placeholder="Mon nouveau nom d'utilisateur",
-                            value=""
-                        ),
-                        width={"size": 3, "offset": 0, },
+                        [
+                            dbc.Input(
+                                id='new-username',
+                                type='text',
+                                placeholder="Mon nouveau nom d'utilisateur",
+                                value=""
+                            ),
+                            dbc.FormFeedback("", type="valid", id='new-username-feedback-valid', style={'fontSize': '0.7rem'}),
+                            dbc.FormFeedback("", type="invalid", id='new-username-feedback-invalid', style={'fontSize': '0.7rem'}),
+                        ], width={"size": 3, "offset": 0, },
                     ),
                     dbc.Col(
                         dbc.Button(
-                            "Modifier",
+                            "Modifier mon nom",
                             id='edit-username-button',
                             color="primary",
                             n_clicks=0,
                             style={'width': "100%"},
                         ),
-                        width={"size": 2, "offset": 0, },
+                        width={"size": 3, "offset": 0, },
                     ),
-                    dbc.Col(
-                        html.Div(id='username-change-status'),
-                        width={"size": 2, "offset": 0, },
-                    ),
+                    # dbc.Col(
+                    #     html.Div(id='username-change-status'),
+                    #     width={"size": 1, "offset": 0, },
+                    # ),
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
+            ),
+            dbc.Row(
+                dbc.Col(
+                    html.Div(id='username-change-status', style={'color': '#43ac6a'}),
+                    width={"size": 10, "offset": 1, },
+                ), id='username-change-margin',
             ),
             # Ligne pour l'email
             dbc.Row(
                 [
                     dbc.Col(
                         dbc.Input(placeholder="Pour modifier votre email vous devrez entrer votre mot de passe actuel", type="password", disabled=True),
-                        width={"size": 6, "offset": 2, },
+                        width={"size": 7, "offset": 1, },
                     ),
                     dbc.Col(
-                        dbc.Button("Modifier", color="primary", href="/profile/edit/email", style={'width': "100%"},),
-                        width=2,
+                        dbc.Button("Modifier mon email", color="primary", href="/profile/edit/email", style={'width': "100%"},),
+                        width=3,
                     )
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
             # Ligne pour le mot de passe
             dbc.Row(
                 [
                     dbc.Col(
                         dbc.Input(placeholder="Pour modifier votre mot de passe vous devrez entrer votre mot de passe actuel", type="password", disabled=True),
-                        width={"size": 6, "offset": 2, },
+                        width={"size": 7, "offset": 1, },
                     ),
                     dbc.Col(
-                        dbc.Button("Modifier", color="primary", href="/profile/edit/password", style={'width': "100%"},),
-                        width=2,
+                        dbc.Button("Modifier mon mot de passe", color="primary", href="/profile/edit/password", style={'width': "100%"},),
+                        width=3,
                     )
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
             dbc.Row(
                 [
@@ -95,7 +136,7 @@ profile_edit_layout = html.Div([
                             type="text",
                             disabled=True
                         ),
-                        width={"size": 6, "offset": 2, },
+                        width={"size": 7, "offset": 1, },
                     ),                    
                     dbc.Col(
                         dbc.Button(
@@ -104,11 +145,24 @@ profile_edit_layout = html.Div([
                             href="/profile/delete",
                             style={'width': "100%"},
                         ),
-                        width=2,
+                        width=3,
                     ),
                 ],
-                className="mb-3",
+                className="mb-3", align="center",
             ),
+            # dbc.Row(
+            #     dbc.Col(
+            #         dcc.Graph(
+            #             id='profile-graph',
+            #             figure={
+            #                 'layout': {
+            #                     'title': "Vous n'avez pas encore fait de requêtes"
+            #                 }
+            #             }
+            #         ),
+            #         width={"size": 8, "offset": 2, },
+            #     ),
+            # ),
         ],
         fluid=True,
         className="py-3"
@@ -118,11 +172,7 @@ profile_edit_layout = html.Div([
 profile_edit_password_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 6, "offset": 3},
-                ),
-            ),
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
@@ -195,11 +245,7 @@ profile_edit_password_layout = html.Div([
 profile_edit_email_layout = html.Div([
     dbc.Container(
         [
-            dbc.Row(
-                dbc.Col(
-                    title_container, width={"size": 6, "offset": 3},
-                ),
-            ),
+            *title_container,
             dbc.Row(
                 dbc.Col(
                     html.Div([
