@@ -12,10 +12,9 @@ profile_delete_account_layout = html.Div([
                     html.Div([
                         html.Div(id="dynamic-username"),
                         html.P(
-                            "Ceci est la page de suppression de votre compte."
-                        ),
-                        html.P(
-                            """Une fois votre compte supprimé, vous ne pourrez
+                            """Vous êtes ici sur la page de suppression de
+                            votre compte. Une fois votre compte supprimé, vous 
+                            ne pourrez
                             plus vous connecter à l'application ni accéder à
                             votre historique."""
                         ),
@@ -43,7 +42,6 @@ profile_delete_account_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col([
-                        html.Br(),
                         html.P(
                             StringGenerator(r"[\l\d]{12}").render_list(3)[0],
                             id='delete-account-text-display'
@@ -104,7 +102,7 @@ profile_delete_account_layout = html.Div([
                         style={'text-align': 'justify', 'font-size': 'small'},
                     ),
                 ],
-                className="mb-3",
+                # className="mb-3",
             ),
         ],
         fluid=True,
