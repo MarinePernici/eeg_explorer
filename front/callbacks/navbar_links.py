@@ -14,9 +14,16 @@ from front.app import app
     Output("account_dropdown", "disabled"),
     [Input("url", "pathname")],
 )
-def update_navbar_links(pathname):
+def update_navbar_links(pathname: str):
+    """
+    Enable/disable the links in the navigation menu
+
+    Args:
+        pathname (str): current url path
+
+    Returns:
+        bool: state of the links
+    """    
     if pathname and is_user_authenticated():
         return False, False, False, False, False
-    # if pathname in ["/login", "/profile"] and n_clicks > 0:
-    #     return False, False, False, False, False
     return True, True, True, True, True

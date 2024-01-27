@@ -19,8 +19,6 @@ from front.pages.profile_history import profile_history_layout
 from front.pages.reset_password import reset_password_layout
 from front.pages.unauthorized import unauthorized_layout
 
-open_pages = ['/home', '/login', '/', '/contact', '/forgot-password']
-
 # dictionary of the routes
 routes = {
     '/': home_layout,
@@ -39,7 +37,6 @@ routes = {
 
 # list of the protected paths
 protected_paths = ['/explorer', '/profile']
-
 
 @app.callback(
     Output('page-content', 'children'),
