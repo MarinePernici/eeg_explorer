@@ -18,17 +18,12 @@
     border-radius: 15px;
     padding: 10px;
     /* margin: 10px; */
-    width: 49%;
-    display:flex;
+    width: 100%;
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
     vertical-align: middle;
     /* text-align: center;  */
-}
-
-#logged-card {
-    /* width: 60%; */
 }
 
 #query-result-card {
