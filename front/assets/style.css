@@ -16,7 +16,7 @@
 .common-card-style {
     border: 3px solid #1a1950;
     border-radius: 15px;
-    padding: 10px;
+    padding: 20px;
     /* margin: 10px; */
     width: 100%;
     flex-direction: column;

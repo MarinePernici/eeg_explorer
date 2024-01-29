@@ -18,6 +18,7 @@ from front.pages.profile_edit import (
 from front.pages.profile_history import profile_history_layout
 from front.pages.reset_password import reset_password_layout
 from front.pages.unauthorized import unauthorized_layout
+from front.pages.documentation import documentation_layout
 
 # dictionary of the routes
 routes = {
@@ -32,11 +33,12 @@ routes = {
     '/profile/edit/password': profile_edit_password_layout,
     '/profile/edit/email': profile_edit_email_layout,
     '/profile/delete': profile_delete_account_layout,
-    '/profile': profile_layout
+    '/profile': profile_layout,
+    '/documentation': documentation_layout,
 }
 
 # list of the protected paths
-protected_paths = ['/explorer', '/profile']
+protected_paths = ['/explorer', '/profile', '/documentation']
 
 @app.callback(
     Output('page-content', 'children'),

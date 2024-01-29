@@ -32,7 +32,7 @@ signup_card = dbc.Card(
             className="me-auto"
         ),
         dbc.Input(
-            id='signup-name', type='text', placeholder="Nom d'utilisateur"
+            id='signup-name', type='text', placeholder="Nom d'utilisateur",
         ),
         dbc.FormFeedback(type="valid", id='username-feedback-valid'),
         dbc.FormFeedback(type="invalid", id='username-feedback-invalid'),
@@ -105,149 +105,163 @@ login_layout = html.Div([
     )
 ])
 
-user_layout = html.Div([
+user_layout = html.Div(
     dbc.Container(
         [
             *title_container,
-            dbc.Row([
-                dbc.Col([
-                    html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),
-                    html.P('Vous êtes maintenant connecté à votre compte EEG Explorer!', style={'fontSize': '1rem'}),
-                ], width={"size": 8, "offset": 2}, className="text-center",
-                ),
-            ], className="mb-1"),
-            dbc.Row([
-                dbc.Col(
-                    html.Img(
-                        src="../assets/img/explore.png",
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                            'border-radius': '25px',
-                        },
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                id="dynamic-username",
+                                style={'fontSize': '1.5rem'}
+                            ),
+                            html.P(
+                                'Vous êtes maintenant connecté à votre '
+                                'compte EEG Explorer!',
+                                style={'fontSize': '1rem'}
+                            ),
+                        ], width={"size": 12, "offset": 0},
+                        className="text-center",
                     ),
-                    width={"size": 2, "offset": 0, },
-                    className="text-center"
-                ),
-                dbc.Col(
-                    html.Img(
-                        src="../assets/img/history.png",
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                            'border-radius': '25px',
-                        },
+                ], className="mb-1"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card(
+                            [
+                                dbc.CardImg(
+                                    src="../assets/img/explore.png",
+                                    top=True,
+                                    style={
+                                        'max-width': '100%',
+                                        'border-radius': '25px'
+                                    }
+                                ),
+                                dbc.CardBody(
+                                    dbc.Button(
+                                        "Commencer l'exploration",
+                                        color="primary",
+                                        href="/explorer",
+                                        style={
+                                            'width': '100%',
+                                            'min-height': '60px',
+                                            'display': 'flex',
+                                            'align-items': 'center',
+                                            'justify-content': 'center'
+                                        }
+                                    ),
+                                    className='px-0',
+                                ),
+                            ], style={'border': 'none'},
+                        ), width=10, md=5, lg=2,
+                        className="text-center mb-2"
                     ),
-                    width={"size": 2, "offset": 0, },
-                    className="text-center"
-                ),
-                dbc.Col(
-                    html.Img(
-                        src="../assets/img/edit.png",
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                            'border-radius': '25px',
-                        },
+                    dbc.Col(
+                        dbc.Card(
+                            [
+                                dbc.CardImg(
+                                    src="../assets/img/history.png",
+                                    top=True,
+                                    style={
+                                        'max-width': '100%',
+                                        'border-radius': '25px'
+                                    }
+                                ),
+                                dbc.CardBody(
+                                    dbc.Button(
+                                        "Consulter mon historique",
+                                        color="primary",
+                                        href="/history",
+                                        style={
+                                            'width': '100%',
+                                            'min-height': '60px',
+                                            'display': 'flex',
+                                            'align-items': 'center',
+                                            'justify-content': 'center'
+                                        }
+                                    ),
+                                    className='px-0',
+                                ),
+                            ], style={'border': 'none'},
+                        ), width=10, md=5, lg=2,
+                        className="text-center mb-2"
                     ),
-                    width={"size": 2, "offset": 0, },
-                    className="text-center"
-                ),
-                dbc.Col(
-                    html.Img(
-                        src="../assets/img/logout.png",
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                            'border-radius': '25px',
-                        },
+                    dbc.Col(
+                        dbc.Card(
+                            [
+                                dbc.CardImg(
+                                    src="../assets/img/edit.png",
+                                    top=True,
+                                    style={
+                                        'width': '100%',
+                                        'border-radius': '25px'
+                                    }
+                                ),
+                                dbc.CardBody(
+                                    dbc.Button(
+                                        "Voir mon profil",
+                                        id="edit-profile-button",
+                                        color="primary",
+                                        href="/profile/edit",
+                                        style={
+                                            'width': '100%',
+                                            'min-height': '60px',
+                                            'display': 'flex',
+                                            'align-items': 'center',
+                                            'justify-content': 'center'
+                                        }
+                                    ),
+                                    className='px-0',
+                                ),
+                            ], style={'border': 'none',},
+                        ), width=10, md=5, lg=2,
+                        className="text-center mb-2"
                     ),
-                    width={"size": 2, "offset": 0, },
-                    className="text-center"
-                ),
-            ], justify="center"),
-            dbc.Row([
-                dbc.Col(
-                    dbc.Button(
-                        "Commencer l'exploration",
-                        # size='lg',
-                        color="primary",
-                        # className="btn",
-                        href="/explorer",
-                        # id="delete-account-button",
-                        # n_clicks=0,
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                        },
-                    ), width={"size": 2, "offset": 0, },
-                    className="text-center mt-3"
-                ),
-                dbc.Col(
-                    dbc.Button(
-                        "Consulter mon historique",
-                        # size='lg',
-                        color="primary",
-                        # className="btn btn-lg",
-                        href="/profile/history",
-                        id="history-button",
-                        style={
-                            'max-width': '80%',
-                            'max-height': '100%',
-                        },
+                    dbc.Col(
+                        dbc.Card(
+                            [
+                                dbc.CardImg(
+                                    src="../assets/img/logout.png",
+                                    top=True,
+                                    style={
+                                        'max-width': '100%',
+                                        'border-radius': '25px'
+                                        }
+                                    ),
+                                dbc.CardBody(
+                                    dbc.Button(
+                                        "Se déconnecter",
+                                        id="logout-button",
+                                        n_clicks=0,
+                                        color="primary",
+                                        href="/login",
+                                        style={
+                                            'width': '100%',
+                                            'min-height': '60px',
+                                            'display': 'flex',
+                                            'align-items': 'center',
+                                            'justify-content': 'center'
+                                        }
+                                    ),
+                                    className='px-0',
+                                ),
+                            ], style={'border': 'none'},
+                        ), width=10, md=5, lg=2,
+                        className="text-center mb-2"
                     ),
-                    width={"size": 2, "offset": 0, },
-                    className="text-center mt-3"
-                ),
-                dbc.Col(
-                    dbc.Button(
-                        "Voir mon profil",
-                        # size='lg',
-                        color="primary",
-                        # className="btn btn-lg",
-                        href="/profile/edit",
-                        id="edit-profile-button",
-                        style={
-                            'width': '80%',
-                            'height': '100%',
-                            'display': 'flex',
-                            'align-items': 'center',
-                            'justify-content': 'center',
-                        },
-                    ),
-                    width={"size": 2, "offset": 0, },
-                    className="d-flex justify-content-center mt-3",
-                ),
-                dbc.Col(
-                    dbc.Button(
-                        "Se déconnecter",
-                        # size='lg',
-                        color="primary",
-                        # className="btn btn-lg",
-                        href="/home",
-                        id="logout-button",
-                        n_clicks=0,
-                        style={
-                            'width': '80%',
-                            'height': '100%',
-                            'display': 'flex',
-                            'align-items': 'center',
-                            'justify-content': 'center',
-                        },
-
-                    ),
-                    width={"size": 2, "offset": 0, },
-                    className="d-flex justify-content-center mt-3",
-                ),
-            ], justify="center"),
+                ], justify="evenly",
+            ),
             dbc.Row(
                 dbc.Col(
-                    html.Div(id='logout-content'),
+                    html.Div(id='logout-content', hidden=True),
                     width={"size": 8, "offset": 2},
                 ),
             ),
         ],
         fluid=True,
-        className="py-3"
+        className="py-3",
     )
-])
+)
