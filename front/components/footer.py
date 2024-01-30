@@ -10,7 +10,7 @@ footer = html.Footer(
                 html.A(
                     "nous contacter.",
                     href="/contact",
-                    className="ms-1"
+                    className="ms-1 footer-link"
                 ),
             ],
             className="mt-3"
@@ -22,7 +22,7 @@ footer = html.Footer(
                     "Spectre Biotech",
                     href="https://www.spectre-biotech.com",
                     target="_blank",
-                    className="ms-1"
+                    className="ms-1 footer-link"
                 ),
             ],
             className="mt-3"

@@ -96,7 +96,9 @@ H4 {
     width: 80%;
 }
 
-
+.footer-link {
+    color: '#5fb0e2';
+}
 
 
 #login-card-container {
