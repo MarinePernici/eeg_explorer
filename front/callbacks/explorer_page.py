@@ -9,6 +9,7 @@ from dash.dependencies import Input, Output, State
 from back.api.auth_routes import get_id
 from front.app import app
 import back.chat_agent as agent
+import back.sql_agent as sql_agent
 from front.functions.explorer_functions import is_query_safe
 from back.api.auth import (
     get_query_id, post_data_in_db
@@ -50,6 +51,7 @@ def ask_spectre_database(n_clicks, query):
             query_registered = message
             intermediate_steps = None
         else:
+            agent = sql_agent.SQLAgent()
             (
                 result, total_tokens,
                 prompt_tokens, completion_tokens,

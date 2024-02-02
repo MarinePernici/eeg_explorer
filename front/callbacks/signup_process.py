@@ -21,10 +21,24 @@ from front.functions.validity_functions import (
      Input('signup-name', 'valid')
     ]
 )
-def update_signup_button_state(valid_email, valid_password, valid_name):
+def update_signup_button_state(
+    valid_email: bool,
+    valid_password: bool,
+    valid_name: bool,
+) -> bool:
+    """ Update the signup button state
+
+    Args:
+        valid_email (bool): is email valid
+        valid_password (bool): is password valid
+        valid_name (bool): is name valid
+
+    Returns:
+        bool: is button disabled
+    """
     if valid_email and valid_password and valid_name:
-        return False  # Active le bouton
-    return True  # Désactive le bouton
+        return False  # button enabled
+    return True  # button disabled
 
 
 # callback pour créer un compte
@@ -80,7 +94,7 @@ def check_username_validity(name):
 
     return True, False, reason, ''
 
-# vérifier la validité de l'email d'inscription
+
 @app.callback(
     [Output("signup-email", "valid"),
      Output("signup-email", "invalid"),
@@ -88,7 +102,20 @@ def check_username_validity(name):
      Output("email-feedback-invalid", "children")],
     [Input("signup-email", "value")],
 )
-def check_email_validity(email):
+def check_email_validity(
+    email: str
+) -> tuple[bool, bool, str, str]:
+    """ Check if the email is valid and allowed
+
+    Args:
+        email (str): email to check
+    
+    Returns:
+        bool: is email valid
+        bool: is email invalid
+        bool: valid feedback
+        bool: invalid feedback
+    """
     if not email:
         return False, False, '', ''
     if not is_email_valid(email):

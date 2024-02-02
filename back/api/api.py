@@ -4,10 +4,26 @@ from flask import request, jsonify
 from front.app import app
 from back.models import db, Queries, QueryResults, Contacts
 from sqlalchemy.exc import SQLAlchemyError
+from flask_login import login_required
 
 
 @app.server.route('/api/record_query', methods=['POST'])
 def record_query():
+    """ Record a query.
+
+    The request should be a JSON object with the following keys
+    - query_text: the text of the query
+    - user_id: the id of the user who made the query
+    - prompt_tokens: the tokens in the prompt
+    - completion_tokens: the tokens in the completion
+    - total_tokens: the total number of tokens
+    - cost: the cost of the query
+
+    Returns a JSON object with the following keys
+    - success: True if the query was saved successfully, False otherwise
+    - message: a message describing the result
+    - query_id: the id of the query if it was saved successfully
+    """
     data = request.json
     try:
         new_query = Queries(

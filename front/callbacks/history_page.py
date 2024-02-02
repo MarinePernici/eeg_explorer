@@ -10,6 +10,7 @@ from back.api.auth_routes import (get_id, is_user_authenticated)
 from front.app import app
 from back.api.auth import get_queries_from_user_id, get_query_result_from_id, get_user_history
 import pandas as pd
+from flask_login import login_required
 
 
 # Callback pour activer/désactiver le bouton de téléchargement
@@ -27,6 +28,7 @@ def update_download_button_state(file_format):
     Output('history-table', 'children'),
     [Input('url', 'pathname')]
 )
+@login_required
 def update_history_table(pathname):
     if pathname == '/profile/history':
         time.sleep(1)
