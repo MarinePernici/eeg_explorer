@@ -146,7 +146,7 @@ def validate_user_input(name, email, password) -> tuple[bool, str]:
         return False, "Email déjà enregistré"
     return True, ""
 
-import logging
+# import logging
 def create_user(
     name: str,
     email: str,

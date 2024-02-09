@@ -4,7 +4,7 @@ SQL database using a large language model and is built with Langchain tools.
 """
 
 import time
-import logging
+# import logging
 
 from langchain.agents import initialize_agent
 from langchain.callbacks import get_openai_callback
