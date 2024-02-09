@@ -28,7 +28,6 @@ def update_download_button_state(file_format):
     Output('history-table', 'children'),
     [Input('url', 'pathname')]
 )
-@login_required
 def update_history_table(pathname):
     if pathname == '/profile/history':
         time.sleep(1)

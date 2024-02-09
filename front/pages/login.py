@@ -1,7 +1,7 @@
 
 import dash_bootstrap_components as dbc
 from dash import html
-from pages.title import title_container
+from front.pages.title import title_container
 
 
 login_card = dbc.Card(
@@ -174,7 +174,7 @@ user_layout = html.Div(
                                     dbc.Button(
                                         "Consulter mon historique",
                                         color="primary",
-                                        href="/history",
+                                        href="/profile/history",
                                         style={
                                             'width': '100%',
                                             'min-height': '60px',
@@ -237,7 +237,8 @@ user_layout = html.Div(
                                         id="logout-button",
                                         n_clicks=0,
                                         color="primary",
-                                        href="/login",
+                                        href="/home",
+                                        disabled=False,
                                         style={
                                             'width': '100%',
                                             'min-height': '60px',

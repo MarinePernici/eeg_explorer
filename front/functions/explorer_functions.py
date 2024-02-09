@@ -22,15 +22,25 @@ def translate_sentence(sentence, target_language, api_key):
     return translated_text, detected_language
 
 
-def check_keywords(text):
-    # Expressions régulières pour les différentes catégories de mots
+def check_keywords(text: str) -> bool:
+    """
+    Check if the translated text contains any of the keywords 
+    that might indicate a dangerous SQL query.
+
+    Args:
+        text (str): The translated text to be checked.
+
+    Returns:
+        bool: True if the text is safe, False otherwise.
+    """
+    # regex for each category of SQL commands
     data_manipulation_regex = r"(?i)\b(creat|add|insert|delet|remov|drop|updat|modif|chang|alter|truncat|merg)"
     transaction_control_regex = r"(?i)\b(commit|rollback|savepoint)"
     structure_manipulation_regex = r"(?i)\b(create\s+(index|table|view)|drop\s+(index|table|view)|renam)"
     access_control_regex = r"(?i)\b(grant|revok|privileg)"
     specific_sql_commands_regex = r"(?i)\b(lock|unlock|execut|call|set)"
 
-    # Vérifier si un des mots clés est présent dans la phrase traduite
+    # verify if the text contains any of the keywords
     is_safe = not any(re.search(regex, text) for regex in [
         data_manipulation_regex,
         transaction_control_regex,

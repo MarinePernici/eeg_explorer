@@ -70,10 +70,9 @@ def create_account(n_clicks, name, email, password):
         return 'Adresse email non autorisée. Vous ne pouvez pas créer de compte.', '', '', ''
 
     # Créer l'utilisateur
-    if create_user(name, email, password):
-        return 'Compte créé avec succès. Vous pouvez maintenant vous connecter.', '', '', ''
+    is_user_created, message = create_user(name, email, password)
 
-    return 'Erreur lors de la création du compte.', '', '', ''
+    return message, '', '', ''
 
 
 # vérifier la validité du nom d'inscription

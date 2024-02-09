@@ -8,7 +8,7 @@ from dash.dependencies import Input, Output, State
 
 from back.api.auth_routes import get_id
 from front.app import app
-import back.chat_agent as agent
+# import back.chat_agent as agent
 import back.sql_agent as sql_agent
 from front.functions.explorer_functions import is_query_safe
 from back.api.auth import (

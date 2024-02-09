@@ -2,7 +2,7 @@
 
 import dash_bootstrap_components as dbc
 from dash import html
-from pages.title import title_container
+from front.pages.title import title_container
 
 profile_layout = html.Div([
     dbc.Container(

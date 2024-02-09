@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
-from pages.title import title_container
+from front.pages.title import title_container
 
 rounded_border_style = {
     'border-radius': '15px',  # 15px est un exemple, ajustez selon vos besoins

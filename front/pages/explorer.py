@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import html, dcc
-from pages.title import title_container
+from front.pages.title import title_container
 
 
 explorer_layout = html.Div([

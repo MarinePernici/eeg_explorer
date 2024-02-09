@@ -13,6 +13,7 @@ from sqlalchemy.sql import func
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
+    """ User model """
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -21,14 +22,28 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(200))
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    def set_password(self, password):
+    def set_password(self, password: str):
+        """ hash the password and set it to the password_hash attribute
+
+        Args:
+            password (str): the password to hash
+        """
         self.password_hash = argon2.hash(password)
 
-    def check_password(self, password):
+    def check_password(self, password : str):
+        """ check if the password is correct
+
+        Args:
+            password (str): the password to check
+
+        Returns:
+            bool: True if the password is correct, False otherwise
+        """
         return argon2.verify(password, self.password_hash)
 
 
 class CommonMixin():
+    """ Common columns for all tables """
     id: Mapped[int] = mapped_column(
         BigInteger,
         Identity(),

@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 from back.models import User, db, Queries, QueryResults, Contacts
 from passlib.hash import argon2
 from flask_login import logout_user
+from sqlalchemy.exc import SQLAlchemyError
+
+from front.functions.validity_functions import is_email_valid, is_password_safe, is_username_valid
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -104,24 +107,79 @@ def is_email_registered(email):
     return existing_user is not None
 
 
-def create_user(name, email, password):
 
+
+
+
+
+# def create_user(name, email, password):
+
+#     if not is_username_valid(name) or not is_email_valid(email) or not is_password_safe(password)[0]:
+#         return False
+
+#     if is_email_registered(email):
+#         return False
+
+#     # create a user instance
+#     user = User(username=name, email=email)
+#     user.set_password(password)
+
+#     # add user in the database
+#     try:
+#         db.session.add(user)
+#         db.session.commit()
+#         return True
+#     except Exception as e:
+#         print("Erreur lors de la création de l'utilisateur:", e)
+#         db.session.rollback()
+#         return False
+
+
+def validate_user_input(name, email, password) -> tuple[bool, str]:
+    if not is_username_valid(name):
+        return False, "Nom d'utilisateur invalide"
+    if not is_email_valid(email):
+        return False, "Email invalide"
+    if not is_password_safe(password)[0]:
+        return False, "Mot de passe non sécurisé"
     if is_email_registered(email):
-        return False
+        return False, "Email déjà enregistré"
+    return True, ""
 
-    # create a user instance
+import logging
+def create_user(
+    name: str,
+    email: str,
+    password: str
+) -> tuple[bool, str]:
+    """ Create a new user in the database if the inputs are valid
+    
+    Args:
+        name (str): username
+        email (str): email
+        password (str): password
+        
+    Returns:
+        bool: True if the user has been created, False otherwise
+        str: message to display to the user
+    """
+    valid, error_message = validate_user_input(name, email, password)
+    if not valid:
+        return False, error_message
+
     user = User(username=name, email=email)
     user.set_password(password)
 
-    # add user in the database
     try:
         db.session.add(user)
         db.session.commit()
-        return True
-    except Exception as e:
+        # logging.info("Utilisateur créé avec succès.")
+        return True, "Utilisateur créé avec succès. Vous pouvez maintenant vous connecter."
+    except SQLAlchemyError as e:
+        # logging.error(f"Erreur lors de la création de l'utilisateur: {e}")
         print("Erreur lors de la création de l'utilisateur:", e)
         db.session.rollback()
-        return False
+        return False, "Erreur lors de l'enregistrement de l'utilisateur"
 
 
 def create_deleted_user():
