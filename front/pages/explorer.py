@@ -40,7 +40,7 @@ explorer_layout = html.Div([
                             rows=4,
                             placeholder="""Ecrivez ici votre question
 par exemple : combien y'a-t-il d'enregistrements EEG?
-ou bien : quel est la valeur moyenne du pic alpha en F3 chez les personnes souffrant d'autisme?"""
+ou bien : quelle est la valeur moyenne du pic alpha en F3 chez les personnes souffrant d'autisme?"""
                         ),
                         dbc.FormText(
                             "EEG Explorer utilise Chat GPT 4 pour traiter vos"
