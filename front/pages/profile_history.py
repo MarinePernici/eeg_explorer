@@ -63,11 +63,11 @@ profile_history_layout=html.Div([
                     ),
 
                     # Bouton de téléchargement
-                    dbc.Button('Télécharger mon historique', id='download-button', style={'width': '100%'}, n_clicks=0, disabled=True),
+                    dbc.Button('Télécharger mon historique', id='download-button', style={'width': '50%'}, n_clicks=0, disabled=True),
 
                     # Composant dcc.Download pour le téléchargement du fichier
                     dcc.Download(id='download-data')
-                ], width={"size": 4, "offset": 4, }, className="text-justify"),
+                ], width={"size": 6, "offset": 3, }, className="text-center"),
             ),
         ],
         fluid=True,
