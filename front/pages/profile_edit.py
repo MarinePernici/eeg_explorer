@@ -55,7 +55,7 @@ profile_edit_layout = html.Div([
                         ),
                         ], style={'text-align': 'justify'},
                     ),
-                    width={"size": 10, "offset": 1, },
+                    width={"size": 8, "offset": 2, },
                     className="text-center"
                 ), align="center", className="mb-3", style={'fontSize': '1.2rem', 'fontWeight': 'bold'},
             ),      
@@ -63,19 +63,19 @@ profile_edit_layout = html.Div([
                 [
                     dbc.Col(
                         html.Div(id='profile-username'),
-                        width={"size": 4, "offset": 1, }, align="center",
+                        width={"size": 3, "offset": 2, }, align="center",
                     ),
                     dbc.Col(
                         [
                             dbc.Input(
                                 id='new-username',
                                 type='text',
-                                placeholder="Mon nouveau nom d'utilisateur",
+                                placeholder="Mon nouveau nom",
                                 value=""
                             ),
                             dbc.FormFeedback("", type="valid", id='new-username-feedback-valid', style={'fontSize': '0.7rem'}),
                             dbc.FormFeedback("", type="invalid", id='new-username-feedback-invalid', style={'fontSize': '0.7rem'}),
-                        ], width={"size": 3, "offset": 0, },
+                        ], width={"size": 2, "offset": 0, },
                     ),
                     dbc.Col(
                         dbc.Button(
@@ -97,15 +97,15 @@ profile_edit_layout = html.Div([
             dbc.Row(
                 dbc.Col(
                     html.Div(id='username-change-status', style={'color': '#43ac6a'}),
-                    width={"size": 10, "offset": 1, },
+                    width={"size": 8, "offset": 2, },
                 ), id='username-change-margin',
             ),
             # Ligne pour l'email
             dbc.Row(
                 [
                     dbc.Col(
-                        dbc.Input(placeholder="Pour modifier votre email vous devrez entrer votre mot de passe actuel", type="password", disabled=True),
-                        width={"size": 7, "offset": 1, },
+                        html.Div("Pour modifier votre email vous devrez entrer votre mot de passe actuel"),
+                        width={"size": 5, "offset": 2, },
                     ),
                     dbc.Col(
                         dbc.Button("Modifier mon email", color="primary", href="/profile/edit/email", style={'width': "100%"},),
@@ -118,8 +118,8 @@ profile_edit_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        dbc.Input(placeholder="Pour modifier votre mot de passe vous devrez entrer votre mot de passe actuel", type="password", disabled=True),
-                        width={"size": 7, "offset": 1, },
+                        html.Div("Pour modifier votre mot de passe vous devrez entrer votre mot de passe actuel"),
+                        width={"size": 5, "offset": 2, },
                     ),
                     dbc.Col(
                         dbc.Button("Modifier mon mot de passe", color="primary", href="/profile/edit/password", style={'width': "100%"},),
@@ -131,13 +131,9 @@ profile_edit_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        dbc.Input(
-                            placeholder="Si vous souhaitez supprimer votre compte veuillez vous diriger vers cette page",
-                            type="text",
-                            disabled=True
-                        ),
-                        width={"size": 7, "offset": 1, },
-                    ),                    
+                        html.Div("Si vous souhaitez supprimer votre compte veuillez vous diriger vers cette page"),
+                        width={"size": 5, "offset": 2, },
+                    ),
                     dbc.Col(
                         dbc.Button(
                             "Supprimer mon compte",
