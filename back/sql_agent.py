@@ -65,6 +65,11 @@ class SQLAgent:
                 result = self.agent(query)
                 end = time.time()
                 execution_time = end - start
+                print(f"Total Tokens: {cb.total_tokens}")
+                print(f"Prompt Tokens: {cb.prompt_tokens}")
+                print(f"Completion Tokens: {cb.completion_tokens}")
+                print(f"Total Cost (USD): ${cb.total_cost}")
+                print(f"Execution Time: {execution_time} sec")
                 return (
                     result,
                     cb.total_tokens,
