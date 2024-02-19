@@ -24,7 +24,8 @@ navbar = dbc.NavbarSimple(
             dbc.NavLink(
                 "Se connecter",
                 href="/login",
-                active="exact"
+                active="exact",
+                id="login_link"
             )
         ),
         dbc.DropdownMenu(
