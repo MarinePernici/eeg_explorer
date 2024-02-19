@@ -19,7 +19,7 @@ profile_delete_account_layout = html.Div([
                             votre historique."""
                         ),
                         html.Br(),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 6, "offset": 3, },
                     className="text-center"
@@ -99,7 +99,7 @@ profile_delete_account_layout = html.Div([
                             """ avant de supprimer votre compte."""
                         ]),
                         width={"size": 6, "offset": 3, },
-                        style={'text-align': 'justify', 'font-size': 'small'},
+                        style={'textAlign': 'justify', 'fontSize': 'small'},
                     ),
                 ],
                 # className="mb-3",

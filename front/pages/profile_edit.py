@@ -3,11 +3,11 @@ from dash import html, dcc
 from front.pages.title import title_container
 
 rounded_border_style = {
-    'border-radius': '15px',  # 15px est un exemple, ajustez selon vos besoins
+    'borderRadius': '15px',  # 15px est un exemple, ajustez selon vos besoins
     'overflow': 'hidden',
-    'box-shadow': '3px 3px 10px rgba(0,0,0,0.2)',
-    'background-color': '#1a1950',
-    'margin-bottom': '10px',
+    'boxShadow': '3px 3px 10px rgba(0,0,0,0.2)',
+    'backgroundColor': '#1a1950',
+    'marginBottom': '10px',
 }
 
 profile_edit_layout = html.Div([
@@ -20,7 +20,7 @@ profile_edit_layout = html.Div([
                         html.Div(
                             id="dynamic-username", style={'fontSize': '1.5rem'}
                         ),  # Contenu dynamique
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 10, "offset": 1, },
                     className="text-center"
@@ -53,7 +53,7 @@ profile_edit_layout = html.Div([
                             "C'est ici que vous pouvez consulter et/ou " +
                             "modifier vos coordonnées personnelles:"
                         ),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 8, "offset": 2, },
                     className="text-center"
@@ -174,7 +174,7 @@ profile_edit_password_layout = html.Div([
                     html.Div([
                         html.Div(id="dynamic-username"),
                         html.P("Ceci est la page de modification du mot de passe."),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 6, "offset": 3, },
                     className="text-center"
@@ -225,7 +225,7 @@ profile_edit_password_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        html.Div(id='password-change-status', style={'text-align': 'center'}),
+                        html.Div(id='password-change-status', style={'textAlign': 'center'}),
                         width={"size": 4, "offset": 4},
                     ),
                 ],
@@ -247,7 +247,7 @@ profile_edit_email_layout = html.Div([
                     html.Div([
                         html.Div(id="dynamic-username"),
                         html.P("Ceci est la page de modification de votre email."),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 6, "offset": 3, },
                     className="text-center"
@@ -297,7 +297,7 @@ profile_edit_email_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        html.Div(id='email-change-status', style={'text-align': 'center'}),
+                        html.Div(id='email-change-status', style={'textAlign': 'center'}),
                         width={"size": 4, "offset": 4},
                     ),
                 ],

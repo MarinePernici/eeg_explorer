@@ -10,9 +10,9 @@ profile_history_layout=html.Div([
                 dbc.Col(
                     html.Div([
                         html.Div(id="dynamic-username", style={'fontSize': '1.5rem'}),  # Contenu dynamique
-                        html.P("Sur cette page, vous pouvez accéder à l'ensemble de votre historique : les questions que vous avez posées et les réponses obtenues sont classées de la plus ancienne à la plus récente."),
+                        html.P("Sur cette page, vous pouvez accéder à l'ensemble de votre historique : les questions que vous avez posées et les réponses obtenues sont classées de la plus récente à la plus ancienne."),
                         html.P("En bas de page, vous pouvez choisir de télécharger votre historique dans un fichier Excel ou CSV."),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 10, "offset": 1, },
                     className="center"

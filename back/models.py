@@ -49,7 +49,6 @@ class CommonMixin():
         Identity(),
         primary_key=True
     )
-    
     time_created: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now()

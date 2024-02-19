@@ -18,12 +18,12 @@ title_container = [
             #     ),
             #     width=12, lg=6, md=6,
             # ),
-        ], justify="center", id="title-container",
+        ], justify="center", className="title-container",
     ),
     dbc.Row(
         dbc.Col(
             html.H4('Transformez vos questions en découvertes', className="text-center"),
             width=12,
-        ), justify="center", className='text-primary mb-3', id="title-container",
+        ), justify="center", className='text-primary mb-3 title-container',
     )
 ]

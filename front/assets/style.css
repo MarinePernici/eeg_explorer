@@ -72,8 +72,7 @@ H4 {
     /* color: #C7E8FC; */
 }
 
-
-#title-container {
+.title-container {
     display: inline-flex;
     justify-content: center;
     align-items: baseline;

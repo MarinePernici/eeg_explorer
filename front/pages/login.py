@@ -136,8 +136,8 @@ user_layout = html.Div(
                                     src="../assets/img/explore.png",
                                     top=True,
                                     style={
-                                        'max-width': '100%',
-                                        'border-radius': '25px'
+                                        'maxWidth': '100%',
+                                        'borderRadius': '25px'
                                     }
                                 ),
                                 dbc.CardBody(
@@ -147,10 +147,10 @@ user_layout = html.Div(
                                         href="/explorer",
                                         style={
                                             'width': '100%',
-                                            'min-height': '60px',
+                                            'minHeight': '60px',
                                             'display': 'flex',
-                                            'align-items': 'center',
-                                            'justify-content': 'center'
+                                            'alignItems': 'center',
+                                            'justifyContent': 'center'
                                         }
                                     ),
                                     className='px-0',
@@ -166,8 +166,8 @@ user_layout = html.Div(
                                     src="../assets/img/history.png",
                                     top=True,
                                     style={
-                                        'max-width': '100%',
-                                        'border-radius': '25px'
+                                        'maxWidth': '100%',
+                                        'borderRadius': '25px'
                                     }
                                 ),
                                 dbc.CardBody(
@@ -177,10 +177,10 @@ user_layout = html.Div(
                                         href="/profile/history",
                                         style={
                                             'width': '100%',
-                                            'min-height': '60px',
+                                            'minHeight': '60px',
                                             'display': 'flex',
-                                            'align-items': 'center',
-                                            'justify-content': 'center'
+                                            'alignItems': 'center',
+                                            'justifyContent': 'center'
                                         }
                                     ),
                                     className='px-0',
@@ -197,7 +197,7 @@ user_layout = html.Div(
                                     top=True,
                                     style={
                                         'width': '100%',
-                                        'border-radius': '25px'
+                                        'borderRadius': '25px'
                                     }
                                 ),
                                 dbc.CardBody(
@@ -208,10 +208,10 @@ user_layout = html.Div(
                                         href="/profile/edit",
                                         style={
                                             'width': '100%',
-                                            'min-height': '60px',
+                                            'minHeight': '60px',
                                             'display': 'flex',
-                                            'align-items': 'center',
-                                            'justify-content': 'center'
+                                            'alignItems': 'center',
+                                            'justifyContent': 'center'
                                         }
                                     ),
                                     className='px-0',
@@ -227,8 +227,8 @@ user_layout = html.Div(
                                     src="../assets/img/logout.png",
                                     top=True,
                                     style={
-                                        'max-width': '100%',
-                                        'border-radius': '25px'
+                                        'maxWidth': '100%',
+                                        'borderRadius': '25px'
                                         }
                                     ),
                                 dbc.CardBody(
@@ -241,10 +241,10 @@ user_layout = html.Div(
                                         disabled=False,
                                         style={
                                             'width': '100%',
-                                            'min-height': '60px',
+                                            'minHeight': '60px',
                                             'display': 'flex',
-                                            'align-items': 'center',
-                                            'justify-content': 'center'
+                                            'alignItems': 'center',
+                                            'justifyContent': 'center'
                                         }
                                     ),
                                     className='px-0',

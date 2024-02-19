@@ -12,7 +12,7 @@ forgot_password_layout = html.Div([
                     html.Div([
                         html.Div(id="dynamic-username"),
                         html.P("Pour réinitialiser votre mot de passe, veuillez renseigner votre adresse email de connexion."),
-                        ], style={'text-align': 'justify'},
+                        ], style={'textAlign': 'justify'},
                     ),
                     width={"size": 6, "offset": 3, },
                     className="text-center"
@@ -42,7 +42,7 @@ forgot_password_layout = html.Div([
             dbc.Row(
                 [
                     dbc.Col(
-                        html.Div(id='forgot-password-message', style={'text-align': 'end'}),
+                        html.Div(id='forgot-password-message', style={'textAlign': 'end'}),
                         width={"size": 4, "offset": 4},
                     ),
                 ],

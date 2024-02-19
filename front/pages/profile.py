@@ -14,7 +14,7 @@ profile_layout = html.Div([
                         html.Div(
                             id="dynamic-username", style={'fontSize': '1.5rem'}
                         ),
-                    ], style={'text-align': 'center'},
+                    ], style={'textAlign': 'center'},
                     ),
                     width={"size": 12, "offset": 0, },
                     className="text-center"
@@ -27,7 +27,7 @@ profile_layout = html.Div([
                         style={
                             'max-width': '80%',
                             'max-height': '100%',
-                            'border-radius': '25px',
+                            'borderRadius': '25px',
                         },
                     ),
                     width={"size": 3, "offset": 0, },
@@ -39,7 +39,7 @@ profile_layout = html.Div([
                         style={
                             'max-width': '80%',
                             'max-height': '100%',
-                            'border-radius': '25px',
+                            'borderRadius': '25px',
                         },
                     ),
                     width={"size": 3, "offset": 0, },
@@ -51,7 +51,7 @@ profile_layout = html.Div([
                         style={
                             'max-width': '80%',
                             'max-height': '100%',
-                            'border-radius': '25px',
+                            'borderRadius': '25px',
                         },
                     ),
                     width={"size": 3, "offset": 0, },
@@ -63,7 +63,7 @@ profile_layout = html.Div([
                         style={
                             'max-width': '80%',
                             'max-height': '100%',
-                            'border-radius': '25px',
+                            'borderRadius': '25px',
                         },
                     ),
                     width={"size": 3, "offset": 0, },
