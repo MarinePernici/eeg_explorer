@@ -1,9 +1,10 @@
 """ callback for the navbar links"""
 
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 
 from back.api.auth_routes import is_user_authenticated
 from front.app import app
+
 
 # callback pour activer/désactiver les liens du menu de navigation
 @app.callback(

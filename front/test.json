@@ -1,0 +1,3 @@
+{
+    "query": "SELECT d.disease, AVG(psd.value) as average_spectral_density FROM power_spectral_density psd JOIN evaluations e ON psd.evaluation_id = e.id JOIN users u ON e.user_id = u.id JOIN diagnostics d ON u.diagnostic_id = d.id WHERE d.disease IN ('depression', 'burnout') GROUP BY d.disease ORDER BY average_spectral_density DESC"
+}

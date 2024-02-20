@@ -2,6 +2,7 @@
 
 from collections import Counter
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import time
 from datetime import datetime, timedelta
@@ -143,6 +144,15 @@ def update_profile_graph(pathname):
                         y='Nombre de Requêtes',
                         title='Votre activité sur EEG Explorer ces 30 derniers jours'
                     )
+                    # Déterminer les limites de l'axe Y
+                    y_min = df['Nombre de Requêtes'].min()
+                    y_max = df['Nombre de Requêtes'].max()
+
+                    # Calculer la plage d'entiers pour l'axe Y
+                    tickvals = np.arange(
+                        np.floor(y_min), np.ceil(y_max) + 1, dtype=int
+                    )
+
                     fig.update_layout(
                         xaxis_tickangle=-45,
                         paper_bgcolor='#1a1950',
@@ -151,6 +161,7 @@ def update_profile_graph(pathname):
                         yaxis_title_font_color='white',
                         xaxis_tickfont_color='white',
                         yaxis_tickfont_color='white',
+                        yaxis={'tickvals': tickvals},
                     )
                     return fig
                 except ValueError:
