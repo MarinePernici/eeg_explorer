@@ -36,34 +36,28 @@ home_layout = html.Div([
                 dbc.Col(
                     html.Div(
                         dcc.Markdown("""
-                            Découvrez EEG Explorer, **une application innovante
-                            by Spectre Biotech**, la startup pionnière en
-                            traitement automatisé du signal EEG.
+                            Découvrez **EEG Explorer**, une application permettant
+                            d'explorer simplement des données EEG à l'aide de
+                            questions en langage naturel.
 
-                            - **Pourquoi EEG Explorer?**
+                            - **Pourquoi EEG Explorer ?**
 
-                            _Notre mission_ : démocratiser la pratique
-                            de l'EEG en clinique courante et faciliter
-                            l'accès aux données EEG, une
-                            ressource précieuse mais souvent sous-exploitée.
-                            Avec EEG Explorer accédez simplement à **une vaste
-                            collection d'enregistrements EEG**.
-                            Grâce à l'intelligence artificielle intégrée,
-                            interagissez avec notre base de données via de
-                            simples questions en langage naturel.
+                            EEG Explorer a été développé comme prototype afin
+                            d'expérimenter une interface permettant à des utilisateurs
+                            non techniques d'interroger une base de données sans avoir
+                            à écrire directement de requêtes SQL.
 
-                            - **Rejoignez l'aventure**
+                            L'application utilise un modèle de langage pour transformer
+                            les questions de l'utilisateur en requêtes SQL, interroger
+                            une base PostgreSQL de démonstration contenant des données
+                            EEG fictives, puis présenter les résultats à l'utilisateur.
 
-                            Que vous soyez un chercheur confirmé, un praticien
-                            en quête de données cliniques ou un étudiant
-                            passionné par l'étude du cerveau, **EEG Explorer
-                            est conçu pour vous**.
+                            - **Explorer les données**
 
-                            _Avec EEG Explorer, franchissez le seuil
-                            d'**une nouvelle ère de la recherche EEG**, où
-                            les données sont vivantes, accessibles et
-                            infiniment explorables._
-                            """,
+                            Posez une question en langage naturel et EEG Explorer
+                            se charge de la traduire en requête pour explorer les
+                            données disponibles.
+                        """,
                             className='custom-list-style'
                         ), style={'text-align': 'justify'},
                     ),
@@ -91,164 +85,3 @@ home_layout = html.Div([
         className="py-3"
     )
 ])
-
-# app_description = dcc.Markdown("""
-# Découvrez EEG Explorer, une application innovante
-# by Spectre Biotech, la startup pionnière en
-# neurotechnologie. Notre mission : démocratiser
-# l'accessibilité à l'électroencéphalographie, une
-# ressource précieuse mais souvent sous-exploitée
-# dans la pratique clinique courante. Avec EEG Explorer,
-# nous ouvrons de nouvelles portes à la communauté
-# scientifique et médicale en fournissant un accès
-# simplifié à une vaste collection de plus de 5000
-# enregistrements EEG.
-
-# Chez Spectre Biotech, nous croyons en la force de la
-# technologie pour transformer la recherche et les soins
-# de santé. EEG Explorer incarne cette vision en intégrant
-# l'intelligence artificielle de pointe, capable de
-# comprendre et de traiter les requêtes en langage naturel.
-# Cette interface intuitive élimine les barrières techniques
-# et linguistiques, permettant aux utilisateurs de poser des
-# questions complexes et de recevoir des réponses détaillées
-# avec une facilité déconcertante.
-
-# EEG Explorer est plus qu'une simple application ;
-# c'est une extension de notre engagement à faire progresser
-# la recherche en neurosciences. Que vous soyez un chercheur
-# confirmé, un praticien en quête de données cliniques ou un
-# étudiant passionné par l'étude du cerveau, EEG Explorer
-# est conçu pour vous.
-                
-# Nous travaillons sans relâche pour
-# que notre technologie soit à la fois puissante et accessible,
-# afin que vous puissiez vous concentrer sur ce qui compte
-# vraiment : faire avancer la science et améliorer les
-# soins aux patients.
-
-# Spectre Biotech est fière de vous inviter à rejoindre cette aventure
-# en neurotechnologie. Avec EEG Explorer, franchissez le seuil
-# d'une nouvelle ère de la recherche EEG, où les données sont
-# vivantes, accessibles et infiniment explorables.
-# """)
-
-
-# app_description = dcc.Markdown('''
-# **Découvrez une application innovante en
-# neurotechnologie.** Notre mission : _démocratiser
-# la pratique de l'EEG en clinique courante et faciliter
-# l'accès aux données EEG_.
-                
-# ## Pourquoi EEG Explorer?
-# - **Accès simplifié** à une vaste collection de plus
-# de 5000 enregistrements EEG.
-# - **Ouverture de nouvelles portes** pour la communauté
-# scientifique et médicale.
-
-# ## Technologie de Pointe
-# - **Intégration de l'intelligence artificielle** pour
-# une compréhension et un traitement en langage naturel.
-# - **Interface intuitive** qui élimine les barrières
-# techniques et linguistiques.
-                
-# ## Plus qu'une Application
-# - **Outil de recherche et d'exploration** pour les
-# chercheurs, praticiens et étudiants.
-# - **Engagement fort** pour la progression de la
-# recherche en neurosciences.
-
-# ## Rejoignez l'Aventure
-# **Spectre Biotech vous invite** à franchir le seuil
-# d'une nouvelle ère de la recherche EEG.''')
-
-
-# illustrations = dbc.Row(
-#     [
-#         dbc.Col(
-#             html.Div([
-#                 html.H5("Demandez Simplement", className="text-center"),
-#                 html.Div(
-#                     style={
-#                         'width': '100%',   # Largeur de 100% du conteneur
-#                         'padding-top': '100%',  # Padding-top de 100% pour maintenir un aspect carré
-#                         'position': 'relative',
-#                         'margin': '0 auto'  # Position relative pour le pseudo-élément
-#                     },
-#                     children=html.Img(
-#                         src='assets/img/ask.png',
-#                         style={
-#                             'max-width': '100%',
-#                             'max-height': '100%',
-#                             'position': 'absolute',
-#                             'top': '0',
-#                             'bottom': '0',
-#                             'left': '0',
-#                             'right': '0',
-#                             'margin': 'auto',
-#                         },
-#                     ),
-#                 )
-#             ]),
-#         width={"size": 2, "offset": 2},
-#         className="mb-3"
-#         ),
-#         dbc.Col(
-#             html.Div([
-#                 html.H5("Téléchargez les résultats", className="text-center"),
-#                 html.Div(
-#                     style={
-#                         'width': '100%',   # Largeur de 100% du conteneur
-#                         'padding-top': '100%',  # Padding-top de 100% pour maintenir un aspect carré
-#                         'position': 'relative',
-#                         'margin': '0 auto'  # Position relative pour le pseudo-élément
-#                     },
-#                     children=html.Img(
-#                         src='assets/img/download.png',
-#                         style={
-#                             'max-width': '100%',
-#                             'max-height': '100%',
-#                             'position': 'absolute',
-#                             'top': '0',
-#                             'bottom': '0',
-#                             'left': '0',
-#                             'right': '0',
-#                             'margin': 'auto',
-#                         },
-#                     ),
-#                 )
-#             ]),
-#         width={"size": 2, "offset": 1},
-#         className="mb-3"
-#         ),
-#         dbc.Col(
-#             html.Div([
-#                 html.H5("Rapidité et Précision", className="text-center"),
-#                 html.Div(
-#                     style={
-#                         'width': '100%',   # Largeur de 100% du conteneur
-#                         'padding-top': '100%',  # Padding-top de 100% pour maintenir un aspect carré
-#                         'position': 'relative',
-#                         'margin': '0 auto'  # Position relative pour le pseudo-élément
-#                     },
-#                     children=html.Img(
-#                         src='assets/img/speed.png',
-#                         style={
-#                             'max-width': '100%',
-#                             'max-height': '100%',
-#                             'position': 'absolute',
-#                             'top': '0',
-#                             'bottom': '0',
-#                             'left': '0',
-#                             'right': '0',
-#                             'margin': 'auto',
-#                         },
-#                     ),
-#                 )
-#             ]),
-#         width={"size": 2, "offset": 1},
-#         className="mb-3"
-#         ),
-#     ],
-#     className="my-3"
-# )

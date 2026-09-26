@@ -91,14 +91,10 @@ signup_card = dbc.Card([
     dbc.FormText("Mot de passe : 12 caractères dont 1 minuscule, 1 majuscule, 1 chiffre et un caractère spécial", id='password-feedback', color='info'),
     html.Br(),
     dbc.Button("Créer le compte", id='signup-button', disabled=True, ),
-    html.Div(id='signup-status', children=[
-        "* La création de compte est ouverte aux membres de Spectre Biotech, pour plus d'informations, veuillez ",
-        html.A(
-            "contacter le support.",
-            href="/contact",
-            target="_blank",
-        ),
-    ], style={'marginBottom': 'auto', 'marginTop': '10px'}),
+    html.Div(
+        id='signup-status',
+        style={'marginBottom': 'auto', 'marginTop': '10px'}
+    ),
 ], id="signup-card", class_name="common-card-style", style={'display': 'flex'})
 
 

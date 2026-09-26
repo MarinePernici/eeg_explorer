@@ -13,7 +13,7 @@ from langchain.utilities import SQLDatabase
 load_dotenv()  # Charge les variables d'environnement depuis '.env'
 
 
-db = SQLDatabase.from_uri(os.environ.get('DATABASE_URL_SPECTRE'))
+db = SQLDatabase.from_uri(os.environ.get('DATABASE_URL_EEG'))
 gpt_llm = ChatOpenAI(model_name='gpt-4-1106-preview')
 toolkit = SQLDatabaseToolkit(db=db, llm=gpt_llm)
 

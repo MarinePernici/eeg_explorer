@@ -2,7 +2,7 @@
 name = "eeg-explorer"
 version = "0.1.0"
 description = ""
-authors = ["MarinePernici <marine@spectre-biotech.com>"]
+authors = ["MarinePernici"]
 readme = "README.md"
 packages = [{include = "eeg_explorer"}]
 

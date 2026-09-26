@@ -14,7 +14,7 @@ from front.callbacks.edit_password_page import (
 from front.callbacks.edit_email_page import (
     change_email, check_confirm_new_email_validity,
     check_new_email_validity, update_edit_email_button_state)
-from front.callbacks.explorer_page import ask_spectre_database
+from front.callbacks.explorer_page import ask_eeg_database
 from front.callbacks.history_page import generate_file, update_history_table
 from front.callbacks.home_page import update_explorer_link
 from front.callbacks.login_process import (check_login_email_validity,
