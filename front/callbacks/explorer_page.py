@@ -26,7 +26,7 @@ def update_search_button_state(query):
     return True
 
 
-# Callback pour la recherche dans la base de données spectre
+# Callback pour la recherche dans la base de données eeg
 @app.callback(
     [Output("search-result", "children"),
      Output('query-reminder', 'children'),
@@ -37,7 +37,7 @@ def update_search_button_state(query):
     [State("query", "value")],
     prevent_initial_call=True
 )
-def ask_spectre_database(n_clicks, query):
+def ask_eeg_database(n_clicks, query):
     if n_clicks > 0:
         is_safe, message = is_query_safe(query)
         if not is_safe:

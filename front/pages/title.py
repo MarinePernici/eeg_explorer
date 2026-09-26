@@ -11,13 +11,6 @@ title_container = [
                 ),
                 width=12,
             ),
-            # dbc.Col(
-            #     html.H3(
-            #         "by SPECTRE Biotech.",
-            #         className="text-lg-start text-md-start text-center"
-            #     ),
-            #     width=12, lg=6, md=6,
-            # ),
         ], justify="center", id="title-container",
     ),
     dbc.Row(
